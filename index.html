@@ -511,9 +511,35 @@ function session(){try{const o=JSON.parse(sessionStorage.getItem(SESSION)||'null
 function clearPassword(){const el=document.getElementById('vitaAuthPassword');if(el)el.value=''}
 function status(m){const el=document.getElementById('vitaAuthMessage');if(el)el.textContent=m}
 async function authFetch(path,body){const res=await fetch(BASE+'/auth/v1/'+path,{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},body:JSON.stringify(body)});const json=await res.json().catch(()=>({}));if(!res.ok)throw Error(json.msg||json.message||json.error_description||json.error||'Ошибка сервера '+res.status);return json}
-window.vitaAuthOpen=function(){const a=session();showSheet('<h2>🔐 Учётная запись Vita Test</h2><p class="vitaSub">Только отдельная тестовая учётная запись для будущих напоминаний. Финансовые данные и задачи остаются на iPhone, в облако не отправляются.</p><div id="vitaAuthMessage" class="vitaSub" role="status">'+(a?'Вход выполнен.':'Вход пока не выполнен.')+'</div><label>Email<input type="email" id="vitaAuthEmail" autocomplete="email" placeholder="email@example.com"></label><label>Пароль<input type="password" id="vitaAuthPassword" autocomplete="current-password" placeholder="Не менее 8 символов"></label><button class="primary" onclick="vitaAuthLogin()">Войти</button><button class="vsBtn" style="margin:10px 0" onclick="vitaAuthRegister()">Создать тестовую учётную запись</button><button class="vsBtn" onclick="vitaAuthLogout()">Выйти</button><p class="vitaSub">При регистрации Supabase может отправить письмо для подтверждения email. Пароль не передавай в чат.</p>')}
+window.vitaAuthOpen=function(){const a=session();showSheet('<h2>🔐 Учётная запись Vita Test</h2><p class="vitaSub">Только отдельная тестовая учётная запись для будущих напоминаний. Финансовые данные и задачи остаются на iPhone, в облако не отправляются.</p><div id="vitaAuthMessage" class="vitaSub" role="status">'+(a?'Вход выполнен.':'Вход пока не выполнен.')+'</div><label>Email<input type="email" id="vitaAuthEmail" autocomplete="email" placeholder="email@example.com"></label><label>Пароль<input type="password" id="vitaAuthPassword" autocomplete="current-password" placeholder="Не менее 8 символов"></label><button class="primary" onclick="vitaAuthLogin()">Войти</button><button class="vsBtn" style="margin:10px 0" onclick="vitaAuthRegister()">Создать тестовую учётную запись</button><button class="vsBtn" onclick="vitaAuthLogout()">Выйти</button><button class="vsBtn" style="margin-top:12px" onclick="vitaTestServerConnection()">🧪 Проверить сервер напоминаний</button><p class="vitaSub">При регистрации Supabase может отправить письмо для подтверждения email. Пароль не передавай в чат.</p>')}
 window.vitaAuthRegister=async function(){const email=(document.getElementById('vitaAuthEmail')?.value||'').trim(),password=document.getElementById('vitaAuthPassword')?.value||'';if(!email.includes('@')||password.length<8){status('Проверь адрес и пароль: минимум 8 символов.');return}status('Регистрация…');try{const d=await authFetch('signup',{email,password});if(d.access_token){sessionStorage.setItem(SESSION,JSON.stringify({...d,expires_at:Math.floor(Date.now()/1000)+(d.expires_in||3600)}));status('Учётная запись создана. Вход выполнен.')}else status('Регистрация отправлена. Проверь почту и подтверди адрес, затем войди.');clearPassword()}catch(e){status('Ошибка регистрации: '+e.message)}finally{clearPassword()}}
 window.vitaAuthLogin=async function(){const email=(document.getElementById('vitaAuthEmail')?.value||'').trim(),password=document.getElementById('vitaAuthPassword')?.value||'';if(!email||!password){status('Укажи email и пароль.');return}status('Проверяю вход…');try{const d=await authFetch('token?grant_type=password',{email,password});if(!d.access_token)throw Error('Сервер не вернул токен');sessionStorage.setItem(SESSION,JSON.stringify(d));status('Вход выполнен. Тестовые финансовые записи остаются только на устройстве.')}catch(e){status('Не удалось войти: '+e.message)}finally{clearPassword()}}
+window.vitaTestServerConnection=async function(){
+ const a=session();if(!a){status('Для проверки войди в учётную запись Vita Test повторно.');return}
+ status('Проверяю безопасный доступ к тестовому серверу…');
+ const headers={'apikey':KEY,'Authorization':'Bearer '+a.access_token,'Content-Type':'application/json'};
+ let created=null;
+ try{
+  const me=await fetch(BASE+'/auth/v1/user',{headers});
+  if(!me.ok)throw Error('Сеанс истёк. Выполни вход заново.');
+  const user=await me.json();
+  if(!user.id)throw Error('Не удалось подтвердить пользователя');
+  const id='vita-connection-check-'+Date.now();
+  const due=new Date(Date.now()+3600000).toISOString();
+  const post=await fetch(BASE+'/rest/v1/vita_reminder_jobs',{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({user_id:user.id,client_task_id:id,title:'Тест соединения Vita',due_at:due})});
+  if(!post.ok)throw Error('Запись теста: '+post.status+' '+(await post.text()).slice(0,130));
+  const rows=await post.json();created=rows[0]?.id;if(!created)throw Error('Сервер не подтвердил запись');
+  const get=await fetch(BASE+'/rest/v1/vita_reminder_jobs?id=eq.'+encodeURIComponent(created)+'&select=id,title',{headers});
+  if(!get.ok)throw Error('Чтение теста: '+get.status);
+  const read=await get.json();if(read.length!==1||read[0].title!=='Тест соединения Vita')throw Error('Тестовая запись не прочитана');
+  status('✅ Сервер доступен: тестовую запись удалось создать и прочитать. Удаляю тестовую запись…');
+ }catch(e){status('Ошибка проверки: '+e.message)}
+ finally{
+  if(created){
+   try{const del=await fetch(BASE+'/rest/v1/vita_reminder_jobs?id=eq.'+encodeURIComponent(created),{method:'DELETE',headers});if(!del.ok)throw Error('HTTP '+del.status);status('✅ Проверка сервера прошла. Тестовая запись создана, прочитана и удалена. Фоновые push пока не включены.')}catch(e){status('Тестовая запись осталась на сервере: '+e.message)}
+  }
+ }
+};
 window.vitaAuthLogout=async function(){const old=session();sessionStorage.removeItem(SESSION);clearPassword();status('Выход на этом устройстве выполнен.');if(old?.access_token){try{await fetch(BASE+'/auth/v1/logout',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+old.access_token}})}catch(_){}}}
 })();
 
