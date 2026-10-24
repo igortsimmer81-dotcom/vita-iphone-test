@@ -1,0 +1,45 @@
+name: Vita Test — validate and publish
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: vita-test-pages
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify isolation and JavaScript
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('index.html').read_text()
+          assert "vita_iphone_test_demo_v1" in html
+          assert "vita_iphone_test_savings_v1" in html
+          for bad in ['igor_personal_assistant_v1','vita_savings_v1','railway.app','navigator.serviceWorker.register(', 'https://', 'http://']:
+            assert bad not in html,bad
+          assert 'importData=function(inp)' in html
+          scripts=re.findall(r'<script(?:\s[^>]*)?>([\s\S]*?)</script>',html)
+          Path('/tmp/vita-test.js').write_text('\n;\n'.join(scripts))
+          print('PASS: isolated keys, no external endpoints, import disabled')
+          PY
+          node --check /tmp/vita-test.js
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+  deploy:
+    needs: validate
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
