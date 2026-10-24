@@ -23,12 +23,14 @@ jobs:
           html=Path('index.html').read_text()
           assert "vita_iphone_test_demo_v1" in html
           assert "vita_iphone_test_savings_v1" in html
-          for bad in ['igor_personal_assistant_v1','vita_savings_v1','railway.app','navigator.serviceWorker.register(', 'https://', 'http://']:
+          for bad in ['igor_personal_assistant_v1','vita_savings_v1','railway.app', 'https://', 'http://']:
             assert bad not in html,bad
-          assert 'importData=function(inp)' in html
+          assert "importData=function(inp){if(inp)inp.value=''" in html
+          assert "navigator.serviceWorker.register('./vita-notify-test-sw.js'" in html
+          assert Path('vita-notify-test-sw.js').is_file()
           scripts=re.findall(r'<script(?:\s[^>]*)?>([\s\S]*?)</script>',html)
           Path('/tmp/vita-test.js').write_text('\n;\n'.join(scripts))
-          print('PASS: isolated keys, no external endpoints, import disabled')
+          print('PASS: isolated keys, safe demo imports, approved same-origin worker, no external endpoints')
           PY
           node --check /tmp/vita-test.js
       - uses: actions/upload-pages-artifact@v3
