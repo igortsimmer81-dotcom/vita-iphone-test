@@ -448,6 +448,46 @@ const oldNav=window.nav;
 window.nav=function(){oldNav();const b=document.querySelector('#nav button:last-child');if(b&&b.textContent.includes('Сбережения')){b.querySelector('.navico').innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6.5c-1.2-1.3-2.9-2-5-2-3.3 0-5 1.5-5 3.7 0 5.7 10 2.6 10 8.3 0 2.3-2 4-5 4-2.3 0-4.4-.9-5.8-2.5"/></svg>';}}
 })();
 
+
+// Vita Test 3.0: unified DEMO-only backups. Production backup import stays disabled.
+(function(){
+ const SAV='vita_iphone_test_savings_v1', DEMO='vita_iphone_test_demo_v1';
+ const oldExport=window.exportData;
+ function isAccounts(a){
+   return Array.isArray(a)&&a.length<=10000&&a.every(x=>x&&typeof x==='object'&&!Array.isArray(x)&&typeof x.id==='string'&&x.id.length>0&&Array.isArray(x.ops)&&x.ops.every(o=>o&&typeof o.id==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(String(o.date||''))&&Number.isFinite(Number(o.amount))));
+ }
+ window.exportData=function(){
+   let savings;
+   try{savings=JSON.parse(localStorage.getItem(SAV)||'[]')}catch{alert('Ошибка чтения сбережений. Копия не создана.');return}
+   if(!isAccounts(savings)){alert('Ошибка проверки сбережений. Копия не создана.');return}
+   const bundle={kind:'vita-test-complete-demo-backup',version:1,createdAt:new Date().toISOString(),main:JSON.parse(JSON.stringify(data)),savings:savings};
+   const blob=new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'});
+   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='vita-test-complete-demo-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+ };
+ function validBundle(x){
+   return x&&x.kind==='vita-test-complete-demo-backup'&&x.version===1&&validateVitaBackup(x.main)&&isAccounts(x.savings)&&Object.keys(x).every(k=>['kind','version','createdAt','main','savings'].includes(k));
+ }
+ window.importData=function(inp){
+   const file=inp.files&&inp.files[0];if(!file)return;
+   if(file.size>15000000){alert('Слишком большой файл');inp.value='';return}
+   const reader=new FileReader();
+   reader.onload=function(){
+     try{
+       const parsed=JSON.parse(reader.result);
+       if(!validBundle(parsed)){alert('Можно восстановить только полную резервную копию Vita Test. Рабочие копии Vita заблокированы.');return}
+       const oldMain=localStorage.getItem(DEMO),oldSav=localStorage.getItem(SAV);
+       const msg='ВОССТАНОВЛЕНИЕ ТЕСТОВОЙ КОПИИ\n\nЗадач: '+parsed.main.tasks.length+'; долгов: '+parsed.main.debts.length+'; вкладов: '+parsed.savings.length+'.\n\nТекущие тестовые данные будут заменены. Продолжить?';
+       if(!confirm(msg)||!confirm('Последнее подтверждение: заменить данные Vita Test?'))return;
+       try{localStorage.setItem(DEMO,JSON.stringify(parsed.main));localStorage.setItem(SAV,JSON.stringify(parsed.savings));data=load();closeSheet();render();alert('Тестовая копия восстановлена. Проверь разделы и сбережения.')}
+       catch(err){try{if(oldMain===null)localStorage.removeItem(DEMO);else localStorage.setItem(DEMO,oldMain);if(oldSav===null)localStorage.removeItem(SAV);else localStorage.setItem(SAV,oldSav);data=load();render()}catch(e){}alert('Ошибка восстановления; выполнена попытка отката. Проверь данные.')}
+     }catch(e){alert('Файл не читается или повреждён. Данные не изменены.')}
+     finally{inp.value=''}
+   };
+   reader.onerror=function(){alert('Ошибка чтения файла');inp.value=''};
+   reader.readAsText(file);
+ };
+})();
+
 render();
 </script>
 <script>document.body.classList.add("vita-ready")</script></body>
