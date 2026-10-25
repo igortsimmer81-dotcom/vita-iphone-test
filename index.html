@@ -321,6 +321,57 @@ html,body{background:#0c1525}
 .vsHomeSummary{background:linear-gradient(120deg,#193936,#1b293f);border:1px solid #467e73;border-left:4px solid #61d9a4;padding:17px;border-radius:20px}
 .vsHomeAmount{font-size:clamp(28px,8vw,38px)!important}
 @media(max-width:370px){.vsOldDetailNav strong{font-size:14px}.vsPage .vsAccount>span{position:static;display:inline-block;margin-top:4px}.vsPage .vsAccount{padding-right:13px}.vsDetailOperation .vsInputs{grid-template-columns:minmax(0,1fr)!important}.vsDetailOperation .vsInputs input[type=date]{font-size:16px!important}}
+</style><style id="vita-savings-compact-fields-20261025">
+/* Final iPhone override: eliminate competing single-column rules. */
+.vsPage .vsDetailOperation .vsInputs{
+ display:grid!important;
+ grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr)!important;
+ flex-direction:unset!important;
+ align-items:end!important;
+ gap:9px!important;
+ width:100%!important;
+ min-width:0!important;
+}
+.vsPage .vsDetailOperation .vsInputs>label,
+.vsPage .vsDetailOperation .vsInputs .vsDateField,
+.vsPage .vsDetailOperation .vsInputs .vsAmountField{
+ display:block!important;
+ width:100%!important;
+ max-width:100%!important;
+ min-width:0!important;
+ overflow:hidden!important;
+ order:unset!important;
+ font-size:12px!important;
+}
+.vsPage .vsDetailOperation .vsInputs input{
+ display:block!important;
+ width:100%!important;
+ max-width:100%!important;
+ min-width:0!important;
+ height:46px!important;
+ margin:7px 0 0!important;
+ padding:8px!important;
+ box-sizing:border-box!important;
+ border-radius:12px!important;
+ font-size:16px!important;
+}
+.vsPage .vsDetailOperation .vsInputs input[type="date"]{
+ appearance:none!important;
+ -webkit-appearance:none!important;
+ font-size:14px!important;
+ overflow:hidden!important;
+ text-align:left!important;
+}
+.vsPage .vsDetailOperation .vsInputs input[type="date"]::-webkit-date-and-time-value{
+ min-width:0!important;
+ max-width:100%!important;
+ text-align:left!important;
+}
+.vsPage .vsDetailOperation .vsInputs input[type="date"]::-webkit-datetime-edit{padding:0!important;min-width:0!important}
+@media(max-width:370px){
+ .vsPage .vsDetailOperation .vsInputs{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)!important;gap:7px!important}
+ .vsPage .vsDetailOperation .vsInputs input[type="date"]{font-size:12px!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
