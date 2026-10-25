@@ -499,7 +499,7 @@ window.nav=function(){oldNav();const b=document.querySelector('#nav button:last-
  }
  function previewLegacy(x){
   const m=x.data.main,s=x.data.savings;
-  alert('ПРОВЕРКА КОПИИ СТАРОЙ VITA\\nДата копии: '+String(x.exportedAt||'неизвестна').slice(0,10)+'\\nПроектов: '+m.projects.length+'\\nЗадач: '+m.tasks.length+'\\nРасходов: '+m.expenses.length+'\\nДолгов: '+m.debts.length+'\\nПоставщиков: '+(m.suppliers||[]).length+'\\nПродаж поставщиков: '+(m.supplierSales||[]).length+'\\nВкладов: '+s.length+'\\n\\nФайл проверен, данные пока НЕ восстановлены.');
+  alert('ПРОВЕРКА КОПИИ СТАРОЙ VITA\nДата копии: '+String(x.exportedAt||'неизвестна').slice(0,10)+'\nПроектов: '+m.projects.length+'\nЗадач: '+m.tasks.length+'\nРасходов: '+m.expenses.length+'\nДолгов: '+m.debts.length+'\nПоставщиков: '+(m.suppliers||[]).length+'\nПродаж поставщиков: '+(m.supplierSales||[]).length+'\nВкладов: '+s.length+'\n\nФайл проверен, данные пока НЕ восстановлены.');
  }
  function validBundle(x){
    return x&&x.kind==='vita-test-complete-demo-backup'&&x.version===1&&validateVitaBackup(x.main)&&isAccounts(x.savings)&&Object.keys(x).every(k=>['kind','version','createdAt','main','savings'].includes(k));
