@@ -513,7 +513,21 @@ window.nav=function(){oldNav();const b=document.querySelector('#nav button:last-
        const parsed=JSON.parse(reader.result);
        if(legacyBundle(parsed)){
          previewLegacy(parsed);
-         alert('Это копия рабочей Vita с личными данными. Пока доступна только безопасная проверка содержимого без восстановления. Исходный файл остаётся неизменным.');
+         if(!confirm('ВОССТАНОВИТЬ СТАРУЮ VITA В VITA TEST?\\n\\nТекущие тестовые записи будут заменены. Проверь, что ты уже сохранил тестовую копию.\\nИсходный файл останется без изменений.\\n\\nПродолжить?'))return;
+         if(!confirm('ПОСЛЕДНЕЕ ПОДТВЕРЖДЕНИЕ\\n\\nЗаменить тестовые записи содержимым старой Vita? Реальные финансовые данные будут сохранены ЛОКАЛЬНО на этом iPhone, без отправки в облако.'))return;
+         const oldMain=localStorage.getItem(DEMO),oldSav=localStorage.getItem(SAV);
+         try{
+           const mainText=JSON.stringify(parsed.data.main),savText=JSON.stringify(parsed.data.savings);
+           localStorage.setItem(DEMO,mainText);localStorage.setItem(SAV,savText);
+           if(localStorage.getItem(DEMO)!==mainText||localStorage.getItem(SAV)!==savText)throw Error('Проверка записи не прошла');
+           data=load();closeSheet();render();
+           alert('✅ Данные старой Vita восстановлены локально. Проверь задачи, долги, поставщиков и все вклады. Автоматические напоминания из файла НЕ включались.');
+         }catch(e){
+           try{if(oldMain===null)localStorage.removeItem(DEMO);else localStorage.setItem(DEMO,oldMain);
+             if(oldSav===null)localStorage.removeItem(SAV);else localStorage.setItem(SAV,oldSav);
+             data=load();render()}catch(_){}
+           alert('Ошибка восстановления. Выполнена попытка возврата прежних данных. Проверь Vita Test.');
+         }
          return;
        }
        if(!validBundle(parsed)){alert('Формат резервной копии не поддерживается либо обнаружены ошибки. Данные не изменены.');return}
