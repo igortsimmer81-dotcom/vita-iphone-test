@@ -450,7 +450,14 @@ body:has(.vitaTop){background:#0c111a}
 .vitaCapitalName{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vitaCapitalLegend strong{color:#f0f6fa;font-variant-numeric:tabular-nums}
 </style>
-</head>
+<style id="vita-home-final-polish-20261025">
+.vitaTop .title p{font-size:17px!important;font-weight:600!important;color:#d8b990!important;line-height:1.35}
+.vsHomeSummary{cursor:pointer;position:relative;padding-bottom:17px!important}
+.vsHomeSummary .vsHomeTitle{display:flex!important;align-items:center;justify-content:space-between;gap:12px}
+.vsHomeChevron{width:36px;height:36px;border:1px solid #52677d;background:#253e46;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#d1ece6;font-size:26px;font-weight:500}
+.vsHomeSummary:focus-visible{outline:2px solid #65d7b0;outline-offset:3px}
+.vitaCapitalLegend{margin-bottom:1px}
+</style></head>
 <body>
 <div id="app" class="safe"></div>
 <nav id="nav"></nav>
@@ -666,16 +673,16 @@ views.home=function(){
  const perMonth=accounts.reduce((n,a)=>n+dailyIncome(a)*365/12,0);
  const distribution=accounts.map((a,i)=>({name:String(a.bank||a.name||'Вклад'),balance:Math.max(0,amount(a)),index:i})).filter(a=>a.balance>0);
  const totalPositive=distribution.reduce((n,a)=>n+a.balance,0);
- const palette=['#e5ae62','#66d6ac','#79afe5','#bc9cef','#e4819a','#88c5c3'];
- const distributionHtml=totalPositive>0?'<div class="vitaCapitalTitle">Распределение капитала</div><div class="vitaCapitalBar" role="img" aria-label="Доли вкладов">'+distribution.map(a=>'<span style="width:'+(a.balance/totalPositive*100).toFixed(3)+'%;background:'+palette[a.index%palette.length]+'"></span>').join('')+'</div><div class="vitaCapitalLegend">'+distribution.map(a=>'<div><span class="vitaCapitalDot" style="background:'+palette[a.index%palette.length]+'"></span><span class="vitaCapitalName">'+e(a.name)+'</span><strong>'+(a.balance/totalPositive*100).toLocaleString('ru-RU',{maximumFractionDigits:1})+'%</strong></div>').join('')+'</div>':'';
+ const bankColor=a=>{const n=a.name.toLocaleLowerCase('ru-RU');if(n.includes('альфа'))return '#EF445D';if(n.includes('втб'))return '#348EF0';if(n.includes('совком'))return '#254F99';return ['#e5ae62','#66d6ac','#79afe5','#bc9cef','#e4819a','#88c5c3'][a.index%6]};
+ const distributionHtml=totalPositive>0?'<div class="vitaCapitalTitle">Распределение капитала</div><div class="vitaCapitalBar" role="img" aria-label="Доли вкладов">'+distribution.map(a=>'<span style="width:'+(a.balance/totalPositive*100).toFixed(3)+'%;background:'+bankColor(a)+'"></span>').join('')+'</div><div class="vitaCapitalLegend">'+distribution.map(a=>'<div><span class="vitaCapitalDot" style="background:'+bankColor(a)+'"></span><span class="vitaCapitalName">'+e(a.name)+'</span><strong>'+(a.balance/totalPositive*100).toLocaleString('ru-RU',{maximumFractionDigits:1})+'%</strong></div>').join('')+'</div>':'';
 
- const card='<section class="vsHomeSummary" aria-label="Сбережения">'+
- '<div class="vsHomeTitle">◈ СБЕРЕЖЕНИЯ</div>'+
+ const card='<section class="vsHomeSummary" role="button" tabindex="0" aria-label="Открыть сбережения" onclick="goTab(&quot;savings&quot;)" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();goTab(&quot;savings&quot;)}">'+
+ '<div class="vsHomeTitle"><span>◈ СБЕРЕЖЕНИЯ</span><span class="vsHomeChevron" aria-hidden="true">›</span></div>'+
  '<div class="vsHomeAmount">'+fmt(total)+'</div>'+
  '<div class="vsHomeDetails"><span>'+accounts.length+' вклад(ов)</span><strong>≈ '+fmt(perMonth)+' / мес</strong></div>'+
  '<p>Прогноз процентов, без учёта налогов</p>'+
  distributionHtml+
- '<button type="button" onclick="goTab(&quot;savings&quot;)">Открыть сбережения ›</button></section>';
+ '</section>';
  const body=originalHome();
  const anchor='<div class="vitaSub" style="margin-top:12px">';
  return body.includes(anchor)?body.replace(anchor,card+anchor):body+card;
