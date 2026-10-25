@@ -556,12 +556,23 @@ async function vitaTaskReminderCancel(id){
 }
 async function vitaTaskReminderUpdate(task){
  const rid=vitaTaskLinks()[task.id];if(!rid)return;
- if(!task.date.includes('T')||new Date(task.date).getTime()<=Date.now()+60000){alert('Задача сохранена, но у напоминания неверное или прошедшее время. Отмени старое уведомление.');return}
- const a=session();if(!a){alert('Войди в Vita Test, чтобы изменить серверное напоминание.');return}
- try{const headers={apikey:KEY,Authorization:'Bearer '+a.access_token,'Content-Type':'application/json'};
- const res=await fetch(BASE+'/rest/v1/vita_reminder_jobs?client_task_id=eq.'+encodeURIComponent(rid)+'&state=eq.pending',{method:'PATCH',headers,body:JSON.stringify({title:task.title,due_at:new Date(task.date).toISOString()})});
- if(!res.ok)throw Error('HTTP '+res.status);
- }catch(e){alert('Не удалось изменить push: '+e.message)}
+ if(!task.date.includes('T')||new Date(task.date).getTime()<=Date.now()+60000){alert('Задача сохранена, но время напоминания должно быть минимум через минуту.');return}
+ const a=session();if(!a){alert('Для изменения push войди в учётную запись Vita Test.');return}
+ try{
+  const headers={apikey:KEY,Authorization:'Bearer '+a.access_token,'Content-Type':'application/json'};
+  const me=await fetch(BASE+'/auth/v1/user',{headers});if(!me.ok)throw Error('Сеанс истёк, выполни вход');
+  const user=await me.json();
+  const response=await fetch(BASE+'/rest/v1/vita_reminder_jobs?client_task_id=eq.'+encodeURIComponent(rid)+'&state=eq.pending',{method:'PATCH',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({title:task.title,due_at:new Date(task.date).toISOString()})});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const updated=await response.json();
+  if(updated.length===1){alert('✅ Новое время напоминания подтверждено сервером.');return}
+  const newId='task-'+task.id+'-'+Date.now();
+  const created=await fetch(BASE+'/rest/v1/vita_reminder_jobs',{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({user_id:user.id,client_task_id:newId,title:task.title,due_at:new Date(task.date).toISOString()})});
+  if(!created.ok)throw Error('Не удалось создать напоминание: HTTP '+created.status);
+  const rows=await created.json();if(rows.length!==1)throw Error('Сервер не подтвердил новую запись');
+  const links=vitaTaskLinks();links[task.id]=newId;localStorage.setItem(VITA_TASK_LINK_KEY,JSON.stringify(links));
+  alert('✅ Новое серверное напоминание создано на изменённое время.');
+ }catch(e){alert('Задача изменена, но push не обновлён: '+e.message)}
 }
 async function vitaTaskReminderSync(task){
  const a=session();if(!a){alert('Задача сохранена. Для push войди в учётную запись Vita Test.');return}
