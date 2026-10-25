@@ -433,6 +433,23 @@ body:has(.vitaTop){background:#0c111a}
 .vsHomeSummary button{font-size:13px!important;min-height:42px}
 @media(max-width:390px){.homeWide{padding:13px!important}.homeWide .dashSplit{gap:7px!important}.homeWide .dashTotal{font-size:clamp(15px,4.6vw,20px)!important}.homeWide .dashVal{font-size:11px!important}}
 </style>
+<style id="vita-home-project-tags-and-capital-20261025">
+.vitaAgendaItem.isOverdue{border-color:#965158!important;border-left:3px solid #f5767e!important;background:linear-gradient(100deg,#392933,#263140)!important}
+.vitaAgendaItem.isOverdue small{color:#e9b2b4!important}
+.vitaProjectTag{display:inline-flex;vertical-align:middle;align-items:center;border-radius:7px;padding:3px 7px;margin-left:5px;font-size:11px;font-weight:750;line-height:1.3;border:1px solid transparent}
+.vitaProjectTag.honey{color:#ffdb85;background:#74562455;border-color:#aa854b88}
+.vitaProjectTag.drive{color:#ffad78;background:#86432450;border-color:#d7784788}
+.vitaProjectTag.personal{color:#a4dfff;background:#26587555;border-color:#4e9ac488}
+.vitaLateTag{display:inline-block;margin-left:7px;color:#ff959c;font-size:11px;font-weight:700}
+.vitaCapitalTitle{font-weight:750;color:#dcebf3;font-size:13px;margin:13px 0 9px}
+.vitaCapitalBar{display:flex;width:100%;height:10px;border-radius:99px;overflow:hidden;background:#334254}
+.vitaCapitalBar span{height:100%;min-width:0}
+.vitaCapitalLegend{display:grid;gap:7px;margin-top:11px}
+.vitaCapitalLegend>div{display:flex;align-items:center;gap:8px;font-size:12px;color:#c8d5e2}
+.vitaCapitalDot{width:9px;height:9px;flex-shrink:0;border-radius:3px}
+.vitaCapitalName{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vitaCapitalLegend strong{color:#f0f6fa;font-variant-numeric:tabular-nums}
+</style>
 </head>
 <body>
 <div id="app" class="safe"></div>
@@ -482,7 +499,7 @@ function miniTask(x){return '<div class="miniTask '+taskProjectClass(x)+(x.done?
 function datePlusDays(n){var d=new Date();d.setDate(d.getDate()+n);return localDateISO(d)}
 function dayLabelDate(iso){var d=new Date(iso+'T12:00:00');return {name:d.toLocaleDateString('ru-RU',{weekday:'long'}).toUpperCase(),num:d.getDate()}}
 function agendaDayHtml(iso,isTomorrow){var info=dayLabelDate(iso),xs=data.tasks.filter(function(x){return x.date&&String(x.date).slice(0,10)===iso&&!x.done}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))});var shown=xs.slice(0,3).map(miniTask).join('');return '<div class="dayCol"><div class="dayHead"><div><div class="dayName '+(isTomorrow?'tomorrow':'')+'">'+(isTomorrow?'ЗАВТРА':info.name)+'</div><div class="dayNum '+(isTomorrow?'tomorrow':'')+'">'+info.num+'</div></div></div>'+(shown||'<div class="agendaEmpty">Ничего не запланировано</div>')+(xs.length>3?'<div class="agendaMore">Ещё '+(xs.length-3)+'</div>':'')+'</div>'}
-function agendaHome(){var td=todayISO(),tom=datePlusDays(1),active=data.tasks.filter(function(x){return !x.done&&x.date}),late=active.filter(function(x){return String(x.date).slice(0,10)<td}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))}),today=active.filter(function(x){return String(x.date).slice(0,10)===td}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))}),next=active.filter(function(x){return String(x.date).slice(0,10)===tom}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))});function items(xs,limit){return xs.slice(0,limit).map(function(x){return '<div class="vitaAgendaItem" role="button" tabindex="0" onclick="event.stopPropagation();editTask(\''+x.id+'\')" onkeydown="if(event.key===\'Enter\'){editTask(\''+x.id+'\')}"><b>'+esc(x.title)+'</b><small>'+taskTimeText(x)+' · '+esc(projectName(x.project))+'</small></div>'}).join('')};return '<div class="homeWide agendaCard"><div class="kicker"><span>Задачи и напоминания</span><span class="arrow" onclick="goTab(\'tasks\')">›</span></div>'+(late.length?'<div class="vitaAgendaHeader late">Просрочено · '+late.length+'</div>'+items(late,2)+(late.length>2?'<button class="vitaAgendaMore" onclick="goTab(\'tasks\')">Все просроченные · '+late.length+'</button>':''):'')+'<div class="vitaAgendaHeader">Сегодня · '+dayLabelDate(td).num+'</div>'+(today.length?items(today,2)+(today.length>2?'<button class="vitaAgendaMore" onclick="goTab(\'tasks\')">Все задачи · '+today.length+'</button>':''):'<div class="small">На сегодня задач нет</div>')+'<div class="vitaAgendaTomorrow">Завтра · '+dayLabelDate(tom).num+' <span>'+(next.length?next.length+' задач':'Нет задач')+'</span></div></div>'}
+function agendaHome(){var td=todayISO(),tom=datePlusDays(1),active=data.tasks.filter(function(x){return !x.done&&x.date}),late=active.filter(function(x){return String(x.date).slice(0,10)<td}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))}),today=active.filter(function(x){return String(x.date).slice(0,10)===td}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))}),next=active.filter(function(x){return String(x.date).slice(0,10)===tom}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))});function items(xs,limit){return xs.slice(0,limit).map(function(x){return '<div class="vitaAgendaItem '+taskProjectClass(x)+(String(x.date).slice(0,10)<td?' isOverdue':'')+'" role="button" tabindex="0" onclick="event.stopPropagation();editTask(\''+x.id+'\')" onkeydown="if(event.key===\'Enter\'){editTask(\''+x.id+'\')}"><b>'+esc(x.title)+'</b><small>'+taskTimeText(x)+' <span class="vitaProjectTag '+taskProjectClass(x)+'">'+esc(projectName(x.project))+'</span>'+(String(x.date).slice(0,10)<td?'<span class="vitaLateTag">Просрочено</span>':'')+'</small></div>'}).join('')};return '<div class="homeWide agendaCard"><div class="kicker"><span>Задачи и напоминания</span><span class="arrow" onclick="goTab(\'tasks\')">›</span></div>'+(late.length?'<div class="vitaAgendaHeader late">Просрочено · '+late.length+'</div>'+items(late,2)+(late.length>2?'<button class="vitaAgendaMore" onclick="goTab(\'tasks\')">Все просроченные · '+late.length+'</button>':''):'')+'<div class="vitaAgendaHeader">Сегодня · '+dayLabelDate(td).num+'</div>'+(today.length?items(today,2)+(today.length>2?'<button class="vitaAgendaMore" onclick="goTab(\'tasks\')">Все задачи · '+today.length+'</button>':''):'<div class="small">На сегодня задач нет</div>')+'<div class="vitaAgendaTomorrow">Завтра · '+dayLabelDate(tom).num+' <span>'+(next.length?next.length+' задач':'Нет задач')+'</span></div></div>'}
 
 function projectOptionsSelected(selected){return '<option value="">Без проекта</option>'+data.projects.map(function(p){return '<option value="'+p.id+'" '+(p.id===selected?'selected':'')+'>'+esc(p.name)+'</option>'}).join('')}
 function expenseForm(projectId){return '<h2>Новый расход</h2><div class="field"><label>Проект</label><select id="f_project">'+projectOptionsSelected(projectId||'')+'</select></div><div class="field"><label>Сумма</label><input id="f_amount" inputmode="decimal"></div><div class="field"><label>Валюта</label><select id="f_currency"><option>RUB</option><option>USD</option><option>THB</option><option>EUR</option></select></div><div class="field"><label>Дата расхода</label><input id="f_expenseDate" type="date" value="'+todayISO()+'"></div><div class="field"><label>Категория</label><select id="f_category"><option>Продукты</option><option>ГСМ</option><option>Доставка</option><option>Рабочим</option><option>Материал</option><option>Оборудование</option><option>Реклама</option><option>Услуги</option><option>Другое</option></select></div><div class="field"><label>Комментарий</label><textarea id="f_comment"></textarea></div><button class="primary" onclick="addExpense()">Сохранить</button>'}
@@ -647,11 +664,17 @@ const originalHome=views.home;
 views.home=function(){
  const accounts=read(),total=accounts.reduce((n,a)=>n+amount(a),0);
  const perMonth=accounts.reduce((n,a)=>n+dailyIncome(a)*365/12,0);
+ const distribution=accounts.map((a,i)=>({name:String(a.bank||a.name||'Вклад'),balance:Math.max(0,amount(a)),index:i})).filter(a=>a.balance>0);
+ const totalPositive=distribution.reduce((n,a)=>n+a.balance,0);
+ const palette=['#e5ae62','#66d6ac','#79afe5','#bc9cef','#e4819a','#88c5c3'];
+ const distributionHtml=totalPositive>0?'<div class="vitaCapitalTitle">Распределение капитала</div><div class="vitaCapitalBar" role="img" aria-label="Доли вкладов">'+distribution.map(a=>'<span style="width:'+(a.balance/totalPositive*100).toFixed(3)+'%;background:'+palette[a.index%palette.length]+'"></span>').join('')+'</div><div class="vitaCapitalLegend">'+distribution.map(a=>'<div><span class="vitaCapitalDot" style="background:'+palette[a.index%palette.length]+'"></span><span class="vitaCapitalName">'+e(a.name)+'</span><strong>'+(a.balance/totalPositive*100).toLocaleString('ru-RU',{maximumFractionDigits:1})+'%</strong></div>').join('')+'</div>':'';
+
  const card='<section class="vsHomeSummary" aria-label="Сбережения">'+
  '<div class="vsHomeTitle">◈ СБЕРЕЖЕНИЯ</div>'+
  '<div class="vsHomeAmount">'+fmt(total)+'</div>'+
  '<div class="vsHomeDetails"><span>'+accounts.length+' вклад(ов)</span><strong>≈ '+fmt(perMonth)+' / мес</strong></div>'+
  '<p>Прогноз процентов, без учёта налогов</p>'+
+ distributionHtml+
  '<button type="button" onclick="goTab(&quot;savings&quot;)">Открыть сбережения ›</button></section>';
  const body=originalHome();
  const anchor='<div class="vitaSub" style="margin-top:12px">';
