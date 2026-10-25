@@ -186,7 +186,7 @@ nav button.active{color:#ffa36b}nav button:nth-child(2).active{color:#81d3fc}nav
 #sheetContent:has(#vaBank) .primary,#sheetContent:has(#voDate) .primary{display:block;width:100%;min-height:52px;margin-top:18px;border-radius:13px}
 #overlay .sheet{max-height:min(85dvh,780px);overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box;padding-bottom:calc(22px + env(safe-area-inset-bottom))}
 @media(min-width:700px){#overlay .sheet{width:min(540px,92vw);margin-inline:auto}#sheetContent:has(#vaBank),#sheetContent:has(#voDate){max-width:100%}}
-.vsHomeSummary{background:#152c34;border:1px solid #477e75;border-left:5px solid #69d5ad;border-radius:19px;padding:20px;margin:15px 0;color:#e6f6f2}.vsHomeTitle{font-size:14px;letter-spacing:1px;font-weight:800;color:#9fe5d5}.vsHomeAmount{font-weight:800;font-size:clamp(29px,6vw,42px);padding:12px 0}.vsHomeDetails{display:flex;justify-content:space-between;gap:10px;color:#b9ceca}.vsHomeDetails strong{color:#79e2ac}.vsHomeSummary p{font-size:13px;color:#a8c0bc}.vsHomeSummary button{width:100%;padding:13px;text-align:left;border:1px solid #43615b;color:#d8f7eb;background:#21383a;border-radius:13px;cursor:pointer}</style><style>body:before{content:"VITA TEST · ДЕМО";position:fixed;top:0;right:0;z-index:99999;background:#a35b04;color:white;padding:4px 10px;font:700 11px system-ui;border-radius:0 0 0 9px;pointer-events:none}</style>
+.vsHomeSummary{background:#152c34;border:1px solid #477e75;border-left:5px solid #69d5ad;border-radius:19px;padding:20px;margin:15px 0;color:#e6f6f2}.vsHomeTitle{font-size:14px;letter-spacing:1px;font-weight:800;color:#9fe5d5}.vsHomeAmount{font-weight:800;font-size:clamp(29px,6vw,42px);padding:12px 0}.vsHomeDetails{display:flex;justify-content:space-between;gap:10px;color:#b9ceca}.vsHomeDetails strong{color:#79e2ac}.vsHomeSummary p{font-size:13px;color:#a8c0bc}.vsHomeSummary button{width:100%;padding:13px;text-align:left;border:1px solid #43615b;color:#d8f7eb;background:#21383a;border-radius:13px;cursor:pointer}</style>
 <style id="vita-test-2-ui">
 html,body{width:100%;max-width:100%;overflow-x:hidden}
 #overlay.overlay{position:fixed!important;inset:0!important;width:100vw!important;max-width:100vw!important;display:none;align-items:flex-end;justify-content:center;overflow:hidden;touch-action:pan-y}
@@ -209,6 +209,31 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
 .vsPage .vsActions button{min-width:0}
 .vsPage .vsLine{min-width:0;gap:12px}.vsPage .vsLine span{white-space:nowrap}
 @media(min-width:600px){.vsPage .vsInputs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}}
+</style><style id="vita-savings-premium-20261025">
+/* Savings presentation only. No storage, calculations or actions modified. */
+.vsPage{width:100%;max-width:650px;padding:12px 2px calc(30px + env(safe-area-inset-bottom));color:#f3f5fa}
+.vsPage>h2{font-size:26px;letter-spacing:-.7px;font-weight:800;margin:12px 2px 18px;line-height:1.18}
+.vsPage .vsCard{background:linear-gradient(155deg,#202b3b 0%,#151d29 100%);border:1px solid #354356;border-radius:21px;padding:19px;margin:12px 0;box-shadow:0 12px 30px #05091035}
+.vsPage .vsCard>small{display:block;color:#aabbd1;font-size:11px;letter-spacing:1.8px;font-weight:800}
+.vsPage .vsCard>h1{font-size:clamp(29px,8vw,41px);font-weight:800;line-height:1.13;letter-spacing:-1px;overflow-wrap:anywhere;margin:15px 0}
+.vsPage .vsCard>p{color:#b5c2d2;font-size:13px;line-height:1.55;margin:9px 0}
+.vsPage .vsCard>h3{margin:0 0 14px;font-size:15px;letter-spacing:-.2px}
+.vsPage .vsBar{display:flex;overflow:hidden;min-height:10px;border-radius:99px;background:#293647}
+.vsPage .vsBar span{min-width:0}
+.vsPage .vsHead{display:flex;align-items:center;justify-content:space-between;gap:9px;margin:25px 1px 10px}
+.vsPage .vsHead h2{font-size:19px;line-height:1.2;margin:0;letter-spacing:-.3px}
+.vsPage .vsBtn{min-height:44px;border-radius:13px;padding:10px 13px;border:1px solid #42536b;background:#233248;color:#e5efff;font-size:14px;font-weight:700}
+.vsPage .vsAccount{display:block;width:100%;text-align:left;cursor:pointer;transition:background .16s,border-color .16s;touch-action:manipulation}
+.vsPage .vsAccount:active{background:#29374a;border-color:#7595b8}
+.vsPage .vsAccount>b{font-size:17px;color:#f6f8ff;display:block;margin-bottom:7px}
+.vsPage .vsAccount>span{display:inline-block;color:#b4ddff;font-weight:750;border-radius:9px;padding:5px 8px;background:#253f55;font-size:12px}
+.vsPage .vsAccount>h2{font-size:clamp(24px,6vw,30px);font-weight:800;letter-spacing:-.6px;margin:15px 0 8px;overflow-wrap:anywhere}
+.vsPage .vsGreen{color:#75e3b3!important}
+.vsPage .vsLine{background:#202e3e;padding:13px 12px;border:1px solid #344457;border-radius:13px;overflow-wrap:anywhere}
+.vsPage .vsLine span{white-space:normal}
+.vsPage .vsActions button{min-height:48px;border-radius:13px;font-size:15px}
+.vsPage .vsInputs input{min-height:48px;border-color:#47576b}
+@media(max-width:390px){.vsPage .vsHead h2{font-size:17px}.vsPage .vsBtn{font-size:13px;padding:9px 10px}.vsPage .vsCard{padding:16px}}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
