@@ -641,6 +641,12 @@ body{background:radial-gradient(ellipse at 65% 0%,#192d4b 0%,#0c1527 65%) fixed!
 .vitaInvestOverview .vitaInvestIcon{height:52px;width:52px;min-width:52px;border-radius:14px}
 .vitaInvestOverview .vitaLine .chev{display:grid;place-items:center;min-width:36px;height:44px;border:1px solid #446386;border-radius:11px;background:#233a59;color:#f3cb86;font-size:25px}
 .vitaInvestOverview .vitaLine .amount{margin-left:auto}
+</style><style id="vita-savings-overlap-fix-20261025">
+.vsPage .vsAccount::before,.vsPage .vsAccount::after{content:none!important;display:none!important}
+.vsPage .vsAccount .vsBankLogo{position:static!important;float:none!important;margin:0!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important}
+.vsPage .vsAccount .vsBankRate{position:static!important;float:none!important;display:block!important;width:auto!important}
+.vsPage .vsAccount .vsOpenAccount{position:absolute!important;right:15px!important;bottom:17px!important;z-index:2}
+.vsPage .vsAccount{overflow:hidden!important}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
