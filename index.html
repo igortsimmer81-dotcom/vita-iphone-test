@@ -721,6 +721,31 @@ body{background:radial-gradient(ellipse at 65% 0%,#192d4b 0%,#0c1527 65%) fixed!
 #nav .navico{line-height:26px;display:block;margin-bottom:4px}
 #nav .navico svg{width:22px;height:22px}
 @media(max-width:370px){#nav{padding-left:3px!important;padding-right:3px!important}#nav button{font-size:9px!important}.vitaPremiumSettings .settingsRow{font-size:14px!important}}
+</style><style id="vita-home-final-20261025">
+/* Dashboard only: one visual system, untouched navigation/actions. */
+#app:has(.homeStack) .homeStack{gap:11px;margin-top:12px}
+#app:has(.homeStack) .homeWide{background:linear-gradient(126deg,#253c5b 0%,#172941 46%,#111d31 100%)!important;border:1px solid #49698d!important;border-radius:20px!important;box-shadow:inset 0 1px 0 #ffffff24,0 9px 23px #02091540!important;padding:15px 16px!important}
+#app:has(.homeStack) .agendaCard{border-left:4px solid #80d6fb!important}
+#app:has(.homeStack) .homeWide.supplier{border-left:4px solid #ff985b!important}
+#app:has(.homeStack) .homeWide.money{border-left:4px solid #60d7a6!important}
+#app:has(.homeStack) .homeWide.invest{border-left:4px solid #b7a0f5!important}
+#app:has(.homeStack) .homeWide .kicker{font-size:13px!important;letter-spacing:1.25px!important;color:#e8f0fb!important;margin-bottom:9px}
+#app:has(.homeStack) .homeWide.agendaCard .kicker{color:#9cdbfb!important}
+#app:has(.homeStack) .homeWide .vitaHomeArrow,#app:has(.homeStack) .agendaCard .arrow{background:linear-gradient(145deg,#304f72,#1d324f)!important;border:1px solid #52769d!important;border-radius:12px!important;color:#e1edff!important;box-shadow:inset 0 1px 0 #ffffff16}
+#app:has(.homeStack) .homeWide .dashTotal{font-size:clamp(22px,5.3vw,30px)!important;line-height:1.22!important;overflow-wrap:anywhere}
+#app:has(.homeStack) .homeWide .dashLabel{font-size:11px!important;letter-spacing:1.1px!important}
+#app:has(.homeStack) .homeWide .dashSplit{margin-top:6px}
+#app:has(.homeStack) .homeWide .compactDetails{border:1px solid #3e5571!important;background:#17253b!important;border-radius:13px!important;margin:9px 0 0!important}
+#app:has(.homeStack) .homeWide .compactDetails summary{padding:10px 12px!important}
+#app:has(.homeStack) .vsHomeSummary{background:linear-gradient(125deg,#1d444b 0%,#13333d 70%,#112a35)!important;border:1px solid #578f84!important;border-left:4px solid #5bd9aa!important;border-radius:20px!important;padding:16px!important;box-shadow:inset 0 1px 0 #e7fff11e,0 8px 23px #02091540}
+#app:has(.homeStack) .vsHomeTitle{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#app:has(.homeStack) .vsHomeAmount{font-size:clamp(30px,8vw,46px)!important;padding:12px 0 8px!important;line-height:1.13}
+#app:has(.homeStack) .vsHomeDetails{font-size:13px;align-items:center;flex-wrap:wrap}
+#app:has(.homeStack) .vsHomeSummary p{margin:9px 0!important}
+#app:has(.homeStack) .vsHomeSummary .vsDistributionLegend{margin-top:10px}
+#app:has(.homeStack) .vsHomeSummary .vsBar{box-shadow:0 0 12px #56aaff35}
+#app:has(.homeStack) .vitaSub:last-child{line-height:1.5}
+@media(max-width:390px){#app:has(.homeStack) .homeWide{padding:13px!important}#app:has(.homeStack) .vsHomeSummary{padding:14px!important}}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -949,7 +974,7 @@ views.home=function(){
  const card='<section class="vsHomeSummary" aria-label="Сбережения">'+
  '<div class="vsHomeTitle"><span>◈ СБЕРЕЖЕНИЯ</span><button type="button" class="vsHomeChevron" aria-label="Открыть сбережения" onclick="goTab(&quot;savings&quot;)">›</button></div>'+
  '<div class="vsHomeAmount">'+fmt(total)+'</div>'+
- '<div class="vsHomeDetails"><span>'+accounts.length+' вклад(ов)</span><strong>≈ '+fmt(perMonth)+' / мес</strong></div>'+
+ '<div class="vsHomeDetails"><span>'+accounts.length+' '+(accounts.length%10===1&&accounts.length%100!==11?'вклад':accounts.length%10>=2&&accounts.length%10<=4&&(accounts.length%100<12||accounts.length%100>14)?'вклада':'вкладов')+'</span><strong>≈ '+fmt(perMonth)+' / мес</strong></div>'+
  '<p>Прогноз процентов, без учёта налогов</p>'+
  distributionHtml+
  '</section>';
