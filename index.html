@@ -372,6 +372,35 @@ html,body{background:#0c1525}
  .vsPage .vsDetailOperation .vsInputs{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)!important;gap:7px!important}
  .vsPage .vsDetailOperation .vsInputs input[type="date"]{font-size:12px!important}
 }
+</style><style id="vita-fields-equal-columns-20261025">
+/* Identical two-column tracks for input fields and matching action buttons. */
+.vsPage .vsDetailOperation .vsInputs,
+.vsPage .vsDetailOperation .vsActions{
+ display:grid!important;
+ grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:10px!important;
+ width:100%!important;
+ min-width:0!important;
+}
+.vsPage .vsDetailOperation .vsInputs>label,
+.vsPage .vsDetailOperation .vsInputs .vsDateField,
+.vsPage .vsDetailOperation .vsInputs .vsAmountField{
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ box-sizing:border-box!important;order:unset!important;overflow:hidden!important;
+}
+.vsPage .vsDetailOperation .vsInputs input{
+ display:block!important;width:100%!important;max-width:100%!important;
+ min-width:0!important;box-sizing:border-box!important;height:48px!important;
+ margin:7px 0 0!important;padding:8px!important;font-size:15px!important;
+}
+.vsPage .vsDetailOperation .vsInputs input[type=date]{
+ -webkit-appearance:none!important;appearance:none!important;
+ font-size:12px!important;text-align:left!important;
+}
+.vsPage .vsDetailOperation .vsInputs input[type=date]::-webkit-date-and-time-value{
+ min-width:0!important;text-align:left!important;
+}
+.vsPage .vsDetailOperation .vsActions button{width:100%!important;min-width:0!important}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
