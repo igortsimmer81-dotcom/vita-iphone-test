@@ -615,6 +615,32 @@ body{background:radial-gradient(ellipse at 65% 0%,#192d4b 0%,#0c1527 65%) fixed!
 .vsPage .vsHead .vsBtn{color:#f4c573;background:linear-gradient(135deg,#2c4667,#1a2c45)}
 .vitaDebtOverview .vitaMetric{background:var(--vita-premium)!important;border:1px solid #43658c!important}
 @media(max-width:370px){.vitaInvestIcon{width:38px;height:38px;min-width:38px}}
+</style><style id="vita-savings-true-mockup-20261025">
+.vsPage .vsCard{background:linear-gradient(135deg,#2c4b73 0%,#193252 50%,#13243e 100%)!important;border:1px solid #6388b9!important;box-shadow:inset 0 1px 0 #ffffff24,0 9px 24px #02091660!important}
+.vsPage>.vsCard:first-of-type{background:linear-gradient(115deg,#2b4c75,#1c3456 65%,#14223b)!important}
+.vsPage .vsAccount{position:relative!important;min-height:175px;padding:17px 16px 16px!important;margin:12px 0!important;text-align:left;overflow:hidden}
+.vsPage .vsAccount .vsAccountTop{display:flex;align-items:center;gap:11px;padding-right:0}
+.vsBankLogo{width:46px;height:46px;flex:0 0 46px;display:grid;place-items:center;border-radius:12px;color:white!important;font-weight:900;letter-spacing:-1px;box-shadow:inset 0 1px 2px #fff5,0 4px 12px #0003}
+.vsBankLogo.vsAlfa{background:linear-gradient(145deg,#ff4559,#c90027);font-size:33px;font-family:Arial,sans-serif;text-decoration:underline}
+.vsBankLogo.vsVtb{background:linear-gradient(140deg,#389bff,#1254c8);font-size:15px;font-style:italic}
+.vsBankLogo.vsSov{background:linear-gradient(145deg,#f8faff,#dbe4f5);color:#e14e57!important;font-size:31px}
+.vsBankLogo.vsOther{background:linear-gradient(145deg,#d7af58,#8e7236)}
+.vsBankIdentity{min-width:0;flex:1;display:flex;flex-direction:column;gap:5px}
+.vsBankIdentity b{font-size:17px;line-height:1.2;color:#f3f6ff}
+.vsBankIdentity small{letter-spacing:0!important;font-size:13px;color:#b0c2d7}
+.vsPage .vsAccount .vsBankRate{float:none!important;color:#f1c77c!important;font-size:12px;font-weight:650;white-space:nowrap;align-self:flex-start;margin-top:2px}
+.vsPage .vsAccount h2{font-size:clamp(27px,7vw,37px)!important;margin:20px 52px 10px 0!important;line-height:1.13;letter-spacing:-.55px}
+.vsPage .vsAccount p.vsGreen{font-size:13px!important;margin:0 51px 0 0!important;line-height:1.5;color:#7de2b1!important}
+.vsOpenAccount{position:absolute;right:15px;bottom:17px;height:49px;width:43px;min-width:43px;border:1px solid #6386af;border-radius:13px;background:linear-gradient(135deg,#365478,#1c3453);color:#f9c775;font-size:31px;line-height:1;cursor:pointer}
+.vsOpenAccount:active{background:#44668d}
+.vsPage .vsDistributionLegend{gap:8px}
+.vsPage .vsDistributionLegend>div{font-size:13px}
+.vsPage .vsDistributionLegend strong{font-size:14px}
+.vitaInvestOverview .vitaLine{min-height:83px!important}
+.vitaInvestOverview>.card{background:linear-gradient(125deg,#2a4465,#162942 68%,#102139)!important;border-color:#6182ad!important}
+.vitaInvestOverview .vitaInvestIcon{height:52px;width:52px;min-width:52px;border-radius:14px}
+.vitaInvestOverview .vitaLine .chev{display:grid;place-items:center;min-width:36px;height:44px;border:1px solid #446386;border-radius:11px;background:#233a59;color:#f3cb86;font-size:25px}
+.vitaInvestOverview .vitaLine .amount{margin-left:auto}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -813,7 +839,7 @@ function renderSavings(){let a=read();const n=a.reduce((s,x)=>s+amount(x),0),inc
 const target=$('app');if(tab!=='savings')return;
 let html='<main class="vsPage">';
 if(current){const x=a.find(y=>y.id===current);if(!x)current=null;else html+=''+details(x)}
-if(!current){html+='<h2>✦ Сбережения</h2><section class="vsCard"><small>МОЙ КАПИТАЛ</small><h1>'+fmt(n)+'</h1><p>Прогноз процентов за текущий месяц <b class="vsGreen">+'+fmt(income)+'</b></p></section><section class="vsCard"><h3>Распределение капитала</h3><div class="vsBar">'+a.map((x,i)=>'<span style="width:'+(n?Math.max(0,amount(x)/n*100):0)+'%;background:'+savingsColor(x,i)+'"></span>').join('')+'</div><div class="vsDistributionLegend">'+a.filter(x=>amount(x)>0).map((x,i)=>'<div><span class="vsDistributionDot" style="background:'+savingsColor(x,i)+'"></span><span>'+e(x.bank||x.name||'Вклад')+'</span><strong>'+(n?(amount(x)/n*100).toLocaleString('ru-RU',{maximumFractionDigits:1}):'0')+'%</strong></div>').join('')+'</div></section><div class="vsHead"><h2>Мои вклады · '+a.length+'</h2><button class="vsBtn" onclick="vitaSavings.add()">+ Добавить</button></div>'+a.map(x=>'<button class="vsCard vsAccount" onclick="vitaSavings.open(\''+e(x.id)+'\')"><b>'+e(x.bank||x.name||'Вклад')+'</b><span>'+Number(x.rate||x.percent||0)+'% годовых</span><p>'+e(x.owner||'')+'</p><h2>'+fmt(amount(x))+'</h2><p class="vsGreen">Прогноз за текущий месяц ~ '+fmt(monthForecast(x))+'</p></button>').join('')}
+if(!current){html+='<h2>✦ Сбережения</h2><section class="vsCard"><small>МОЙ КАПИТАЛ</small><h1>'+fmt(n)+'</h1><p>Прогноз процентов за текущий месяц <b class="vsGreen">+'+fmt(income)+'</b></p></section><section class="vsCard"><h3>Распределение капитала</h3><div class="vsBar">'+a.map((x,i)=>'<span style="width:'+(n?Math.max(0,amount(x)/n*100):0)+'%;background:'+savingsColor(x,i)+'"></span>').join('')+'</div><div class="vsDistributionLegend">'+a.filter(x=>amount(x)>0).map((x,i)=>'<div><span class="vsDistributionDot" style="background:'+savingsColor(x,i)+'"></span><span>'+e(x.bank||x.name||'Вклад')+'</span><strong>'+(n?(amount(x)/n*100).toLocaleString('ru-RU',{maximumFractionDigits:1}):'0')+'%</strong></div>').join('')+'</div></section><div class="vsHead"><h2>Мои вклады · '+a.length+'</h2><button class="vsBtn" onclick="vitaSavings.add()">+ Добавить</button></div>'+a.map(x=>'<div class="vsCard vsAccount"><div class="vsAccountTop"><span class="vsBankLogo '+(String(x.bank||x.name||'').toLowerCase().includes('альфа')?'vsAlfa':String(x.bank||x.name||'').toLowerCase().includes('втб')?'vsVtb':String(x.bank||x.name||'').toLowerCase().includes('совком')?'vsSov':'vsOther')+'">'+(String(x.bank||x.name||'').toLowerCase().includes('альфа')?'A':String(x.bank||x.name||'').toLowerCase().includes('втб')?'ВТБ':String(x.bank||x.name||'').toLowerCase().includes('совком')?'◉':'₽')+'</span><div class="vsBankIdentity"><b>'+e(x.bank||x.name||'Вклад')+'</b><small>'+e(x.owner||'')+'</small></div><span class="vsBankRate">'+Number(x.rate||x.percent||0)+'% годовых</span></div><h2>'+fmt(amount(x))+'</h2><p class="vsGreen">Прогноз за текущий месяц ~ '+fmt(monthForecast(x))+'</p><button class="vsOpenAccount" type="button" aria-label="Открыть вклад" onclick="vitaSavings.open(\''+e(x.id)+'\')">›</button></div>').join('')}
 target.innerHTML=html+'</main>'}
 function sheet(title,body){showSheet('<h2>'+title+'</h2>'+body)}
 function account(){return read().find(x=>x.id===current)}
