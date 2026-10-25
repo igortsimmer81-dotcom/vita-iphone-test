@@ -252,17 +252,20 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
 .vsDetailHistoryHead{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:16px 2px 8px}.vsDetailHistoryHead h3{margin:0}.vsDetailHistoryHead span{font-size:12px;color:#b8c9dc;background:#25354a;padding:5px 10px;border-radius:99px}
 @media(max-width:385px){.vsDetailOperation .vsInputs{grid-template-columns:1fr;gap:4px}.vsDetailBalance{font-size:31px}}
 </style><style id="vita-stable-cards-20261025">
-/* Layout-only: prevent horizontal drift/overscroll without disabling scrolling or swipe actions. */
-html,body{width:100%;max-width:100%;overflow-x:clip}
-#app,.safe,.vsPage{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
-.card,.homeWide,.taskListCard,.saleCard,.paymentCard,.historyCard,.compactDetails,.supplierHero,.miniTask,.vsCard,.vsAccount,.vsDetailHero,.vsDetailOperation,.vsLine{box-sizing:border-box;max-width:100%;min-width:0}
-.vsPage .vsCard,.vsDetailHero,.vsDetailOperation,.vsPage .vsLine{width:100%;margin-left:0;margin-right:0}
+/* Stable iPhone layout, no data changes. Keep legacy swipe gestures intact. */
+html,body{max-width:100%;overflow-x:hidden}
+#app,.safe,.vsPage{max-width:100%;min-width:0;box-sizing:border-box}
+.card,.homeWide,.taskListCard,.paymentCard,.historyCard,.compactDetails,.supplierHero,.miniTask,.vsCard,.vsAccount,.vsDetailHero,.vsDetailOperation,.vsLine{max-width:100%;min-width:0;box-sizing:border-box}
+.vsPage .vsDetailOperation{width:100%;overflow:hidden}
+.vsPage .vsDetailOperation .vsInputs{display:flex!important;flex-direction:column!important;gap:12px!important;align-items:stretch!important;width:100%;min-width:0;margin-bottom:16px}
+.vsPage .vsDetailOperation .vsInputs>label{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box;overflow:hidden}
+.vsPage .vsDetailOperation .vsInputs input{display:block!important;position:relative;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;margin:7px 0 0!important;height:49px!important;font-size:16px!important;padding:10px 12px!important;border-radius:12px}
+.vsPage .vsDetailOperation .vsInputs .vsDateField{order:1}
+.vsPage .vsDetailOperation .vsInputs .vsAmountField{order:2;width:68%!important;max-width:68%!important}
+.vsPage .vsDetailOperation .vsInputs input[type="date"]{-webkit-appearance:none;appearance:none;text-align:left}
+.vsPage .vsDetailOperation .vsInputs input[type="date"]::-webkit-date-and-time-value{text-align:left;min-height:1em}
+.vsPage .vsDetailOperation .vsInputs input[type="date"]::-webkit-calendar-picker-indicator{opacity:1}
 .vsPage .vsAccount:active{transform:none}
-.vsDetailOperation .vsInputs>label{min-width:0;width:100%;overflow:visible}
-.vsDetailOperation .vsInputs input{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box;display:block}
-.vsDetailOperation .vsInputs input[type="date"]{font-size:15px;min-height:48px;appearance:auto;-webkit-appearance:auto}
-.vsDetailOperation .vsInputs input[type="number"]{font-size:16px}
-@media(max-width:385px){.vsDetailOperation .vsInputs{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:8px}}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -449,7 +452,7 @@ function read(){try{const v=JSON.parse(localStorage.getItem(K)||'[]');return Arr
 function write(a){localStorage.setItem(K,JSON.stringify(a));renderSavings()}
 function amount(o){return (o.ops||[]).reduce((s,x)=>s+Number(x.amount||0),0)}
 function dailyIncome(a){const n=amount(a),r=Number(a.rate||a.percent||0);return n*r/100/365}
-function details(a){return `<section class="vsDetailHero"><div class="vsDetailTop"><span class="vsDetailIcon">₽</span><div class="vsDetailBank"><strong>${e(a.bank||a.name||'Вклад')}</strong><span>${e(a.owner||'')}</span></div><button type="button" class="vsDetailEdit" onclick="vitaSavings.editTerms()" aria-label="Изменить условия вклада">⚙</button></div><div class="vsDetailCaption">ОСТАТОК НА ВКЛАДЕ</div><div class="vsDetailBalance">${fmt(amount(a))}</div><div class="vsDetailFoot"><span>${Number(a.rate||a.percent||0)}% годовых</span><span class="vsGreen">≈ +${fmt(dailyIncome(a)*365/12)} / мес</span></div></section><section class="vsDetailOperation"><h3>Новая операция</h3><div class="vsInputs"><label>Сумма, ₽<input type="number" inputmode="decimal" min=".01" step=".01" id="vsAmount" placeholder="0"></label><label>Дата<input type="date" id="vsDate" value="${date()}"></label></div><div class="vsActions"><button onclick="vitaSavings.op(1)">＋ Пополнить</button><button onclick="vitaSavings.op(-1)">− Снять</button></div></section><div class="vsDetailHistoryHead"><h3>История операций</h3><span>${(a.ops||[]).length}</span></div>${(a.ops||[]).slice().sort((x,y)=>(y.date||'').localeCompare(x.date||'')).map(o=>`<button class="vsLine" onclick="vitaSavings.editOp('${e(o.id)}')"><span>${e(String(o.date||'').split('-').reverse().join('.'))}</span><b class="${o.amount<0?'vsNegative':''}">${o.amount>=0?'+':''}${fmt(o.amount)}</b></button>`).join('')}` }
+function details(a){return `<section class="vsDetailHero"><div class="vsDetailTop"><span class="vsDetailIcon">₽</span><div class="vsDetailBank"><strong>${e(a.bank||a.name||'Вклад')}</strong><span>${e(a.owner||'')}</span></div><button type="button" class="vsDetailEdit" onclick="vitaSavings.editTerms()" aria-label="Изменить условия вклада">⚙</button></div><div class="vsDetailCaption">ОСТАТОК НА ВКЛАДЕ</div><div class="vsDetailBalance">${fmt(amount(a))}</div><div class="vsDetailFoot"><span>${Number(a.rate||a.percent||0)}% годовых</span><span class="vsGreen">≈ +${fmt(dailyIncome(a)*365/12)} / мес</span></div></section><section class="vsDetailOperation"><h3>Новая операция</h3><div class="vsInputs"><label class="vsDateField">Дата<input type="date" id="vsDate" value="${date()}"></label><label class="vsAmountField">Сумма, ₽<input type="number" inputmode="decimal" min=".01" step=".01" id="vsAmount" placeholder="0"></label></div><div class="vsActions"><button onclick="vitaSavings.op(1)">＋ Пополнить</button><button onclick="vitaSavings.op(-1)">− Снять</button></div></section><div class="vsDetailHistoryHead"><h3>История операций</h3><span>${(a.ops||[]).length}</span></div>${(a.ops||[]).slice().sort((x,y)=>(y.date||'').localeCompare(x.date||'')).map(o=>`<button class="vsLine" onclick="vitaSavings.editOp('${e(o.id)}')"><span>${e(String(o.date||'').split('-').reverse().join('.'))}</span><b class="${o.amount<0?'vsNegative':''}">${o.amount>=0?'+':''}${fmt(o.amount)}</b></button>`).join('')}` }
 
 function renderSavings(){let a=read();const n=a.reduce((s,x)=>s+amount(x),0),income=a.reduce((s,x)=>s+dailyIncome(x)*365/12,0);
 const target=$('app');if(tab!=='savings')return;
