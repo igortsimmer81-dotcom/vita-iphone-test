@@ -873,6 +873,35 @@ html,body{max-width:100%;overflow-x:hidden}
 .vitaInvestOverview img.vitaBrandImage{background-image:none!important;background:none!important;object-fit:cover!important;font-size:initial!important;filter:none!important}
 .vitaInvestOverview .vitaLine:has(+ .vitaInvestThaiHeader){border-bottom:0!important;border-radius:0!important}
 .vitaInvestOverview .vitaLine:has(+ .vitaInvestThaiHeader) + .vitaInvestThaiHeader{box-shadow:inset 0 1px 0 #47739b}
+</style><style id="vita-invest-thailand-polish-20261027">
+/* Thailand grouping: inset luminous section label, not a flat full-width separator. */
+.vitaInvestOverview .vitaInvestThaiHeader{
+ margin:13px 12px 8px!important;padding:12px 15px!important;
+ border:1.5px solid #52bffc!important;border-radius:15px!important;
+ background:linear-gradient(110deg,#205b8b 0%,#19416a 45%,#172d4b 100%)!important;
+ box-shadow:0 0 12px #39bcfa75,inset 0 1px 10px #69daff35!important;
+ color:#d2efff!important;font-size:17px!important;letter-spacing:.2px!important;
+}
+.vitaInvestOverview .vitaInvestThaiHeader:before{content:"⌂";color:#9fe1ff;margin-right:10px;font-size:19px}
+.vitaInvestOverview .vitaThaiLive1,.vitaInvestOverview .vitaThaiLive2{min-height:111px!important}
+.vitaInvestOverview .vitaThaiLive1 img.vitaInvestIcon,.vitaInvestOverview .vitaThaiLive2 img.vitaInvestIcon{
+ width:67px!important;height:67px!important;min-width:67px!important;flex:0 0 67px!important;
+ border-radius:16px!important;
+ object-fit:cover!important;transform:scale(1.04);
+ clip-path:inset(4% round 14px);
+}
+.vitaInvestOverview .vitaLine.vitaThaiLive2{
+ border-radius:0 0 21px 21px!important;
+ border-bottom:2px solid #58caff!important;
+ box-shadow:inset 0 -3px 10px #3fb9ff30,0 11px 23px #2b9fe23b!important;
+ padding-bottom:19px!important;
+}
+@media(max-width:390px){
+ .vitaInvestOverview .vitaThaiLive1 img.vitaInvestIcon,.vitaInvestOverview .vitaThaiLive2 img.vitaInvestIcon{
+ width:55px!important;height:55px!important;min-width:55px!important;flex-basis:55px!important;
+ }
+ .vitaInvestOverview .vitaInvestThaiHeader{font-size:16px!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
