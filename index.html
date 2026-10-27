@@ -1047,6 +1047,40 @@ color:#f1f6ff!important;font:700 30px/1 -apple-system,BlinkMacSystemFont,"SF Pro
 #app:has(.homeStack) .homeWide.money{border-color:#548b79!important;box-shadow:inset 5px 0 20px -13px #61e0ad,0 0 27px #55dba538,0 9px 23px #0004!important}
 #app:has(.homeStack) .homeWide.invest{border-color:#8575b2!important;box-shadow:inset 5px 0 20px -13px #c6a7ff,0 0 27px #ac8dfb42,0 9px 23px #0004!important}
 #app:has(.homeStack) .vitaHomeSavingsCompact{border-color:#508b8e!important;border-left-color:#4bcfb2!important;box-shadow:inset 5px 0 20px -13px #62e8cd,0 0 27px #4bdfca3b,0 9px 23px #0004!important}
+</style><style id="vita-home-final-polish-20261027">
+/* Unified dashboard system: presentation-only; no financial state changes. */
+#app:has(.homeStack) .homeStack{gap:14px!important;margin-top:14px!important}
+#app:has(.homeStack) .homeWide,
+#app:has(.homeStack) .vitaHomeSavingsCompact{border-radius:22px!important;background:linear-gradient(135deg,#263e5d 0%,#1b304e 42%,#111e34 100%)!important;position:relative;isolation:isolate;overflow:hidden!important}
+#app:has(.homeStack) .homeWide:before,
+#app:has(.homeStack) .vitaHomeSavingsCompact:before{content:"";position:absolute;pointer-events:none;inset:1px 1px auto 1px;height:54px;border-radius:21px 21px 0 0;background:linear-gradient(180deg,#ffffff0d,transparent);z-index:-1}
+#app:has(.homeStack) .homeWide .kicker,
+#app:has(.homeStack) .vitaHomeSavingsCompact .vsHomeTitle{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;min-height:51px!important;margin:0 0 10px!important;letter-spacing:1.2px!important;font-size:13px!important;font-weight:850!important}
+#app:has(.homeStack) .homeWide .kicker .vitaHomeArrow,
+#app:has(.homeStack) .homeWide.agendaCard .kicker .arrow,
+#app:has(.homeStack) .vitaHomeSavingsCompact .vsHomeChevron{
+box-sizing:border-box!important;appearance:none!important;-webkit-appearance:none!important;flex:0 0 51px!important;
+width:51px!important;min-width:51px!important;max-width:51px!important;
+height:51px!important;min-height:51px!important;max-height:51px!important;
+margin:0!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;
+border:1px solid #688bb1!important;border-radius:15px!important;
+background:linear-gradient(145deg,#385879,#2a4465 56%,#203552)!important;
+color:#f3f8ff!important;box-shadow:inset 0 1px 0 #ffffff2b,0 5px 13px #030a1940!important;
+font:700 29px/1 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif!important;
+}
+#app:has(.homeStack) .homeWide .dashTotal{font-variant-numeric:tabular-nums;font-size:clamp(19px,5.25vw,28px)!important}
+#app:has(.homeStack) .homeWide.invest{min-height:145px!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact .vsHomeAmount{font-size:clamp(25px,6.2vw,31px)!important;padding:0!important;margin:4px 0 15px!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact .vitaSavingsLine{padding-top:9px!important;border-top:1px solid #486080!important;line-height:1.4!important}
+#app:has(.homeStack) .homeWide.agendaCard{box-shadow:inset 5px 0 16px -12px #86dcff,0 0 21px #48c8ff30,0 9px 24px #0004!important}
+#app:has(.homeStack) .homeWide.supplier{box-shadow:inset 5px 0 16px -12px #ffaa76,0 0 21px #ff983536,0 9px 24px #0004!important}
+#app:has(.homeStack) .homeWide.money{box-shadow:inset 5px 0 16px -12px #7defc2,0 0 21px #52dd9f32,0 9px 24px #0004!important}
+#app:has(.homeStack) .homeWide.invest{box-shadow:inset 5px 0 16px -12px #cfb2ff,0 0 21px #b490fa38,0 9px 24px #0004!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact{box-shadow:inset 5px 0 16px -12px #6cf5d1,0 0 21px #42d9be34,0 9px 24px #0004!important}
+@media(max-width:390px){
+#app:has(.homeStack) .homeWide .dashTotal{font-size:clamp(17px,4.7vw,23px)!important}
+#app:has(.homeStack) .homeWide,#app:has(.homeStack) .vitaHomeSavingsCompact{padding-left:13px!important;padding-right:13px!important}
+}
 </style><style id="vita-nav-scroll-shell-20261027">
 /* Keep the navigation outside the independently scrolling app content on iOS. */
 html{height:100%;overflow:hidden!important}
