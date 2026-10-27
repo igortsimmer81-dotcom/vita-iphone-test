@@ -1018,6 +1018,18 @@ body{margin:0!important}
 #app:has(.homeStack) .vitaHomeSavingsCompact .vitaSavingsFootnote{margin-top:7px;font-size:11px;color:#9daec2}
 #app:has(.homeStack) .homeWide.invest{padding-bottom:21px!important}
 @media(max-width:390px){#app:has(.homeStack) .vitaHomeSavingsCompact .vitaSavingsLine{font-size:12px}#app:has(.homeStack) .vitaHomeSavingsCompact .vitaSavingsLine strong{font-size:13px}}
+</style><style id="vita-home-colors-compact-20261027">
+/* Dashboard only: retain data and destination tabs. */
+#app:has(.homeStack) .homeWide.agendaCard{border-left:5px solid #72d5ff!important;box-shadow:inset 4px 0 17px -12px #81d9ff,0 0 19px #48c6ff20,inset 0 1px 0 #ffffff25!important}
+#app:has(.homeStack) .homeWide.supplier{border-left:5px solid #ff985b!important;box-shadow:inset 4px 0 18px -12px #ff985b,0 0 19px #ff985b20,inset 0 1px 0 #ffffff25!important}
+#app:has(.homeStack) .homeWide.money{border-left:5px solid #60d7a6!important;box-shadow:inset 4px 0 18px -12px #60d7a6,0 0 19px #60d7a620,inset 0 1px 0 #ffffff25!important}
+#app:has(.homeStack) .homeWide.invest{border-left:5px solid #b7a0f5!important;box-shadow:inset 4px 0 18px -12px #b7a0f5,0 0 19px #b7a0f525,inset 0 1px 0 #ffffff25!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact{border-left:5px solid #4bcfb2!important;box-shadow:inset 4px 0 18px -12px #4bcfb2,0 0 19px #4bcfb224,inset 0 1px 0 #ffffff25!important;padding:15px 16px 17px!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact .vsHomeTitle{min-height:51px!important;margin:0 0 12px!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact .vsHomeChevron{width:51px!important;height:51px!important;min-width:51px!important;max-width:51px!important;min-height:51px!important;padding:0!important;display:grid!important;place-items:center!important;font-size:28px!important;line-height:1!important;background:linear-gradient(145deg,#304f72,#1d324f)!important;border:1px solid #52769d!important;border-radius:12px!important;box-shadow:inset 0 1px 0 #ffffff16!important;color:#e1edff!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact .vsHomeAmount{font-size:clamp(25px,6vw,30px)!important;margin:0 0 8px!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact .vitaSavingsLine{padding:8px 0 0!important;border:0!important;font-size:13px!important}
+#app:has(.homeStack) .vitaHomeSavingsCompact .vitaSavingsLine strong{font-size:15px!important;color:#66dfb2!important}
 </style><style id="vita-nav-scroll-shell-20261027">
 /* Keep the navigation outside the independently scrolling app content on iOS. */
 html{height:100%;overflow:hidden!important}
@@ -1305,11 +1317,8 @@ views.home=function(){
 
  const card='<section class="vsHomeSummary vitaHomeSavingsCompact" aria-label="Сбережения">'+
  '<div class="vsHomeTitle"><span>СБЕРЕЖЕНИЯ</span><button type="button" class="vsHomeChevron" aria-label="Открыть сбережения" onclick="goTab(&quot;savings&quot;)">›</button></div>'+
- '<div class="vitaSavingsCaption">ВСЕГО НА ВКЛАДАХ</div>'+
  '<div class="vsHomeAmount">'+fmt(total)+'</div>'+
- '<div class="vitaSavingsLine"><span>Прогноз процентов в месяц</span><strong>≈ '+fmt(perMonth)+'</strong></div>'+
- '<div class="vitaSavingsLine"><span>Активных вкладов</span><strong>'+accounts.length+'</strong></div>'+
- '<div class="vitaSavingsFootnote">Прогноз без учёта налогов</div>'+
+ '<div class="vitaSavingsLine"><span>Доход в месяц</span><strong>≈ '+fmt(perMonth)+'</strong></div>'+
  '</section>';
  const body=originalHome();
  const anchor='<div class="vitaSub" style="margin-top:12px">';
