@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101a2c"><title>Vita Crypto Lab — тестовые данные</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0d1727;color:#eaf2ff}
+*{box-sizing:border-box}body{max-width:650px;margin:0 auto;padding:28px 18px 60px;line-height:1.5}
+h1{font-size:26px}p{color:#b9c8df}.card{background:linear-gradient(140deg,#253c5a,#15243a);border:1px solid #54749d;border-left:4px solid #55c9ad;border-radius:19px;padding:20px;margin:16px 0;box-shadow:0 10px 30px #0004}
+button{font:inherit;display:block;width:100%;background:#ff8b30;border:0;color:#171717;padding:14px;border-radius:13px;font-weight:800;margin-top:14px}button:disabled{opacity:.5}
+pre{white-space:pre-wrap;word-break:break-word;background:#101c30;border-radius:12px;padding:12px;font-size:13px}
+small{color:#a8c0d8}#status{font-weight:700}a{color:#93d8ff}
+</style></head><body>
+<a href="./">← Vita 3.0</a><h1>🔐 Vita Crypto Lab</h1>
+<p>Изолированная проверка шифрования. Используются только вымышленные записи; локальные данные Vita, учётная запись и Supabase не затрагиваются.</p>
+<section class="card"><strong>Тестовый набор</strong>
+<pre id="fixture"></pre>
+<button id="run">Проверить шифрование и восстановление</button>
+<p id="status" role="status">Тест ещё не запущен.</p>
+<small>Алгоритм: PBKDF2 SHA-256 (310 000 итераций) → AES-GCM 256. Для каждой проверки создаются новые соль и IV. Пароль тестовый, он не подходит для настоящих резервных копий. Загрузка в облако на этом этапе отключена.</small>
+</section>
+<script>
+'use strict';
+const fixture={kind:'vita-crypto-lab-fixture',version:1,projects:[{id:'fake-project-001',name:'Тестовый проект'}],expenses:[{id:'fake-expense-001',project:'fake-project-001',amount:123,currency:'RUB'}],savings:[]};
+document.getElementById('fixture').textContent=JSON.stringify(fixture,null,2);
+const enc=new TextEncoder(),dec=new TextDecoder();
+function eq(a,b){return a.length===b.length&&a.every((x,i)=>x===b[i])}
+async function keyFor(pass,salt){
+ const material=await crypto.subtle.importKey('raw',enc.encode(pass),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:310000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+document.getElementById('run').addEventListener('click',async()=>{
+ const btn=document.getElementById('run'),status=document.getElementById('status');btn.disabled=true;status.textContent='Проверяю…';
+ try{
+  if(!crypto?.subtle||!crypto.getRandomValues)throw Error('Web Crypto API недоступен');
+  const pass='fixture-only-password-not-for-real-use',salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const plain=enc.encode(JSON.stringify(fixture)),key=await keyFor(pass,salt);
+  const ciphertext=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,plain));
+  if(eq(plain,ciphertext))throw Error('Данные не зашифрованы');
+  const opened=dec.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv},key,ciphertext));
+  if(opened!==JSON.stringify(fixture))throw Error('Восстановленные данные не совпадают');
+  let tamperRejected=false;const damaged=ciphertext.slice();damaged[damaged.length-1]^=1;
+  try{await crypto.subtle.decrypt({name:'AES-GCM',iv},key,damaged)}catch{tamperRejected=true}
+  if(!tamperRejected)throw Error('Изменённый шифротекст принят');
+  let wrongPasswordRejected=false;const wrong=await keyFor(pass+'-wrong',salt);
+  try{await crypto.subtle.decrypt({name:'AES-GCM',iv},wrong,ciphertext)}catch{wrongPasswordRejected=true}
+  if(!wrongPasswordRejected)throw Error('Неверный пароль принят');
+  status.textContent='✅ 4 проверки пройдены: шифрование, точное восстановление, защита от подмены, неверный пароль. Никакие данные не отправлялись.';
+ }catch(e){status.textContent='❌ Ошибка: '+e.message}
+ finally{btn.disabled=false}
+});
+</script></body></html>
