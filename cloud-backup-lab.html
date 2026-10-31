@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vita — облачная лаборатория</title>
+<style>body{font:17px system-ui;max-width:650px;margin:auto;padding:24px;background:#101a2c;color:#eef4ff}input,button{box-sizing:border-box;width:100%;padding:12px;margin:8px 0;font:inherit}pre{white-space:pre-wrap;overflow-wrap:anywhere}label{display:block}button{cursor:pointer}</style>
+<h1>Vita: тест облачной копии</h1>
+<p>Только встроенные вымышленные данные. Сессии и пароли хранятся в памяти до закрытия страницы. Нужны два отдельных тестовых аккаунта Supabase. Настоящие записи Vita не читаются.</p>
+<form id="form" autocomplete="off">
+<label>Публичный ключ проекта<input id="apiKey" required autocomplete="off"></label>
+<label>Email тестового аккаунта A<input id="emailA" type="email" required></label>
+<label>Пароль A<input id="passA" type="password" required autocomplete="new-password"></label>
+<label>Email тестового аккаунта B<input id="emailB" type="email" required></label>
+<label>Пароль B<input id="passB" type="password" required autocomplete="new-password"></label>
+<label><input style="width:auto" id="consent" type="checkbox" required> Оба аккаунта тестовые. Разрешаю создать и удалить одну зашифрованную тестовую запись.</label>
+<button id="run">Запустить проверку</button></form>
+<pre id="status" role="status">Проверка ещё не запущена.</pre>
+<script type="module">
+import {runLab} from './cloud-backup-lab.mjs';
+const form=document.querySelector('form'),status=document.querySelector('#status');
+form.addEventListener('submit',async event=>{event.preventDefault();const button=document.querySelector('#run');button.disabled=true;status.textContent='';
+try{await runLab({apiKey:form.apiKey.value,emailA:form.emailA.value,passwordA:form.passA.value,emailB:form.emailB.value,passwordB:form.passB.value,report:line=>status.textContent+=line+'\n'});}catch{status.textContent+='❌ Проверка не завершена. См. этап выше.\n';}finally{form.passA.value='';form.passB.value='';button.disabled=false;}});
+</script></html>
