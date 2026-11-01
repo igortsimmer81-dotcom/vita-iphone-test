@@ -35,6 +35,11 @@ jobs:
           print('PASS: isolated keys, safe demo imports, approved same-origin worker, no external endpoints')
           PY
           node --check /tmp/vita-test.js
+      - name: Verify encrypted fixture and restore failure handling
+        run: |
+          node cloud-backup-lab.test.mjs
+          node restore-lab.test.mjs
+          node restore-transaction.test.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
