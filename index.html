@@ -1618,7 +1618,46 @@ function saveTaskEdit(id){var x=data.tasks.find(function(t){return t.id===id});i
 function addExpense(){var project=v('f_project'),category=v('f_category'),raw=v('f_amount').trim().replace(',','.'),amount=Number(raw);if(!project||!data.projects.some(function(p){return p.id===project})){alert('Выбери проект');return}if(!category){alert('Выбери категорию');return}if(!raw||!/^\d+(?:\.\d{1,2})?$/.test(raw)||!Number.isFinite(amount)||amount<=0){alert('Укажи корректную сумму (не более двух знаков после запятой)');return}var fx={};if(vitaThai(project)){if(v('f_currency')!=='RUB'){alert('Для тайской квартиры введи сумму в RUB');return}var raw=v('f_fxrate').trim().replace(',','.');if(!raw){alert('Укажи курс обмена для тайской квартиры');return}var rate=Number(raw);if(!Number.isFinite(rate)||rate<=0){alert('Некорректный курс');return}fx.thbRate=rate;fx.thbAmount=Math.round(amount/rate*100)/100}data.expenses.push(Object.assign({id:uid(),amount:amount,currency:v('f_currency')||'RUB',category:v('f_category')||'Другое',project:v('f_project'),comment:v('f_comment'),date:v('f_expenseDate')||todayISO(),created:new Date().toISOString()},fx));save();closeSheet()}
 function addDebt(){var person=v('f_person').trim(),raw=v('f_amount').trim().replace(',','.'),amount=Number(raw);if(!person||!raw||!Number.isFinite(amount)||amount<=0||Math.round(amount*100)/100!==amount){alert('Укажи человека и корректную сумму (не более двух знаков после запятой)');return}data.debts.push({id:uid(),direction:v('f_direction'),person:person,amount:amount,currency:v('f_currency'),debtDate:v('f_debtDate')||todayISO(),due:v('f_due'),comment:v('f_debtComment'),project:v('f_project'),closed:false,created:new Date().toISOString()});save();closeSheet()}
 function addNote(){data.notes.push({id:uid(),title:v('f_title'),text:v('f_text'),project:v('f_project'),created:new Date().toISOString()});save();closeSheet()}
-function toggleTask(id){var x=data.tasks.find(function(t){return t.id===id});if(x){x.done=!x.done;if(x.done&&window.vitaTaskLinks()[id])window.vitaTaskReminderCancel(id)}save()}
+function toggleTask(id){
+ var x=data.tasks.find(function(t){return t.id===id});
+ if(!x)return;
+ x.done=!x.done;
+ if(x.done){
+  x.completedAt=new Date().toISOString();
+  if(typeof window.vitaTaskLinks==='function'&&window.vitaTaskLinks()[id]&&typeof window.vitaTaskReminderCancel==='function')window.vitaTaskReminderCancel(id);
+ }else{
+  delete x.completedAt;
+ }
+ save();
+}
+/* Completed tasks and their local reminder records share data.tasks.
+   Only confirmed completions older than 7 x 24 hours are deleted.
+   Legacy completed tasks without timestamp receive a fresh 7-day grace period. */
+function vitaTaskRetentionSweep(){
+ if(!data||!Array.isArray(data.tasks))return 0;
+ var now=Date.now(),ttl=7*24*60*60*1000,next=[],changed=false,removed=0;
+ for(var i=0;i<data.tasks.length;i++){
+  var task=data.tasks[i];
+  if(!task||typeof task!=='object'||!task.done){next.push(task);continue}
+  var stamp=typeof task.completedAt==='string'?Date.parse(task.completedAt):NaN;
+  if(!Number.isFinite(stamp)||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(task.completedAt)){
+   task=Object.assign({},task,{completedAt:new Date(now).toISOString()});
+   stamp=now;changed=true;
+  }
+  if(now-stamp>=ttl){removed++;changed=true;continue}
+  next.push(task);
+ }
+ if(!changed)return 0;
+ try{
+  var nextData=Object.assign({},data,{tasks:next});
+  localStorage.setItem(KEY,JSON.stringify(nextData));
+  data=nextData;
+  return removed;
+ }catch(e){
+  console.warn('Vita: не удалось обновить срок хранения выполненных задач',e);
+  return 0;
+ }
+}
 function delItem(k,id){if(confirm('Удалить запись?')){data[k]=data[k].filter(function(x){return x.id!==id});save();if(k==='tasks'&&window.vitaTaskLinks()[id])window.vitaTaskReminderCancel(id)}}
 function noteSearchText(v){return String(v==null?'':v).toLocaleLowerCase('ru-RU')}
 function notesListHtml(q){var needle=noteSearchText(q).trim(),xs=data.notes.slice().reverse().filter(function(n){return !needle||noteSearchText(n.title).includes(needle)||noteSearchText(n.text).includes(needle)});return xs.length?xs.map(function(n){return '<div class="row" onclick="showNote(\''+n.id+'\')"><div class="grow"><b>'+esc(n.title||'Без названия')+'</b><div class="small">'+esc((n.text||'').slice(0,95))+'</div><div class="small" style="margin-top:4px">'+esc(projectName(n.project))+'</div></div><span class="chev">›</span></div>'}).join(''):'<div class="empty">'+(needle?'Ничего не найдено':'Заметок пока нет')+'</div>'}
@@ -1986,7 +2025,16 @@ window.vitaTestServerConnection=async function(){
 window.vitaAuthLogout=async function(){const old=session();sessionStorage.removeItem(SESSION);localStorage.removeItem(PERSIST);clearPassword();status('Выход на этом устройстве выполнен.');if(old?.access_token){try{await fetch(BASE+'/auth/v1/logout',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+old.access_token}})}catch(_){}}}
 })();
 
+/* Run on app startup and after returning to the app; background timers may pause on iPhone. */
+vitaTaskRetentionSweep();
 render();
+document.addEventListener('visibilitychange',function(){
+ if(!document.hidden&&vitaTaskRetentionSweep()>0)render();
+});
+window.addEventListener('focus',function(){
+ if(vitaTaskRetentionSweep()>0)render();
+});
+setInterval(function(){if(!document.hidden&&vitaTaskRetentionSweep()>0)render()},60*60*1000);
 </script>
 <script id="vita-cosmic-intelligence-v4-glow">
 /* Purely visual optical cursor effect. No data access, no storage, no network. */
