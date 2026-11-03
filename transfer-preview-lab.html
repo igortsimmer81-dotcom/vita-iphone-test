@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vita — предварительный просмотр переноса (тест)</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#101a2c;color:#edf4ff}
+*{box-sizing:border-box}body{max-width:680px;margin:auto;padding:24px 18px 65px;line-height:1.5}
+a{color:#9dd6ff}h1{font-size:25px;margin-bottom:4px}
+p,small{color:#b8cadf}.card{border:1px solid #445a7b;border-radius:17px;background:#192940;padding:18px;margin:16px 0}
+button{padding:13px 16px;border-radius:12px;border:0;background:#ff963f;color:#20160f;font-weight:750;font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #8de1ff}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #40536b;padding:9px 5px}
+th{color:#b7d5f5}code{overflow-wrap:anywhere}#result{white-space:pre-wrap}
+.warn{color:#ffd28d}.ok{color:#8fefd0}
+</style>
+</head>
+<body>
+<a href="./">← Vita Test</a>
+<h1>🧪 Vita — предпросмотр переноса</h1>
+<p>Безопасная лаборатория только с вымышленными записями. Здесь нельзя импортировать или восстановить реальные данные. Страница не читает память Vita, не записывает данные и не подключается к серверу.</p>
+<div class="card"><strong>Исходное устройство: тестовый iPhone</strong><p>4 фиктивные записи: две задачи, один долг и один расход.</p>
+<strong>Целевое устройство: тестовый Mac</strong><p>4 фиктивные записи: одна совпадающая задача, одна отличающаяся задача, один долг с тем же ID и другая сумма, один отдельный расход.</p>
+<button id="test">Проверить совпадения и конфликты</button></div>
+<div class="card"><strong>Результат</strong><p id="result" role="status">Нажмите кнопку, чтобы выполнить проверку.</p><div id="details"></div></div>
+<small>Стратегия: никогда не заменять всё содержимое Mac копией iPhone автоматически. Для записи с одинаковым ID и разным содержимым требуется отдельное решение пользователя. Этот стенд не выполняет перенос.</small>
+<script>
+'use strict';
+const source={
+ tasks:[{id:'fake-task-1',title:'Тестовая задача A'},{id:'fake-task-2',title:'Тестовая задача B'}],
+ debts:[{id:'fake-debt-1',amount:100,currency:'RUB'}],
+ expenses:[{id:'fake-expense-1',amount:50,currency:'RUB'}]
+};
+const destination={
+ tasks:[{id:'fake-task-1',title:'Тестовая задача A'},{id:'fake-task-2',title:'Изменена на Mac'}],
+ debts:[{id:'fake-debt-1',amount:150,currency:'RUB'}],
+ expenses:[{id:'fake-expense-2',amount:90,currency:'RUB'}]
+};
+const groups=['tasks','debts','expenses'];
+function canonical(value){
+ if(Array.isArray(value))return value.map(canonical);
+ if(value&&typeof value==='object')return Object.fromEntries(Object.keys(value).sort().map(k=>[k,canonical(value[k])]));
+ return value;
+}
+function analyze(a,b){
+ const report={newOnMac:[],identical:[],conflicts:[],onlyOnMac:[]};
+ for(const group of groups){
+   const left=a[group]||[],right=b[group]||[];
+   if(!Array.isArray(left)||!Array.isArray(right))throw Error('Недопустимый список: '+group);
+   const index=new Map();
+   for(const row of right){
+     if(!row||typeof row.id!=='string'||!row.id||index.has(row.id))throw Error('Неверный или повторяющийся ID в Mac');
+     index.set(row.id,row);
+   }
+   const seen=new Set();
+   for(const row of left){
+     if(!row||typeof row.id!=='string'||!row.id||seen.has(row.id))throw Error('Неверный или повторяющийся ID в iPhone');
+     seen.add(row.id);
+     const item={group,id:row.id};
+     if(!index.has(row.id))report.newOnMac.push(item);
+     else if(JSON.stringify(canonical(row))===JSON.stringify(canonical(index.get(row.id))))report.identical.push(item);
+     else report.conflicts.push(item);
+   }
+   for(const row of right)if(!seen.has(row.id))report.onlyOnMac.push({group,id:row.id});
+ }
+ return report;
+}
+document.querySelector('#test').addEventListener('click',()=>{
+ const result=document.querySelector('#result'),details=document.querySelector('#details');
+ try{
+ const r=analyze(source,destination);
+ if([r.newOnMac.length,r.identical.length,r.conflicts.length,r.onlyOnMac.length].join(',')!=='1,1,2,1')throw Error('Тестовый результат не совпал с ожидаемым');
+ result.textContent='✅ Предпросмотр работает. Проверка пройдена.\nНовые на Mac: 1\nУже совпадают: 1\nКонфликты: 2\nТолько на Mac: 1\n\nНичего не перенесено и не удалено.';
+ const names={newOnMac:'Новые на Mac',identical:'Совпадают',conflicts:'Конфликты — не перезаписывать',onlyOnMac:'Только на Mac'};
+ details.replaceChildren();
+ const table=document.createElement('table'),tbody=document.createElement('tbody');
+ const head=document.createElement('tr');
+ for(const s of ['Категория','Раздел','ID']){const th=document.createElement('th');th.textContent=s;head.append(th)}
+ table.append(head);
+ for(const [bucket,label] of Object.entries(names))for(const row of r[bucket]){const tr=document.createElement('tr');for(const text of [label,row.group,row.id]){const td=document.createElement('td');td.textContent=text;tr.append(td)}tbody.append(tr)}
+ table.append(tbody);details.append(table);
+ }catch(error){result.textContent='❌ Ошибка проверки: '+error.message;details.replaceChildren()}
+});
+</script>
+</body></html>
