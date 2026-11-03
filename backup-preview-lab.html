@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; connect-src 'none'; img-src 'none'; frame-src 'none'; object-src 'none'">
+<title>Vita — проверка резервной копии</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf4ff;background:#101a2c}
+*{box-sizing:border-box}body{max-width:700px;margin:0 auto;padding:26px 18px 60px;line-height:1.48}
+a{color:#a9deff}h1{font-size:26px;margin:10px 0}p,small{color:#bed0e4}
+.panel{background:#1b2c47;border:1px solid #476384;border-radius:18px;padding:18px;margin-top:16px}
+button{background:#fb9134;color:#21190f;font:inherit;font-weight:700;border:0;border-radius:12px;padding:13px 16px;cursor:pointer;width:100%;margin:7px 0}
+input{width:100%;padding:12px;font:inherit;margin:12px 0;border:1px solid #6686ac;border-radius:10px;background:#112139;color:#fff}
+table{border-collapse:collapse;width:100%}td,th{padding:9px 6px;border-bottom:1px solid #394c69;text-align:left}td:last-child{text-align:right;font-variant-numeric:tabular-nums}th{color:#b6cce3}
+.ok{color:#8cf0c2}.bad{color:#ffb0ab}#status{white-space:pre-wrap}
+</style></head><body>
+<a href="./">← Vita Test</a><h1>🔎 Vita — проверка резервной копии</h1>
+<p>Изолированный предпросмотр: ничего не восстанавливает, не перезаписывает и не отправляет в облако. Не показывает имена, суммы и содержимое записей. Файл обрабатывается только в браузере.</p>
+<div class="panel">
+<button id="demo" type="button">Проверить на вымышленной копии</button>
+<label for="file">Выбрать резервную копию Vita (.json) для локальной проверки:</label>
+<input id="file" type="file" accept=".json,application/json">
+<small>Максимум 15 МБ. В целях безопасности сначала проверьте работу на вымышленных данных. Не загружайте файл резервной копии в переписку или GitHub.</small>
+</div>
+<div class="panel"><strong>Результат проверки</strong><p id="status" role="status">Проверка не выполнялась.</p><div id="report"></div></div>
+<script>
+'use strict';
+const counts=['projects','tasks','expenses','projectReturns','debts','debtPayments','notes','suppliers','supplierSales','supplierPayments'];
+const names={projects:'Проекты',tasks:'Задачи',expenses:'Вложения и расходы',projectReturns:'Доходы проектов',debts:'Долги',debtPayments:'Погашения долгов',notes:'Заметки',suppliers:'Поставщики',supplierSales:'Продажи поставщиков',supplierPayments:'Платежи поставщикам',savings:'Сбережения',savingsOps:'Операции сбережений'};
+const required=['projects','tasks','expenses','debts','notes'];
+const show=$=>document.querySelector($);
+function fail(m){throw Error(m)}
+function validMain(m){
+ if(!m||typeof m!=='object'||Array.isArray(m))fail('Некорректные основные данные.');
+ for(const key of required)if(!Array.isArray(m[key]))fail('Отсутствует обязательный раздел: '+names[key]);
+ for(const key of counts){const a=m[key];if(a===undefined)continue;if(!Array.isArray(a))fail('Некорректный раздел: '+names[key]);if(a.length>150000)fail('Слишком много записей.');
+ const seen=new Set();for(const row of a){if(!row||typeof row!=='object'||Array.isArray(row)||typeof row.id!=='string'||!row.id||seen.has(row.id))fail('Неверные или повторные ID в разделе: '+names[key]);seen.add(row.id)}}
+ for(const d of m.debts)if(!Number.isFinite(Number(d.amount))||Number(d.amount)<=0||!['toMe','iOwe',undefined].includes(d.direction))fail('Некорректная запись долга.');
+ const debts=new Set(m.debts.map(x=>x.id));for(const p of m.debtPayments||[])if(!Number.isFinite(Number(p.amount))||Number(p.amount)<=0||!debts.has(p.debtId))fail('Некорректное погашение долга.');
+ return true;
+}
+function validSavings(s){
+ if(!Array.isArray(s)||s.length>10000)fail('Некорректный раздел сбережений.');
+ const seen=new Set();let ops=0;
+ for(const a of s){
+ if(!a||typeof a!=='object'||Array.isArray(a)||typeof a.id!=='string'||!a.id||seen.has(a.id)||!Array.isArray(a.ops))fail('Некорректный счёт сбережений.');
+ seen.add(a.id);const opIds=new Set();
+ for(const o of a.ops){if(!o||typeof o.id!=='string'||!o.id||opIds.has(o.id)||!/^\d{4}-\d{2}-\d{2}$/.test(String(o.date||''))||!Number.isFinite(Number(o.amount)))fail('Некорректная операция сбережений.');opIds.add(o.id);ops++;}
+ }
+ return ops;
+}
+function inspect(raw){
+ let m,s,format,date='не указана';
+ if(raw&&raw.kind==='vita-test-complete-demo-backup'&&raw.version===1&&raw.main&&raw.savings){
+  if(Object.keys(raw).some(k=>!['kind','version','createdAt','main','savings'].includes(k)))fail('Неизвестные поля контейнера.');
+  m=raw.main;s=raw.savings;format='Vita Test — полная копия';date=raw.createdAt||date;
+ }else if(raw&&raw.format==='vita-unified-backup'&&raw.version===1&&raw.data&&raw.data.main&&raw.data.savings){
+  m=raw.data.main;s=raw.data.savings;format='Vita — старая единая копия';date=raw.exportedAt||date;
+ }else fail('Неподдерживаемый формат. Данные не изменены.');
+ validMain(m);const ops=validSavings(s);
+ return {format,date:String(date).slice(0,10),summary:[...counts.map(k=>[names[k],Array.isArray(m[k])?m[k].length:0]),[names.savings,s.length],[names.savingsOps,ops]]};
+}
+function render(value){
+ show('#report').replaceChildren();const tbl=document.createElement('table'),head=document.createElement('tr');
+ for(const label of ['Раздел','Записей']){const th=document.createElement('th');th.textContent=label;head.append(th)}tbl.append(head);
+ for(const [label,n] of value.summary){const row=document.createElement('tr');for(const v of [label,String(n)]){const td=document.createElement('td');td.textContent=v;row.append(td)}tbl.append(row)}
+ show('#report').append(tbl);
+ show('#status').className='ok';show('#status').textContent='✅ Формат распознан: '+value.format+'\nДата копии: '+value.date+'\nСтруктура прошла базовые проверки. Данные НЕ восстановлены. Эта проверка не гарантирует полноту или пригодность копии для восстановления.';
+}
+function error(e){show('#report').replaceChildren();show('#status').className='bad';show('#status').textContent='❌ '+e.message+' Ничего не изменено.'}
+show('#demo').addEventListener('click',()=>{
+ const main=Object.fromEntries(counts.map(k=>[k,[]]));main.projects=[{id:'fake-project-1'}];main.tasks=[{id:'fake-task-1'}];
+ try{const info=inspect({kind:'vita-test-complete-demo-backup',version:1,createdAt:'2026-11-03T12:00:00Z',main,savings:[{id:'fake-account-1',ops:[{id:'fake-op-1',date:'2026-11-03',amount:100}]}]});
+ if(info.summary.find(x=>x[0]==='Задачи')[1]!==1||info.summary.find(x=>x[0]==='Операции сбережений')[1]!==1)fail('Тест не совпал с ожидаемыми числами.');render(info)
+ }catch(e){error(e)}
+});
+show('#file').addEventListener('change',async e=>{
+ const f=e.target.files?.[0];if(!f)return;
+ try{if(f.size>15000000)fail('Размер файла превышает 15 МБ.');const parsed=JSON.parse(await f.text());render(inspect(parsed))}
+ catch(err){error(err)}
+ finally{e.target.value=''}
+});
+</script></body></html>
