@@ -1769,7 +1769,7 @@ views.tasks=function(){
  ['Предстоящие',active.filter(x=>x.date&&String(x.date).slice(0,10)>now).sort(sort),'#a6ebcb']
  ];
  return '<div class="sectionTitle">Мои дела</div><div class="vitaSub">Все важные задачи на одном экране</div>'+
- '<div class="vitaOverviewControls"><button onclick="vitaTaskSelect(\'day\')">📅 Выбрать день</button></div>'+
+ '<div class="vitaOverviewControls"><button onclick="vitaTaskSelect(\'day\')">📅 Выбрать день</button><button onclick="vitaTaskSelect(\'done\')">✓ Выполненные ('+data.tasks.filter(function(x){return x.done}).length+')</button></div>'+
  buckets.filter(([name,items])=>items.length>0||name==='Сегодня').map(([name,items,color])=>'<section class="vitaOverviewGroup '+(name==='Просрочено'?'vitaOverviewLate':name==='Сегодня'?'vitaOverviewToday':name==='Предстоящие'?'vitaOverviewFuture':'vitaOverviewOther')+'"><h3 style="color:'+color+'"><span class="vitaGroupIcon" aria-hidden="true">'+(name==='Просрочено'?'◷':'▣')+'</span>'+name+' <small>'+items.length+'</small></h3>'+
  (items.length?'<div class="taskListCard">'+items.map(taskRow).join('')+'</div>':'<div class="vitaOverviewEmpty">Нет задач</div>')+'</section>').join('')+
  '<button class="primary" onclick="openForm(\'task\')">+ Добавить задачу</button>';
