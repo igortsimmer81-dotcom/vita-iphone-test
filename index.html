@@ -2245,7 +2245,7 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
  window.vitaV5Mode=function(s){if(['day','week','month'].indexOf(s)<0)return;mode=s;showDone=false;render()};
  window.vitaV5Completed=function(){showDone=!showDone;listView=false;render()};
  window.vitaV5List=function(){listView=!listView;vitaTaskMode='overview';render()};
- window.vitaV5NewTask=function(){openForm('task');var input=document.getElementById('f_date');if(input&&!input.value)input.value=selected+'T09:00';if(typeof window.vitaMacTaskDateRefresh==='function')window.vitaMacTaskDateRefresh()};
+ window.vitaV5NewTask=function(){openForm('task');var input=document.getElementById('f_date');if(input)input.value=selected+'T09:00';if(typeof window.vitaMacTaskDateRefresh==='function')window.vitaMacTaskDateRefresh()};
  function viewTasks(){
   var active=activeTasks(),done=completedTasks(),now=todayISO();
   var overdue=active.filter(function(t){return taskDate(t)&&taskDate(t)<now}).sort(cmp);
