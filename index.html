@@ -1611,6 +1611,56 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #overlay #sheetContent .vitaMacDays .vitaMacBlank{visibility:hidden}
  #overlay #sheetContent .vitaMacDateHint{margin:9px 0 0;font-size:11px;color:#9dbbd9}
 }
+</style><style id="vita-mac-task-compact-v3-20261103">
+/* Mac-only compact task date/time controls. Keep the real datetime-local input for saving. */
+@media(min-width:1024px) and (pointer:fine){
+ #overlay.show:has(.vitaTaskFormHeader)>.sheet{
+  flex:0 0 min(530px,calc(100vw - 60px))!important;
+  flex-basis:min(530px,calc(100vw - 60px))!important;
+  width:min(530px,calc(100vw - 60px))!important;
+  max-width:min(530px,calc(100vw - 60px))!important;
+ }
+ #overlay #sheetContent:has(.vitaTaskFormHeader) input.vitaMacDateOriginal{
+  display:none!important;position:absolute!important;width:1px!important;
+  height:1px!important;min-height:0!important;padding:0!important;
+  opacity:0!important;pointer-events:none!important;
+ }
+ #overlay #sheetContent .vitaMacDatePicker{
+  display:grid!important;grid-template-columns:minmax(0,1.07fr) minmax(0,1fr);
+  gap:9px!important;align-items:center!important;margin:0!important;
+ }
+ #overlay #sheetContent .vitaMacDateBtn{
+  grid-column:1!important;min-width:0!important;
+  min-height:44px!important;height:44px!important;
+  font-size:12px!important;line-height:1.2!important;
+  padding:8px 10px!important;white-space:normal!important
+ }
+ #overlay #sheetContent .vitaMacDateBtn::after{font-size:17px!important;flex:0 0 auto}
+ #overlay #sheetContent .vitaMacTimeLabel{display:none!important}
+ #overlay #sheetContent .vitaMacTimePicker{grid-column:2!important;gap:4px!important;min-width:0!important}
+ #overlay #sheetContent .vitaMacTimePicker select{
+  min-width:0!important;width:45%!important;height:44px!important;min-height:44px!important;
+  padding:5px 2px!important;font-size:13px!important;
+ }
+ #overlay #sheetContent .vitaMacTimePicker .vitaMacColon{font-size:17px!important}
+ #overlay #sheetContent .vitaMacCalendar:not([hidden]){
+  position:fixed!important;z-index:120!important;
+  top:50%!important;left:50%!important;right:auto!important;bottom:auto!important;
+  transform:translate(-50%,-50%)!important;
+  width:min(415px,calc(100vw - 75px))!important;
+  max-width:calc(100vw - 75px)!important;
+  max-height:calc(100dvh - 85px)!important;
+  overflow-y:auto!important;
+  margin:0!important;padding:14px!important;
+  border:1px solid #8fcefa!important;border-radius:17px!important;
+  box-shadow:0 25px 80px #020616e8,0 0 0 999px #0006!important;
+  background:linear-gradient(150deg,#27466c,#10243e)!important
+ }
+ #overlay #sheetContent .vitaMacDays button{height:39px!important;min-height:39px!important}
+ #overlay #sheetContent .vitaMacCalTop{margin-bottom:8px!important}
+ #overlay #sheetContent .vitaMacDateHint{margin-top:6px!important}
+ #overlay.show:has(.vitaTaskFormHeader) .vitaTaskHint{margin-top:6px!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -2349,7 +2399,7 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
    '<div class="vitaMacWeekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div><div class="vitaMacDays"></div>'+
    '<div class="vitaMacDateHint">Нажми на число, чтобы выбрать дату</div></div>';
   parent.insertBefore(root,target.nextSibling);
-  target.classList.add('vitaMacDateOriginal');target.dataset.vitaMacEnhanced='1';
+  target.classList.add('vitaMacDateOriginal');target.dataset.vitaMacEnhanced='1';target.style.setProperty('display','none','important');
   var parts=raw.slice(0,10).split('-').map(Number);
   active={
    root:root,target:target,date:raw.slice(0,10),hour:Number(raw.slice(11,13)),minute:Number(raw.slice(14,16)),
