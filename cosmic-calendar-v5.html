@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071225">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Vita Cosmic Calendar V5 — Demo</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;color:#eff8ff;background:#071225;font-size:14px}*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse 50% 70% at 80% 5%,#25205f66,transparent 85%),radial-gradient(ellipse 55% 60% at 25% 95%,#134c6650,transparent 90%),#071225}
+body::before{content:"";inset:0;position:fixed;pointer-events:none;background-image:radial-gradient(#8ddfff4c .8px,transparent 1px);background-size:103px 107px;opacity:.36}
+button{font:inherit;cursor:pointer}button:focus-visible{outline:2px solid #9aeaff;outline-offset:3px}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100vh;position:relative}
+aside{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:30px;background:#101e36f2;border-right:1px solid #6a92d047;padding:28px 14px;backdrop-filter:blur(20px)}
+.brand{font-size:19px;font-weight:850;letter-spacing:2.5px;color:#f1faff;line-height:1.5;padding:3px 9px 20px;border-bottom:1px solid #486b8e66}.brand small{font-size:10px;letter-spacing:1.2px;color:#91dafa;display:block}
+nav{display:grid;gap:7px}nav div{color:#a5bbd5;padding:14px 13px;border-radius:12px}nav .active{color:#fff;border:1px solid #67c9ff8a;background:linear-gradient(90deg,#224671,#273761);box-shadow:inset 3px 0 #ffb276,0 0 19px #46adff23}
+.foot{margin-top:auto;border-top:1px solid #4661815e;padding:17px 5px;font-size:10px;letter-spacing:1.1px;color:#a6a3e5}
+main{padding:35px clamp(22px,3.8vw,58px) 58px;min-width:0}.wrap{max-width:1440px;margin:auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.kicker{color:#76d8ff;font-size:11px;letter-spacing:2px;font-weight:780}.top h1{margin:6px 0;font-size:30px}.sub{font-size:13px;color:#b0c4dc}
+.orb{display:grid;place-items:center;width:48px;height:48px;border:1px solid #eeb678;border-radius:50%;background:radial-gradient(circle at 32% 25%,#9b89e1,#304378 60%,#152347);box-shadow:0 0 27px #bd9aff70;font-size:25px;animation:glow 5s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 36px #a7e3ff9b,0 0 48px #ba87ff49}}
+.notice{background:linear-gradient(110deg,#302b57,#173e56);border:1px solid #64b8e87c;padding:12px 16px;border-radius:13px;margin-bottom:20px;font-size:12px;color:#cce8ff}
+.columns{display:grid;grid-template-columns:minmax(420px,1.08fr) minmax(340px,.92fr);gap:18px;align-items:start}
+.panel{--mx:65%;--my:12%;position:relative;isolation:isolate;overflow:hidden;padding:23px;border-radius:22px;border:1px solid #7fbce486;background:radial-gradient(440px circle at var(--mx) var(--my),#b8ecff19,transparent 62%),linear-gradient(140deg,#21416ccf,#162944e9 77%);box-shadow:inset 0 1px 0 #e4fcff37,0 16px 35px #01051489,0 0 27px #398be02b;backdrop-filter:blur(18px);transition:border-color .2s,box-shadow .2s}
+.panel::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(235px circle at var(--mx) var(--my),#ddf7ff20,transparent 75%)}
+.panel:hover{border-color:#a7e6ff;box-shadow:inset 0 1px 0 #e4fcff76,0 20px 46px #01051496,0 0 38px #6fc6ff4a}
+.head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.head h2{margin:0;font-size:19px;letter-spacing:-.4px}.month-buttons{display:flex;gap:8px}
+.nav-btn,.mode-btn,.action-btn{background:#253f63;border:1px solid #527aa5;color:#e2f0ff;border-radius:10px;padding:9px 13px;transition:background .2s,border-color .2s}.nav-btn:hover,.mode-btn:hover,.action-btn:hover{background:#36577f;border-color:#91dcff}
+.weeknames,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.weeknames{margin-bottom:9px}.weeknames span{text-align:center;color:#9db4d1;font-size:12px;padding:6px 0}
+.day{position:relative;min-height:66px;border-radius:12px;border:1px solid #375a7e8f;background:#1128448c;color:#e9f5ff;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:7px;padding:10px;text-align:left}
+.day:hover{background:#2a4773a5;border-color:#75cbff}.day.muted{opacity:.32;cursor:default}.day.muted:hover{background:#1128448c;border-color:#375a7e8f}
+.day.today{border-color:#dfaa79}.day.selected{border-color:#92e7ff;background:linear-gradient(135deg,#235b90,#314b80);box-shadow:inset 0 1px #b5eaff7e,0 0 20px #60b8ff47}
+.day-num{font-size:15px;font-weight:720}.dots{display:flex;gap:4px}.dot{width:5px;height:5px;border-radius:50%;background:#75d5ff;box-shadow:0 0 7px #69bdff}.dot.past{background:#ff9bac;box-shadow:0 0 7px #ff688c}
+.viewmodes{display:flex;gap:5px;background:#0e223b;border:1px solid #3f6485;padding:4px;border-radius:12px}
+.mode-btn{padding:8px 12px;background:transparent;border:0;font-size:12px;color:#b7cce2}.mode-btn.active{background:#345c86;color:#fff;box-shadow:0 0 12px #4ca0ee38}
+.selected-header{margin:19px 0 13px;display:flex;justify-content:space-between;align-items:center;gap:10px}.selected-header h2{font-size:19px;margin:0}.selected-header small{font-size:12px;color:#a9d5f1}
+.tasks{display:grid;gap:10px}.task{display:flex;gap:14px;align-items:center;background:#122a48a8;border:1px solid #46678d9c;border-radius:12px;padding:15px;min-height:65px;transition:background .2s,border-color .2s}
+.task:hover{background:#25466f;border-color:#7bd8ff}.time{font-variant-numeric:tabular-nums;color:#89d6ff;font-size:13px;min-width:41px}.task strong{display:block;font-size:14px}.task small{display:block;margin-top:5px;font-size:11px;color:#b2c6df}.badge{padding:4px 8px;border-radius:7px;background:#29476b;font-size:11px;color:#b9e7ff}
+.empty{padding:21px 10px;color:#a7bed9;text-align:center;border:1px dashed #4f7190;border-radius:12px}
+.past-block{margin-top:17px;border:1px solid #b76b82a1;border-radius:16px;overflow:hidden;background:#30263d6e}
+.past-toggle{width:100%;text-align:left;background:transparent;color:#ffb2bf;border:0;padding:14px 17px;display:flex;justify-content:space-between;align-items:center;font-weight:750}
+.past-count{background:#603347;padding:5px 9px;border-radius:8px}
+.past-content{padding:0 12px 12px;display:grid;gap:7px}.past-content[hidden]{display:none}
+.past-item{background:#251f36;border-left:3px solid #f17b9c;border-radius:9px;padding:11px 13px}.past-item strong{display:block}.past-item small{color:#d4afc4;display:block;margin-top:3px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}.summary div{border:1px solid #4b688a;background:#142b49;border-radius:12px;padding:12px}.summary b{display:block;font-size:23px;color:#bceaff}.summary small{font-size:11px;color:#abbed9}
+.help{font-size:12px;color:#8fa8c7;margin-top:20px}
+@media(max-width:1140px){.columns{grid-template-columns:1fr}}
+@media(max-width:700px){.layout{display:block}aside{height:auto;position:static;padding:15px}.brand{padding:2px 7px;border:0}nav,.foot{display:none}main{padding:19px 13px}.top h1{font-size:24px}.columns{grid-template-columns:1fr}.panel{padding:14px}.weeknames,.days{gap:4px}.day{min-height:49px;padding:6px}.day-num{font-size:13px}.head{align-items:flex-start;flex-wrap:wrap}.viewmodes{flex-wrap:wrap}.summary{grid-template-columns:repeat(3,1fr)}}
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="layout">
+<aside><div class="brand">✦ VITA<small>COSMIC · CALENDAR V5</small></div><nav><div>⌂　Главная</div><div class="active">▦　Календарь</div><div>◇　Поставщики</div><div>⇄　Деньги</div><div>▣　Инвестиции</div><div>＄　Сбережения</div></nav><div class="foot">✦ HOLOGRAPHIC PREVIEW</div></aside>
+<main><div class="wrap">
+<div class="top"><div><div class="kicker">VITA / TIME & FOCUS</div><h1>Мой космический календарь</h1><div class="sub">Задачи, время и проекты в одном пространстве</div></div><div class="orb" aria-hidden="true">✦</div></div>
+<div class="notice">✦ COSMIC CALENDAR V5 — отдельный прототип. Все задачи вымышлены. Рабочая Vita и данные iPhone/Mac не используются и не изменяются.</div>
+<div class="columns">
+<section class="panel" aria-label="Календарная сетка">
+<div class="head"><h2 id="month-title">Ноябрь 2026</h2><div class="month-buttons"><button class="nav-btn" id="prev-month" aria-label="Предыдущий месяц">❮</button><button class="nav-btn" id="go-today">3 ноября</button><button class="nav-btn" id="next-month" aria-label="Следующий месяц">❯</button></div></div>
+<div class="weeknames"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div><div class="days" id="calendar-grid"></div>
+<div class="summary"><div><b id="s-overdue">4</b><small>Просрочено</small></div><div><b id="s-month">—</b><small>В этом месяце</small></div><div><b id="s-selected">—</b><small>В выбранный день</small></div></div>
+<p class="help">Нажми на день, чтобы посмотреть задачи. Точки показывают дни с записями.</p>
+</section>
+<section class="panel" aria-label="Задачи">
+<div class="head"><h2>Мои дела</h2><div class="viewmodes" role="group" aria-label="Режим просмотра"><button class="mode-btn active" data-mode="day" aria-pressed="true">День</button><button class="mode-btn" data-mode="week" aria-pressed="false">Неделя</button><button class="mode-btn" data-mode="month" aria-pressed="false">Месяц</button></div></div>
+<div class="selected-header"><h2 id="selected-title">Вторник, 3 ноября</h2><small id="selected-count"></small></div>
+<div class="tasks" id="task-items"></div>
+<div class="past-block"><button class="past-toggle" id="past-toggle" aria-expanded="false"><span>Просроченные задачи</span><span class="past-count">4　▾</span></button><div class="past-content" id="past-content" hidden></div></div>
+<p class="help">Это только визуальный и интерактивный тест. Добавление, отметка выполнения, синхронизация и уведомления здесь отключены.</p>
+</section></div>
+</div></main></div>
+<script>
+(function(){
+'use strict';
+const today=new Date(2026,10,3), monthLabels=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const fictive=[
+{date:'2026-10-17',time:'13:05',title:'Подготовить список материалов',project:'Тестовый проект'},
+{date:'2026-10-27',time:'13:00',title:'Согласовать расчёты',project:'Личный'},
+{date:'2026-10-30',time:'11:30',title:'Проверить документы',project:'Бизнес'},
+{date:'2026-11-02',time:'11:00',title:'Отправить письмо',project:'Личный'},
+{date:'2026-11-03',time:'07:00',title:'Подготовить документы для встречи',project:'Проект А'},
+{date:'2026-11-03',time:'07:10',title:'Согласовать доверенность',project:'Проект А'},
+{date:'2026-11-05',time:'10:00',title:'Проверить поставку',project:'Бизнес'},
+{date:'2026-11-09',time:'16:30',title:'Подготовить финансовый отчёт',project:'Бизнес'},
+{date:'2026-11-17',time:'12:00',title:'Встреча по проекту',project:'Проект Б'},
+{date:'2026-11-25',time:'14:00',title:'Планирование расходов',project:'Личный'},
+{date:'2026-12-04',time:'10:20',title:'Составить план на месяц',project:'Личный'}
+];
+let selected=new Date(today), shownMonth=new Date(2026,10,1), mode='day', expanded=false;
+const el=id=>document.getElementById(id);
+function key(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function dateOf(k){const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)}
+function nice(d){return new Intl.DateTimeFormat('ru-RU',{weekday:'long',day:'numeric',month:'long'}).format(d)}
+function taskSort(a,b){return(a.date+a.time).localeCompare(b.date+b.time)}
+const overdue=fictive.filter(x=>x.date<key(today)).sort(taskSort);
+function renderMonth(){
+el('month-title').textContent=monthLabels[shownMonth.getMonth()]+' '+shownMonth.getFullYear();
+const grid=el('calendar-grid');grid.replaceChildren();
+const offset=(shownMonth.getDay()+6)%7,count=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,0).getDate();
+const cells=Math.ceil((offset+count)/7)*7;
+for(let i=0;i<cells;i++){
+ const num=i-offset+1,active=num>0&&num<=count,d=new Date(shownMonth.getFullYear(),shownMonth.getMonth(),num);
+ const btn=document.createElement('button');btn.type='button';btn.className='day'+(!active?' muted':'')+(active&&key(d)===key(today)?' today':'')+(active&&key(d)===key(selected)?' selected':'');
+ btn.disabled=!active;btn.setAttribute('aria-label',active?nice(d):'Другой месяц');if(active&&key(d)===key(selected))btn.setAttribute('aria-pressed','true');
+ const n=document.createElement('span');n.className='day-num';n.textContent=active?String(num):'';
+ btn.append(n);
+ if(active){const matches=fictive.filter(x=>x.date===key(d));if(matches.length){const dots=document.createElement('span');dots.className='dots';for(let j=0;j<Math.min(matches.length,3);j++){const dot=document.createElement('i');dot.className='dot'+(key(d)<key(today)?' past':'');dots.append(dot)}btn.append(dots)}btn.addEventListener('click',()=>{selected=d;render()})}
+ grid.append(btn);
+}
+el('s-month').textContent=fictive.filter(x=>dateOf(x.date).getFullYear()===shownMonth.getFullYear()&&dateOf(x.date).getMonth()===shownMonth.getMonth()).length;
+el('s-overdue').textContent=overdue.length;el('s-selected').textContent=fictive.filter(x=>x.date===key(selected)).length;
+}
+function shownTasks(){
+let start=new Date(selected),end=new Date(selected);
+if(mode==='week'){let offset=(start.getDay()+6)%7;start.setDate(start.getDate()-offset);end=new Date(start);end.setDate(start.getDate()+6)}
+if(mode==='month'){start=new Date(selected.getFullYear(),selected.getMonth(),1);end=new Date(selected.getFullYear(),selected.getMonth()+1,0)}
+return fictive.filter(x=>{const d=dateOf(x.date);return d>=start&&d<=end&&x.date>=key(today)}).sort(taskSort);
+}
+function renderTasks(){
+const a=shownTasks(),list=el('task-items');list.replaceChildren();
+el('selected-title').textContent=mode==='day'?nice(selected):mode==='week'?'Неделя · '+nice(selected):monthLabels[selected.getMonth()]+' '+selected.getFullYear();
+el('selected-count').textContent=a.length+' задач';
+if(!a.length){const p=document.createElement('div');p.className='empty';p.textContent='На этот период задач нет';list.append(p)}
+for(const x of a){
+ const row=document.createElement('div');row.className='task';
+ const t=document.createElement('span');t.className='time';t.textContent=x.time;
+ const info=document.createElement('div');const name=document.createElement('strong');name.textContent=x.title;const sub=document.createElement('small');sub.textContent=x.project+(mode==='day'?'':' · '+new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(dateOf(x.date)));info.append(name,sub);row.append(t,info);list.append(row)
+}
+document.querySelectorAll('[data-mode]').forEach(b=>{const on=b.dataset.mode===mode;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false')})
+const past=el('past-content');past.replaceChildren();for(const x of overdue){const row=document.createElement('div');row.className='past-item';const n=document.createElement('strong');n.textContent=x.title;const sub=document.createElement('small');sub.textContent=new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(dateOf(x.date))+' · '+x.time+' · '+x.project;row.append(n,sub);past.append(row)}
+past.hidden=!expanded;el('past-toggle').setAttribute('aria-expanded',expanded?'true':'false');el('past-toggle').querySelector('.past-count').textContent=overdue.length+(expanded?'　▴':'　▾');
+}
+function render(){renderMonth();renderTasks()}
+for(const [id,step] of [['prev-month',-1],['next-month',1]])el(id).addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+step,1);selected=new Date(shownMonth);render()});
+el('go-today').addEventListener('click',()=>{selected=new Date(today);shownMonth=new Date(today.getFullYear(),today.getMonth(),1);render()});
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;renderTasks()}));
+el('past-toggle').addEventListener('click',()=>{expanded=!expanded;renderTasks()});
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ let pending=false,target=null,pointer=null;
+ document.addEventListener('pointermove',ev=>{const panel=ev.target.closest?.('.panel');if(!panel||ev.pointerType==='touch')return;target=panel;pointer={x:ev.clientX,y:ev.clientY};if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;if(!target||!target.isConnected)return;const r=target.getBoundingClientRect();target.style.setProperty('--mx',((pointer.x-r.left)/r.width*100).toFixed(1)+'%');target.style.setProperty('--my',((pointer.y-r.top)/r.height*100).toFixed(1)+'%')})},{passive:true});
+}
+render();
+})();
+</script></body></html>
