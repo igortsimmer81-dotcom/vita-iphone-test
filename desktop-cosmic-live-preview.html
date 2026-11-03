@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0d1626">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Vita Cosmic — Live Read-Only Preview</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0b1320;color:#edf3fc;font-size:15px}
+*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #74c5f8;outline-offset:3px}
+.shell{display:grid;grid-template-columns:244px minmax(0,1fr);min-height:100vh}.shell.compact{grid-template-columns:76px minmax(0,1fr)}
+aside{position:sticky;top:0;align-self:start;height:100vh;background:#111e30;border-right:1px solid #293c54;display:flex;flex-direction:column;padding:24px 15px 19px;gap:24px}
+.brand{display:flex;align-items:center;gap:12px;padding:3px 9px}.mark{width:38px;height:38px;background:linear-gradient(135deg,#ffb065,#f47d27);border-radius:12px;display:grid;place-items:center;color:#17243b;font-size:22px;font-weight:900;box-shadow:0 4px 25px #f68a3729}.brand-name{font-size:19px;letter-spacing:2px;font-weight:800}.brand-sub{font-size:10px;color:#899eb9;letter-spacing:1.4px}
+nav{display:grid;gap:7px}nav button{display:flex;align-items:center;gap:13px;text-align:left;background:transparent;border:1px solid transparent;color:#acbed5;min-height:45px;padding:0 14px;border-radius:12px;font-size:14px;white-space:nowrap}nav button:hover{background:#1b304a;color:#fff}nav button.active{background:#263c59;border-color:#345678;color:#fff;box-shadow:inset 3px 0 0 #f5a45c}nav .ico{width:24px;flex-shrink:0;font-size:19px;text-align:center}nav button.active .ico{color:#ffad62}
+.sidebar-bottom{margin-top:auto;border-top:1px solid #2a3b51;padding-top:16px;display:grid;gap:11px}
+.test-label{font-size:11px;color:#f3bd86;background:#55341f;border-radius:50px;padding:7px 10px;text-align:center}
+.collapse{background:#1e3048;border:1px solid #39516a;border-radius:10px;color:#bfd2e7;padding:9px}
+.compact .brand{justify-content:center;padding:0}.compact .brand-name,.compact .brand-sub,.compact nav .label,.compact .test-label{display:none}.compact nav button{justify-content:center;padding:0}
+main{padding:34px clamp(22px,4vw,64px);min-width:0}.content{max-width:1370px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
+.kicker{text-transform:uppercase;letter-spacing:2.4px;color:#85a9d2;font-size:11px;font-weight:700}
+h1{font-size:29px;letter-spacing:-.8px;margin:5px 0 6px;font-weight:770}h2{font-size:17px;margin:0;font-weight:730}p{margin:0}.muted{color:#a5b8ce;font-size:13px}.actions{display:flex;gap:10px;align-items:center}.today{color:#cfdded;background:#1a2a42;border:1px solid #334962;border-radius:11px;padding:10px 14px;font-size:13px}.avatar{width:42px;height:42px;border:1px solid #ed9a50;background:#372737;border-radius:50%;display:grid;place-items:center;color:#ffc98b;font-size:20px}
+.banner{display:flex;justify-content:space-between;gap:20px;align-items:center;border:1px solid #65533d;background:linear-gradient(105deg,#312b36,#1d2e43 75%);padding:13px 18px;border-radius:14px;margin-bottom:22px}.banner strong{font-size:13px;color:#ffd3a5}.banner span{font-size:12px;color:#b9c8da}
+.dashboard{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,1fr);gap:18px}
+.panel{border:1px solid #344f6d;background:linear-gradient(145deg,#1d324e,#192a42);border-radius:19px;padding:21px;min-width:0;box-shadow:0 10px 30px #00000018}
+.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}.eyebrow{font-weight:760;color:#bdd2ed;font-size:12px;letter-spacing:1.2px;text-transform:uppercase}.link{background:none;border:0;color:#9acbf5;font-size:13px;padding:4px 0}.task-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.stat{background:#16273f;border:1px solid #2d4561;padding:14px;border-radius:14px}.stat strong{display:block;font-size:26px;line-height:1.2;font-variant-numeric:tabular-nums}.stat span{font-size:12px;color:#abc0d8}.danger{color:#ff8d96}.blue{color:#95d6fa}.green{color:#83e0ba}
+.task-list{display:grid;gap:9px}.task{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 14px;background:#1a2b43;border:1px solid #34516c;border-radius:11px;min-height:55px}.task .task-main{font-size:13px;font-weight:650}.task small{display:block;color:#9fb6ce;margin-top:4px;font-size:11px}.dot{width:8px;height:8px;border-radius:50%;background:#ff8e91;flex-shrink:0}.task-time{color:#a8bdd4;font-size:12px;white-space:nowrap}.task.today-task .dot{background:#7ebfe8}
+.right-stack{display:grid;gap:18px;align-content:start}.compact-card{padding:20px;min-height:154px}.metric{font-size:28px;font-weight:790;letter-spacing:-.7px;line-height:1.3;margin:12px 0 4px;font-variant-numeric:tabular-nums}.badge{display:inline-block;background:#264d42;color:#89e0bd;border-radius:7px;padding:4px 8px;font-size:11px;font-weight:700}.badge.warn{background:#51343b;color:#ffb0b4}
+.double{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.tint-purple{border-color:#5d4b83;background:linear-gradient(135deg,#302b51,#202b46)}.tint-teal{border-color:#3c6e78;background:linear-gradient(135deg,#1b4248,#1c2f48)}.tint-orange{border-color:#7a5b42;background:linear-gradient(135deg,#403143,#1d2c45)}.subrow{display:flex;justify-content:space-between;gap:12px;margin-top:13px;align-items:center;color:#bad0e8;font-size:12px}
+.segmented{display:flex;gap:4px;border:1px solid #364c65;background:#15243b;border-radius:10px;padding:3px}.segmented button{border:0;background:transparent;padding:7px 10px;color:#96b2d0;font-size:12px;border-radius:7px}.segmented button.selected{background:#344e6d;color:#fff}
+.section-view{display:none}.section-view.visible{display:block}.subview{margin-top:20px}.subview .panel{max-width:860px}
+.compact-note{color:#8fa6bf;font-size:12px;margin-top:19px}
+@media(max-width:1100px){.dashboard{grid-template-columns:1fr}.right-stack{grid-template-columns:1fr 1fr}.double{grid-template-columns:1fr 1fr}}
+@media(max-width:730px){.shell,.shell.compact{display:block}aside{position:static;height:auto;padding:13px;gap:9px}nav{display:flex;overflow:auto}nav button{min-width:46px}.sidebar-bottom{display:none}.brand{padding:0 6px}nav .label{display:none}.compact .brand-name,.compact .brand-sub{display:block}main{padding:20px 14px}.top{align-items:flex-start}.actions .today{display:none}h1{font-size:24px}.right-stack,.double{grid-template-columns:1fr}.task-stats{gap:6px}.stat{padding:10px}.stat strong{font-size:22px}.banner{display:block}.banner span{display:block;margin-top:5px}}
+
+/* COSMIC V2 — isolated holographic design system */
+:root{background:#050b18;color:#f2f7ff}
+body{background:radial-gradient(ellipse 62% 43% at 75% 5%,#173e7840,transparent 70%),radial-gradient(ellipse 40% 42% at 48% 70%,#39206230,transparent 75%),#050b18;position:relative;isolation:isolate}
+body:before{content:"";position:fixed;pointer-events:none;inset:0;z-index:-1;background-image:radial-gradient(#8edbff59 0.7px,transparent 0.8px),radial-gradient(#dbbaff4a 0.65px,transparent 0.8px);background-size:79px 77px,139px 113px;background-position:12px 16px,56px 64px;mask-image:linear-gradient(90deg,transparent 8%,#0008 55%,#0006 95%)}
+.shell{grid-template-columns:226px minmax(0,1fr)}
+.shell.compact{grid-template-columns:76px minmax(0,1fr)}
+aside{background:linear-gradient(165deg,#0f1e37f5,#0b1429f5 85%);border-right:1px solid #6582c32c;box-shadow:15px 0 50px #06122990;backdrop-filter:blur(22px)}
+.brand{gap:11px}.mark{background:radial-gradient(circle at 30% 20%,#ffddaf,#ff974e 55%,#e76e3b);box-shadow:0 0 20px #ff9c5a55,0 0 45px #ff9c5a15;transform:rotate(-6deg);font-weight:900}
+.brand-name{letter-spacing:3px}.brand-sub{color:#9dbce5}
+nav button{transition:background .22s,border .22s,transform .22s,color .22s}
+nav button:hover{transform:translateX(3px);border-color:#6fb8f54f;background:#24416b7b}
+nav button.active{background:linear-gradient(90deg,#225385a8,#3540747e);border:1px solid #5dcaf65a;box-shadow:inset 3px 0 0 #ffa65b,0 0 22px #48aaf526}
+.test-label{background:#5b3578;color:#e9c9ff;border:1px solid #ca93ff65;box-shadow:0 0 22px #9259e022}
+.collapse{transition:background .2s,box-shadow .2s}.collapse:hover{background:#284d77;box-shadow:0 0 19px #4db5f344}
+main{padding:24px clamp(20px,3.4vw,50px) 42px}
+.content{max-width:1390px}.top{margin-bottom:17px}
+.kicker{color:#80d7ff;letter-spacing:2.7px;text-shadow:0 0 18px #4bb9f466}
+.online-dot{display:inline-block;width:6px;height:6px;background:#71e8c6;border-radius:50%;margin-left:8px;box-shadow:0 0 12px #7cffd7;vertical-align:middle}
+h1{font-size:30px;color:#f6f8ff;text-shadow:0 0 27px #83caff33}
+.today{background:#15264a9c;border-color:#5679ab55;backdrop-filter:blur(18px)}
+.avatar{background:radial-gradient(circle at 35% 30%,#624783,#282b54 72%);border:1px solid #f9b46a;box-shadow:0 0 15px #ffac6d55,0 0 28px #b776ff33}
+.orb-mini{color:#ffe2ac;filter:drop-shadow(0 0 8px #fbbdff)}
+.cosmic-banner{margin-bottom:16px;border-color:#67b9ff65;background:linear-gradient(110deg,#28375cdd,#252444c7 60%,#174268bb);box-shadow:inset 0 1px 0 #b3d7ff25,0 0 25px #2f83ff1c;position:relative;overflow:hidden}
+.cosmic-banner:after{content:"";position:absolute;right:9%;top:-45px;width:180px;height:100px;transform:rotate(30deg);background:linear-gradient(90deg,transparent,#6de4ff21,transparent);pointer-events:none}
+.dashboard{grid-template-columns:minmax(0,1.53fr) minmax(310px,1fr);gap:15px}
+.right-stack{gap:15px}.double{gap:15px;margin-top:15px}
+.panel{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(135deg,#203b63d9,#142842c9 68%,#19233fe0);border:1px solid #6c9dce63;box-shadow:inset 0 1px 0 #c9eaff22,0 15px 35px #0208155e,0 0 28px #4c9cff16;backdrop-filter:blur(24px);transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease}
+.panel:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 91% 0%,var(--holo-glow,#48bffd35),transparent 52%),linear-gradient(125deg,#d9f3ff0c,transparent 35%);opacity:.95}
+.panel:after{content:"";position:absolute;top:-75%;left:-110%;height:280%;width:42%;background:linear-gradient(95deg,transparent,#d5f2ff0b,transparent);transform:rotate(24deg);transition:left .7s ease;pointer-events:none}
+.panel:hover{transform:translateY(-3px);border-color:var(--holo-edge,#81ceffbb);box-shadow:inset 0 1px 0 #dffaff40,0 20px 46px #010713a8,0 0 32px var(--holo-shadow,#47aefb32)}
+.panel:hover:after{left:175%}
+.holo-blue{--holo-glow:#2ea4f936;--holo-edge:#78ccffbb;--holo-shadow:#3aabff35}
+.holo-orange,.tint-orange{--holo-glow:#f28b9339;--holo-edge:#ffc07ebd;--holo-shadow:#ff9d5730;background:linear-gradient(135deg,#453149dc,#252d53cb 75%,#212642cc)}
+.holo-cyan{--holo-glow:#46c9e72f;--holo-edge:#90deffbb;--holo-shadow:#4bbce432}
+.holo-purple,.tint-purple{--holo-glow:#ad63f740;--holo-edge:#d5a9ffcc;--holo-shadow:#b775fa35;background:linear-gradient(120deg,#352951df,#282b54da 73%,#1e3551c9)}
+.holo-teal,.tint-teal{--holo-glow:#29d9c437;--holo-edge:#86ffe1bb;--holo-shadow:#4cf5d12e;background:linear-gradient(120deg,#144448d6,#22354cdb 78%,#193852d1)}
+.panel-heading{margin-bottom:13px}.eyebrow{color:#c8e4ff;text-shadow:0 0 14px #89b9ff52}
+.link{color:#94dbff;transition:color .18s,text-shadow .18s}.link:hover{color:#e7faff;text-shadow:0 0 14px #72d1ff}
+.task-stats{gap:8px;margin-bottom:12px}.stat{background:#0c1b37a3;border-color:#5276ad4f;padding:12px 13px;box-shadow:inset 0 1px 0 #a6cdff10}
+.task-list{gap:7px}.task{min-height:49px;padding:9px 12px;background:#0f2541a6;border-color:#51759c5c;transition:background .2s,border .2s,transform .2s}
+.task:hover{background:#203e5dd9;border-color:#70c1ff8a;transform:translateX(2px)}
+.dot{box-shadow:0 0 9px #fa6c91}.today-task .dot{box-shadow:0 0 10px #65d3ff}
+.compact-card{padding:18px;min-height:146px}.metric{font-size:27px;margin:9px 0 4px;color:#f1f7ff;text-shadow:0 0 15px #bdc9ff23}
+.badge{box-shadow:0 0 14px #59e3b52b}
+.subrow{margin-top:10px}
+.compact-note{color:#809fbe}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media(max-width:1100px){.dashboard{grid-template-columns:1fr}.right-stack{grid-template-columns:1fr 1fr}}
+@media(max-width:730px){.shell,.shell.compact{display:block}.panel:hover{transform:none}main{padding:20px 14px}.right-stack,.double{grid-template-columns:1fr}aside{position:static;height:auto}.cosmic-banner:after{display:none}}
+
+/* COSMIC V3 — glass and cursor-reactive optical effects, isolated demo */
+:root{--halo-x:68%;--halo-y:25%}
+body{background:#050b19}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+background:radial-gradient(550px circle at var(--halo-x) var(--halo-y),#4c90fd13,transparent 74%),
+radial-gradient(ellipse 45% 40% at 85% 8%,#4533a433,transparent 75%),
+radial-gradient(ellipse 40% 65% at 40% 90%,#13b5ba1d,transparent 70%);}
+.ambient-orbit{position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(1px);border:1px solid #6ab9f61d;box-shadow:inset 0 0 75px #4488e007,0 0 70px #4a88f50a;aspect-ratio:1;}
+.orbit-one{width:clamp(290px,42vw,680px);right:-190px;top:-240px;transform:rotate(-17deg);animation:orbitDrift 25s ease-in-out infinite alternate}
+.orbit-two{width:clamp(270px,32vw,490px);left:16%;bottom:-280px;border-color:#d48fff18;animation:orbitDrift 32s ease-in-out infinite alternate-reverse}
+@keyframes orbitDrift{from{transform:translate(0,0) rotate(-15deg)}to{transform:translate(-24px,18px) rotate(12deg)}}
+.panel{--spot-x:65%;--spot-y:10%;transform:translate3d(0,0,0);will-change:auto;
+background-image:radial-gradient(500px circle at var(--spot-x) var(--spot-y),#96dcff14,transparent 52%),
+linear-gradient(138deg,#263f62d9,#142741e6 70%,#1a2541e4);
+box-shadow:0 16px 35px #030b1b80,inset 0 1px 0 #d4f4ff24,0 0 32px var(--holo-shadow,#3f9efb25)}
+.panel:before{background:
+radial-gradient(230px circle at var(--spot-x) var(--spot-y),#daedff17,transparent 82%),
+radial-gradient(circle at 95% 2%,var(--holo-glow,#2ea4f931),transparent 56%),
+linear-gradient(125deg,#e7fbff0e,transparent 46%);}
+.panel:hover{transform:translate3d(0,-4px,0);box-shadow:0 23px 46px #0107139c,inset 0 1px 0 #e7ffff66,0 0 38px var(--holo-shadow,#4d9efe40)}
+.panel:focus-within{border-color:var(--holo-edge,#b2ebffcf)}
+.panel:hover::after{left:175%}
+.holo-orange,.tint-orange{background-image:radial-gradient(440px circle at var(--spot-x) var(--spot-y),#fff0dd16,transparent 55%),linear-gradient(135deg,#49334bdb,#242c50e8 75%,#232742dd)}
+.holo-purple,.tint-purple{background-image:radial-gradient(440px circle at var(--spot-x) var(--spot-y),#e9c8ff20,transparent 56%),linear-gradient(135deg,#35284fe0,#242b4ee3 73%,#1e3551d9)}
+.holo-teal,.tint-teal{background-image:radial-gradient(440px circle at var(--spot-x) var(--spot-y),#afffed18,transparent 56%),linear-gradient(135deg,#16434adf,#1e344de8 78%,#18394dde)}
+.cosmic-banner{border:1px solid #80e5ff8c;box-shadow:inset 0 1px #f4ffff28,0 0 23px #56cbff26;background:linear-gradient(105deg,#29325ddd,#222747dd 57%,#184267c9)}
+.brand .mark{box-shadow:0 0 18px #ffba6b9a,0 0 55px #fa8d6b28, inset 0 1px #fff2c7a6}
+.avatar{animation:avatarPulse 5s ease-in-out infinite}
+@keyframes avatarPulse{0%,100%{box-shadow:0 0 13px #ffac6d55,0 0 25px #b776ff33}50%{box-shadow:0 0 22px #ffd5aa88,0 0 37px #bb8cff55}}
+.task:hover .dot{filter:brightness(1.5)}
+.stat{transition:border-color .25s,box-shadow .25s}
+.stat:hover{border-color:#82e1ff80;box-shadow:inset 0 0 19px #75cfff11,0 0 20px #2f9aff20}
+.link:hover{text-shadow:0 0 14px #89ecffbb}
+@media(prefers-reduced-motion:reduce){
+ .ambient-orbit,.avatar{animation:none!important}
+ .panel{will-change:auto!important;transition:none!important}
+ .panel:hover{transform:none!important}
+}
+@media(max-width:730px){.ambient-orbit{display:none}.panel{transform:none!important}}
+
+.live-status{font-size:13px;line-height:1.5;color:#a2d7f8;margin:-5px 0 16px;padding:10px 14px;background:#112d4c9c;border:1px solid #4771a56b;border-radius:11px}
+.live-status.warning{background:#3a2835be;color:#ffd4ae;border-color:#a97c5c77}
+.live-status.ok{color:#9ff1d1;border-color:#54bb9c7e}
+.live-empty{font-size:13px;color:#a9bdd3;padding:15px 11px}
+.live-refresh{background:#2345699e;color:#cde9ff;border:1px solid #5c9ad27b;border-radius:9px;padding:8px 12px;font-size:12px}
+.live-refresh:hover{background:#2b5d8d}
+@media(max-width:730px){.live-status{margin:0 0 12px}}
+</style></head><body>
+<div class="ambient-orbit orbit-one" aria-hidden="true"></div><div class="ambient-orbit orbit-two" aria-hidden="true"></div><div class="shell" id="shell">
+<aside>
+ <div class="brand"><div class="mark">V</div><div><div class="brand-name">VITA</div><div class="brand-sub">COSMIC · GLASS V3</div></div></div>
+ <nav aria-label="Разделы">
+  <button class="active" data-view="home" aria-current="page"><span class="ico">⌂</span><span class="label">Главная</span></button>
+  <button data-view="calendar"><span class="ico">▦</span><span class="label">Календарь</span></button>
+  <button data-view="suppliers"><span class="ico">◇</span><span class="label">Поставщики</span></button>
+  <button data-view="debts"><span class="ico">⇄</span><span class="label">Деньги и долги</span></button>
+  <button data-view="investments"><span class="ico">▣</span><span class="label">Инвестиции</span></button>
+  <button data-view="savings"><span class="ico">＄</span><span class="label">Сбережения</span></button>
+ </nav>
+ <div class="sidebar-bottom"><div class="test-label">✦ ✦ LIVE · ТОЛЬКО ЧТЕНИЕ</div><button class="collapse" id="collapse">◧ <span class="collapse-label">Свернуть меню</span></button></div>
+</aside>
+<main><div class="content">
+ <div class="top"><div><div class="kicker">✦ VITA / PERSONAL COMMAND CENTER <span class="online-dot"></span></div><h1 id="page-title">Главная</h1><p class="muted" id="subtitle">Важное сегодня — без лишней информации</p></div><div class="actions"><div class="today" id="live-date">Проверка локальных данных</div><div class="avatar" aria-label="Профиль"><span class="orb-mini">✦</span></div></div></div>
+ <div class="banner cosmic-banner"><strong>✦ COSMIC LIVE · Безопасный просмотр локальных данных</strong><span>Данные только из этого браузера · чтение без изменений</span></div>
+ <div id="live-status" class="live-status" role="status">Проверяю данные текущего браузера…</div><section class="section-view visible" id="view-home">
+ <div class="dashboard">
+  <article class="panel holo-blue">
+   <div class="panel-heading"><span class="eyebrow">Задачи и напоминания</span><button class="link" data-go="calendar">Все задачи ↗</button><button class="live-refresh" id="live-refresh" type="button">↻ Обновить</button></div>
+   <div class="task-stats"><div class="stat"><strong class="danger" id="live-late">—</strong><span>Просрочены</span></div><div class="stat"><strong class="blue" id="live-today">—</strong><span>Сегодня</span></div><div class="stat"><strong class="green" id="live-week">—</strong><span>На неделе</span></div></div>
+   <div class="task-list" id="live-tasks"><p class="muted">Чтение данных…</p></div>
+  </article>
+  <div class="right-stack">
+   <article class="panel compact-card tint-orange holo-orange"><div class="panel-heading"><span class="eyebrow">Поставщики</span><button class="link" data-go="suppliers">Открыть ↗</button></div><div class="metric" id="live-suppliers">—</div><p class="muted">Поставщики в локальных записях</p><div class="subrow"><span id="live-sales">Продажи: —</span><span class="badge warn" id="live-payments">Платежи: —</span></div></article>
+   <article class="panel compact-card holo-cyan"><div class="panel-heading"><span class="eyebrow">Деньги и долги</span><button class="link" data-go="debts">Открыть ↗</button></div><div class="metric" id="live-debts">—</div><p class="muted">Учтённые долги — без смешения валют</p><div class="subrow"><span id="live-debt-payments">Погашения: —</span><span class="badge">Только чтение</span></div></article>
+  </div>
+ </div>
+ <div class="double">
+  <article class="panel tint-purple holo-purple"><div class="panel-heading"><span class="eyebrow">Инвестиции</span><button class="link" data-go="investments">Подробнее ↗</button></div><div class="metric" id="live-invest">—</div><p class="muted">Проекты с инвестиционными операциями</p><div class="subrow"><span id="live-invest-ops">Операций: —</span><span>◈</span></div></article>
+  <article class="panel tint-teal holo-teal"><div class="panel-heading"><span class="eyebrow">Сбережения</span><button class="link" data-go="savings">Подробнее ↗</button></div><div class="metric" id="live-savings">—</div><p class="muted" id="live-capital">Локальные сбережения</p><div class="subrow"><span id="live-savings-ops">Операций: —</span><span>◎</span></div></article>
+ </div>
+ </section>
+ <section class="section-view" id="view-other"><article class="panel subview"><div class="panel-heading"><span class="eyebrow" id="other-heading"></span><span class="badge">Только чтение</span></div><h2 id="other-title"></h2><p class="muted" style="margin-top:12px;max-width:580px">Это предварительная Desktop-панель. На главной отображаются реальные показатели из локальной памяти этого браузера, но редактирование в этой версии отключено. Для изменений используй основную Vita, не закрывая резервную копию.</p><p style="margin-top:22px"><a class="link" href="./" style="margin-right:20px">Открыть рабочую Vita ↗</a><button class="link" data-go="home">← Вернуться на главную</button></p></article></section>
+ <p class="compact-note">Vita Cosmic Live Preview · только чтение данных этого браузера · без записи и отправки на сервер</p>
+</div></main></div>
+<script>
+'use strict';
+const titles={home:'Главная',calendar:'Календарь',suppliers:'Поставщики',debts:'Деньги и долги',investments:'Инвестиции',savings:'Сбережения'};
+function showView(view){if(!titles[view])return;
+ document.querySelectorAll('nav button').forEach(b=>{const on=b.dataset.view===view;b.classList.toggle('active',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ document.querySelector('#view-home').classList.toggle('visible',view==='home');
+ document.querySelector('#view-other').classList.toggle('visible',view!=='home');
+ document.querySelector('#page-title').textContent=titles[view];
+ document.querySelector('#subtitle').textContent=view==='home'?'Важное сегодня — без лишней информации':'Предпросмотр раздела для MacBook';
+ if(view!=='home'){document.querySelector('#other-heading').textContent=titles[view];document.querySelector('#other-title').textContent='Раздел «'+titles[view]+'»'}
+}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.go)));
+document.querySelector('#collapse').addEventListener('click',()=>{const c=document.querySelector('#shell').classList.toggle('compact');document.querySelector('.collapse-label').textContent=c?'Развернуть меню':'Свернуть меню'});
+</script>
+<script>
+/* Optical highlight only: no storage, no network, no data read. */
+(function(){
+'use strict';
+const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const panels=Array.from(document.querySelectorAll('.panel'));
+if(reduced)return;
+let pending=false,point=null,active=null;
+for(const panel of panels){
+ panel.addEventListener('pointermove',event=>{
+  if(event.pointerType==='touch')return;
+  point={clientX:event.clientX,clientY:event.clientY};active=panel;
+  if(pending)return;pending=true;
+  requestAnimationFrame(()=>{
+   pending=false;if(!active||!point)return;
+   const box=active.getBoundingClientRect();
+   active.style.setProperty('--spot-x',((point.clientX-box.left)/box.width*100).toFixed(1)+'%');
+   active.style.setProperty('--spot-y',((point.clientY-box.top)/box.height*100).toFixed(1)+'%');
+  });
+ },{passive:true});
+ panel.addEventListener('pointerleave',()=>{
+  panel.style.removeProperty('--spot-x');panel.style.removeProperty('--spot-y');
+  if(active===panel)active=null;
+ });
+}
+document.addEventListener('pointermove',event=>{
+ if(event.pointerType==='touch')return;
+ document.body.style.setProperty('--halo-x',event.clientX+'px');
+ document.body.style.setProperty('--halo-y',event.clientY+'px');
+},{passive:true});
+})();
+</script>
+<script>
+/* Read-only data adapter: reads only existing Vita keys; no writes, no API calls. */
+(function(){
+'use strict';
+const MAIN='vita_iphone_test_demo_v1';
+const SAVINGS='vita_iphone_test_savings_v1';
+const one=id=>document.getElementById(id);
+const shortDate=d=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return y+'-'+m+'-'+day};
+const fmt=n=>Number(n).toLocaleString('ru-RU',{maximumFractionDigits:2})+' ₽';
+const list=(o,k)=>Array.isArray(o?.[k])?o[k]:[];
+const show=(id,v)=>{one(id).textContent=String(v)};
+function taskCard(t,isToday,projects){
+ const div=document.createElement('div');div.className='task'+(isToday?' today-task':'');
+ const left=document.createElement('div');left.style.cssText='display:flex;gap:12px;align-items:center;min-width:0';
+ const dot=document.createElement('i');dot.className='dot';
+ const body=document.createElement('div');body.style.minWidth='0';
+ const title=document.createElement('div');title.className='task-main';title.textContent=String(t.title||t.name||'Задача');title.style.overflowWrap='anywhere';
+ const small=document.createElement('small');const project=projects.find(x=>x.id===t.project);small.textContent=(project?String(project.name||'Проект'):'Без проекта')+' · '+(isToday?'Сегодня':'Просрочено');
+ body.append(title,small);left.append(dot,body);
+ const tm=document.createElement('span');tm.className='task-time';tm.textContent=String(t.date||'').slice(11,16);
+ div.append(left,tm);return div;
+}
+function readArray(key,required){
+ const raw=localStorage.getItem(key);
+ if(raw===null){if(required)throw new Error('Данные Vita в этом браузере не найдены. Открой приложение через прежний значок Mac или браузер, где выполнялось восстановление. Ничего не импортируй повторно.');return []}
+ const value=JSON.parse(raw);
+ if(required&&(!value||typeof value!=='object'||!Array.isArray(value.tasks)||!Array.isArray(value.projects)))throw new Error('Основной формат данных не распознан');
+ if(!required&&!Array.isArray(value))throw new Error('Формат сбережений не распознан');
+ return value;
+}
+function refresh(){
+ const status=one('live-status');
+ try{
+ const main=readArray(MAIN,true),accounts=readArray(SAVINGS,false);
+ const tasks=list(main,'tasks').filter(x=>!x.done),today=shortDate(new Date()),now=new Date();
+ const end=new Date(now.getFullYear(),now.getMonth(),now.getDate()+7);
+ const future=shortDate(end);
+ const dated=tasks.filter(x=>String(x.date||'').length>=10);
+ const late=dated.filter(x=>String(x.date).slice(0,10)<today);
+ const due=dated.filter(x=>String(x.date).slice(0,10)===today);
+ const week=dated.filter(x=>String(x.date).slice(0,10)>today&&String(x.date).slice(0,10)<future);
+ show('live-late',late.length);show('live-today',due.length);show('live-week',week.length);
+ const target=one('live-tasks');target.replaceChildren();
+ const shown=[...late.slice(0,2).map(x=>[x,false]),...due.slice(0,3).map(x=>[x,true])];
+ for(const [t,isToday] of shown)target.append(taskCard(t,isToday,list(main,'projects')));
+ if(!shown.length){const p=document.createElement('p');p.className='live-empty';p.textContent='На сегодня и по просроченным задачам записей нет';target.append(p)}
+ const suppliers=list(main,'suppliers'),sales=list(main,'supplierSales'),payments=list(main,'supplierPayments'),debts=list(main,'debts'),debtPayments=list(main,'debtPayments'),expenses=list(main,'expenses');
+ show('live-suppliers',suppliers.length+' поставщик'+(suppliers.length===1?'':'а/ов'));
+ show('live-sales','Продаж: '+sales.length);show('live-payments','Платежей: '+payments.length);
+ show('live-debts',debts.length+' записей');show('live-debt-payments','Погашений: '+debtPayments.length);
+ const projectIds=new Set(expenses.map(x=>x.projectId||x.project).filter(Boolean));
+ show('live-invest',projectIds.size+' проектов');show('live-invest-ops','Операций: '+expenses.length);
+ show('live-savings',accounts.length+' вкладов');
+ const capital=accounts.reduce((sum,a)=>sum+list(a,'ops').reduce((x,op)=>x+Number(op.amount||0),0),0);
+ const ops=accounts.reduce((sum,a)=>sum+list(a,'ops').length,0);
+ show('live-capital',fmt(capital));show('live-savings-ops','Операций: '+ops);
+ show('live-date',new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}));
+ status.className='live-status ok';status.textContent='✓ Локальные данные прочитаны. Ничего не изменено. Этот экран не синхронизируется автоматически. Для изменения записей открой рабочую Vita.';
+ }catch(e){
+  status.className='live-status warning';status.textContent='⚠ '+String(e?.message||'Ошибка чтения')+' Данные не изменены.';
+  for(const id of ['live-late','live-today','live-week','live-suppliers','live-sales','live-payments','live-debts','live-debt-payments','live-invest','live-invest-ops','live-savings','live-capital','live-savings-ops'])show(id,'—');
+  one('live-tasks').replaceChildren();
+ }
+}
+one('live-refresh').addEventListener('click',refresh);
+refresh();
+})();
+</script></body></html>
