@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none'; img-src 'none'; object-src 'none'">
+<title>Vita — лаборатория конфликтов синхронизации</title>
+<style>
+:root{color-scheme:dark;font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0e182a;color:#eff5ff}*{box-sizing:border-box}
+body{max-width:720px;margin:auto;padding:24px 16px 60px;line-height:1.5}a{color:#a8d9ff}h1{font-size:25px}
+p,small{color:#bbcae0}.card{background:#1b2d49;border:1px solid #466182;border-radius:18px;padding:17px;margin:17px 0}
+button{background:#fb933d;border:0;border-radius:13px;color:#191819;font:inherit;font-weight:700;width:100%;padding:13px;cursor:pointer}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #415572;padding:9px 5px}
+th{color:#bbd6f3}.good{color:#83e9ba}.warning{color:#ffd08a}#status{white-space:pre-wrap}
+</style></head><body>
+<a href="./">← Vita Test</a>
+<h1>🔄 Vita — тест конфликтов синхронизации</h1>
+<p>Отдельная лаборатория на вымышленных записях. Она сравнивает три состояния: общую исходную версию, iPhone и Mac. Ничего не сохраняет, не удаляет и не отправляет в интернет.</p>
+<div class="card">
+<strong>Проверяем сценарии</strong>
+<p>Новая запись на каждом устройстве, изменение только на одном устройстве, одинаковые изменения, противоречивые изменения и удаление против редактирования.</p>
+<button id="run">Проверить правила объединения</button>
+</div>
+<div class="card"><strong>Результат</strong><p id="status" role="status">Тест ещё не запущен.</p><div id="table"></div></div>
+<small>Это демонстрация алгоритма, не работающая синхронизация. Перед настоящим запуском понадобятся защищённое облачное хранилище, версии записей, шифрование, контроль целостности, атомарная запись и проверка на двух устройствах. Конфликты не перезаписываются автоматически.</small>
+<script>
+'use strict';
+const base=[
+ {id:'fake-one-sided-phone',value:'old'},
+ {id:'fake-one-sided-mac',value:'old'},
+ {id:'fake-same-change',value:'old'},
+ {id:'fake-conflict',value:'old'},
+ {id:'fake-delete-vs-edit',value:'old'}
+];
+const phone=[
+ {id:'fake-one-sided-phone',value:'edited-phone'},
+ {id:'fake-one-sided-mac',value:'old'},
+ {id:'fake-same-change',value:'new-same'},
+ {id:'fake-conflict',value:'edited-phone'},
+ {id:'fake-delete-vs-edit',value:'old'},
+ {id:'fake-added-phone',value:'new-phone'}
+];
+const mac=[
+ {id:'fake-one-sided-phone',value:'old'},
+ {id:'fake-one-sided-mac',value:'edited-mac'},
+ {id:'fake-same-change',value:'new-same'},
+ {id:'fake-conflict',value:'edited-mac'},
+ {id:'fake-delete-vs-edit',value:'edited-mac'},
+ {id:'fake-added-mac',value:'new-mac'}
+];
+function index(rows){
+ if(!Array.isArray(rows))throw Error('Invalid list');
+ const m=new Map();
+ for(const r of rows){if(!r||typeof r.id!=='string'||!r.id||m.has(r.id))throw Error('Invalid or duplicate ID');m.set(r.id,r)}
+ return m;
+}
+const same=(a,b)=>JSON.stringify(a??null)===JSON.stringify(b??null);
+function merge(b,p,m){
+ const bi=index(b),pi=index(p),mi=index(m);
+ const ids=new Set([...bi.keys(),...pi.keys(),...mi.keys()]),output=[],report=[];
+ for(const id of [...ids].sort()){
+ const original=bi.get(id),a=pi.get(id),z=mi.get(id),aChanged=!same(a,original),zChanged=!same(z,original);
+ let outcome,selected;
+ if(!aChanged&&!zChanged){outcome='Без изменений';selected=original}
+ else if(aChanged&&!zChanged){outcome='Из iPhone';selected=a}
+ else if(!aChanged&&zChanged){outcome='С Mac';selected=z}
+ else if(same(a,z)){outcome='Одинаковые изменения';selected=a}
+ else {outcome='Конфликт — требуется решение';selected=original}
+ if(selected!==undefined)output.push(selected);
+ report.push({id,outcome});
+ }
+ return {output,report};
+}
+document.querySelector('#run').addEventListener('click',()=>{
+ const st=document.querySelector('#status'),container=document.querySelector('#table');
+ try{
+ const r=merge(base,phone,mac);
+ const count=x=>r.report.filter(y=>y.outcome===x).length;
+ if(count('Из iPhone')!==2||count('С Mac')!==2||count('Одинаковые изменения')!==1||count('Конфликт — требуется решение')!==2)throw Error('Не совпали ожидаемые результаты');
+ if(r.output.find(x=>x.id==='fake-conflict')?.value!=='old')throw Error('Конфликт перезаписал основу');
+ if(r.output.find(x=>x.id==='fake-delete-vs-edit')?.value!=='old')throw Error('Удаление перезаписало основу');
+ const row=(a,b)=>{const tr=document.createElement('tr');for(const s of [a,b]){const td=document.createElement('td');td.textContent=s;tr.append(td)}return tr};
+ const table=document.createElement('table'),head=document.createElement('tr');for(const n of ['Запись','Решение']){const th=document.createElement('th');th.textContent=n;head.append(th)}table.append(head);
+ for(const v of r.report)table.append(row(v.id,v.outcome));
+ container.replaceChildren(table);
+ st.className='good';st.textContent='✅ 7 сценариев пройдены.\nВзято с iPhone: 2\nВзято с Mac: 2\nОдинаковые изменения: 1\nКонфликтов: 2\n\nНикаких настоящих данных не изменено.';
+ }catch(e){container.replaceChildren();st.className='warning';st.textContent='❌ Ошибка теста: '+e.message}
+});
+</script></body></html>
