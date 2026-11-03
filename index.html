@@ -1424,6 +1424,71 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
   align-self:start!important;
  }
 }
+</style><style id="vita-cosmic-calendar-v5-live-styles">
+@media(min-width:1024px) and (pointer:fine){
+ #app.safe:has(.vitaCalV5){height:100dvh!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;scrollbar-width:thin;padding-top:18px!important;padding-bottom:28px!important}
+ #app .vitaCalV5{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;color:#ecf7ff;max-width:1440px;margin:0 auto}
+ #app .vitaCalV5 *{box-sizing:border-box}
+ #app .vitaCalV5 .vc5Title{font-size:27px;line-height:1.2;font-weight:800;margin:2px 0 5px}
+ #app .vitaCalV5 .vc5Kicker{color:#7edbff;font-size:10px;font-weight:780;letter-spacing:2px}
+ #app .vitaCalV5 .vc5Sub{color:#aec2df;font-size:12px;margin-bottom:14px}
+ #app .vitaCalV5 .vc5Columns{display:grid;grid-template-columns:minmax(400px,1.08fr) minmax(345px,.92fr);gap:18px;align-items:start}
+ #app .vitaCalV5 .vc5Panel{--vcx:65%;--vcy:12%;min-width:0;position:relative;overflow:hidden;border:1px solid #81b8dd9c;border-radius:21px;background:radial-gradient(225px circle at var(--vcx) var(--vcy),#b8ecff09,transparent 78%),linear-gradient(140deg,#21416cde,#162944f0 77%);box-shadow:inset 0 1px 0 #e4fcff35,0 16px 35px #0105146b,0 0 22px #398be019;padding:17px 18px}
+ #app .vitaCalV5 .vc5Panel::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(140px circle at var(--vcx) var(--vcy),#ddf7ff0b,transparent 80%)}
+ #app .vitaCalV5 .vc5Panel>*{position:relative}
+ #app .vitaCalV5 .vc5Head{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:12px;flex-wrap:wrap}
+ #app .vitaCalV5 .vc5Head h2{font-size:18px;color:#f0faff;font-weight:750;margin:0}
+ #app .vitaCalV5 button{cursor:pointer;font:inherit;touch-action:manipulation}
+ #app .vitaCalV5 button:focus-visible{outline:2px solid #a1ecff;outline-offset:2px}
+ #app .vitaCalV5 .vc5SmallBtn{border:1px solid #537ba6;color:#e6f5ff;background:#274469;border-radius:10px;min-height:34px;padding:6px 10px;font-size:12px}
+ #app .vitaCalV5 .vc5SmallBtn:hover{background:#365a82}
+ #app .vitaCalV5 .vc5MonthNav{display:flex;gap:6px;align-items:center}
+ #app .vitaCalV5 .vc5Weekdays,#app .vitaCalV5 .vc5Days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+ #app .vitaCalV5 .vc5Weekdays{margin:1px 0 6px}
+ #app .vitaCalV5 .vc5Weekdays span{text-align:center;color:#aac1df;font-size:11px}
+ #app .vitaCalV5 .vc5Day{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:3px;min-width:0;min-height:41px;padding:6px 8px;text-align:left;border:1px solid #3b61838a;background:#122b498a;border-radius:10px;color:#ebf6ff}
+ #app .vitaCalV5 .vc5Day:not(:disabled):hover{background:#254b77;border-color:#83cfff}
+ #app .vitaCalV5 .vc5Day.vc5Empty{border-color:transparent;background:transparent;opacity:0;pointer-events:none}
+ #app .vitaCalV5 .vc5Day.vc5Today{border-color:#e8af7f}
+ #app .vitaCalV5 .vc5Day.vc5Selected{background:linear-gradient(135deg,#245f8e,#334e83);border-color:#94e7ff;box-shadow:0 0 15px #6cbfff36}
+ #app .vitaCalV5 .vc5Num{font-weight:760;font-size:14px}
+ #app .vitaCalV5 .vc5Dots{display:flex;gap:3px}
+ #app .vitaCalV5 .vc5Dot{width:5px;height:5px;border-radius:50%;background:#77d9ff;box-shadow:0 0 5px #70ccff}
+ #app .vitaCalV5 .vc5Dot.vc5Overdue{background:#ff8da5}
+ #app .vitaCalV5 .vc5Counters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px}
+ #app .vitaCalV5 .vc5Counter{border:1px solid #4c7198;background:#122c4b90;border-radius:11px;padding:9px 10px}
+ #app .vitaCalV5 .vc5Counter b{display:block;font-size:21px;color:#bfeeff}
+ #app .vitaCalV5 .vc5Counter span{display:block;font-size:10px;color:#b8cce3}
+ #app .vitaCalV5 .vc5Modes{display:flex;gap:3px;background:#0f233d;border:1px solid #45698f;border-radius:11px;padding:3px}
+ #app .vitaCalV5 .vc5Modes button{min-height:31px;border:0;border-radius:8px;color:#abc5e0;background:transparent;font-size:12px;padding:5px 10px}
+ #app .vitaCalV5 .vc5Modes button[aria-pressed="true"]{color:white;background:#365f8b}
+ #app .vitaCalV5 .vc5SelectedHead{margin:6px 0 13px;display:flex;justify-content:space-between;align-items:center;gap:9px}
+ #app .vitaCalV5 .vc5SelectedHead strong{font-size:17px}
+ #app .vitaCalV5 .vc5SelectedHead span{color:#a5c2dc;font-size:11px}
+ #app .vitaCalV5 .vc5Items{display:grid;gap:9px}
+ #app .vitaCalV5 .vc5Task{display:flex;align-items:center;gap:10px;min-width:0;border:1px solid #456b94;background:#102a49c7;border-radius:12px;min-height:64px;padding:10px}
+ #app .vitaCalV5 .vc5Task.vc5IsDone{opacity:.82}
+ #app .vitaCalV5 .vc5Check{display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border:1px solid #87c2ed;border-radius:50%;background:#132c4c;color:#9ce7ff;font-size:17px}
+ #app .vitaCalV5 .vc5Check:hover{background:#2d6490}
+ #app .vitaCalV5 .vc5Time{min-width:41px;font-size:12px;color:#91dcff;font-variant-numeric:tabular-nums}
+ #app .vitaCalV5 .vc5TaskInfo{flex:1;min-width:0}
+ #app .vitaCalV5 .vc5TaskInfo b{display:block;font-size:13px;overflow-wrap:anywhere}
+ #app .vitaCalV5 .vc5TaskInfo small{display:block;color:#a7c4de;font-size:11px;margin-top:5px}
+ #app .vitaCalV5 .vc5Edit{border:1px solid #4f7091;background:#213d5b;color:#c6eaff;border-radius:9px;padding:7px 9px;font-size:11px}
+ #app .vitaCalV5 .vc5EmptyMsg{border:1px dashed #53718f;border-radius:12px;padding:18px;color:#b4c5d8;text-align:center}
+ #app .vitaCalV5 .vc5Details{margin-top:14px;border:1px solid #a96785a6;background:#30263e80;border-radius:13px;overflow:hidden}
+ #app .vitaCalV5 .vc5Details summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;padding:13px 14px;font-weight:740;font-size:13px;color:#ffb4c6}
+ #app .vitaCalV5 .vc5Details summary::-webkit-details-marker{display:none}
+ #app .vitaCalV5 .vc5Details .vc5DetailItems{padding:0 10px 10px;display:grid;gap:7px}
+ #app .vitaCalV5 .vc5Details .vc5Task{min-height:50px;background:#201e37cf}
+ #app .vitaCalV5 .vc5Actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+ #app .vitaCalV5 .vc5Add{flex:1;min-width:185px;min-height:44px;border:1px solid #ffad68;border-radius:11px;background:linear-gradient(100deg,#fa942b,#ff7519);color:#fff;font-weight:750;box-shadow:0 5px 20px #f47b2429}
+ #app .vitaCalV5 .vc5Alt{min-height:44px;border:1px solid #597ba0;background:#243f63;color:#d2eaff;border-radius:11px;padding:8px 13px}
+ #app .vitaCalV5 .vc5Note{font-size:11px;color:#9ab5d2;margin:10px 0 0}
+ @media(max-height:850px){#app .vitaCalV5 .vc5Panel{padding:14px 16px}#app .vitaCalV5 .vc5Day{min-height:38px;padding:5px 7px}#app .vitaCalV5 .vc5Head{margin-bottom:9px}}
+}
+@media(min-width:1024px) and (pointer:fine) and (max-width:1180px){#app .vitaCalV5 .vc5Columns{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){#app .vitaCalV5 *{transition:none!important}}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -2025,6 +2090,83 @@ window.vitaTestServerConnection=async function(){
 window.vitaAuthLogout=async function(){const old=session();sessionStorage.removeItem(SESSION);localStorage.removeItem(PERSIST);clearPassword();status('Выход на этом устройстве выполнен.');if(old?.access_token){try{await fetch(BASE+'/auth/v1/logout',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+old.access_token}})}catch(_){}}}
 })();
 
+
+/* Vita Cosmic Calendar V5.2 — desktop-only live view.
+   Reuses existing data.tasks, openForm, editTask, toggleTask and reminder logic.
+   No new storage keys or mutations and no effect on iPhone task rendering. */
+(function(){
+ 'use strict';
+ var desktop=window.matchMedia('(min-width:1024px) and (pointer:fine)');
+ var oldCalendar=views.tasks;
+ var selected=todayISO(),month=selected.slice(0,7),mode='day',showDone=false;
+ var monthNames=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+ function isoDate(s){var a=String(s).slice(0,10).split('-').map(Number);return new Date(a[0],a[1]-1,a[2])}
+ function formatDate(s,opts){return isoDate(s).toLocaleDateString('ru-RU',opts)}
+ function taskDate(t){return String(t.date||'').slice(0,10)}
+ function activeTasks(){return (Array.isArray(data.tasks)?data.tasks:[]).filter(function(t){return t&&!t.done})}
+ function completedTasks(){return (Array.isArray(data.tasks)?data.tasks:[]).filter(function(t){return t&&t.done}).sort(function(a,b){return String(b.completedAt||'').localeCompare(String(a.completedAt||''))})}
+ function cmp(a,b){return String(a.date||'').localeCompare(String(b.date||''))}
+ function taskMarkup(t){
+  var label=taskDate(t),time=t.date&&String(t.date).includes('T')?String(t.date).slice(11,16):'—';
+  var id=esc(encodeURIComponent(String(t.id||'')));
+  return '<div class="vc5Task'+(t.done?' vc5IsDone':'')+'">'+
+   '<button class="vc5Check" aria-label="'+(t.done?'Отменить выполнение':'Выполнить задачу')+'" onclick="vitaV5Toggle(\''+id+'\')">'+(t.done?'✓':'○')+'</button>'+
+   '<span class="vc5Time">'+esc(time)+'</span>'+
+   '<div class="vc5TaskInfo"><b>'+esc(t.title||'Без названия')+'</b><small>'+esc(projectName(t.project))+(mode!=='day'&&label?' · '+esc(formatDate(label,{day:'numeric',month:'short'})):'')+'</small></div>'+
+   '<button class="vc5Edit" aria-label="Изменить задачу" onclick="vitaV5Edit(\''+id+'\')">Изменить</button></div>';
+ }
+ window.vitaV5Toggle=function(id){var raw=decodeURIComponent(id);if(data.tasks.some(function(t){return String(t.id)===raw}))toggleTask(raw)};
+ window.vitaV5Edit=function(id){var raw=decodeURIComponent(id);if(data.tasks.some(function(t){return String(t.id)===raw}))editTask(raw)};
+ window.vitaV5Month=function(n){var d=isoDate(month+'-01');d.setMonth(d.getMonth()+n);month=localDateISO(d).slice(0,7);selected=month+'-01';showDone=false;render()};
+ window.vitaV5Today=function(){selected=todayISO();month=selected.slice(0,7);showDone=false;render()};
+ window.vitaV5Choose=function(s){if(!/^\d{4}-\d{2}-\d{2}$/.test(s))return;selected=s;month=s.slice(0,7);showDone=false;render()};
+ window.vitaV5Mode=function(s){if(['day','week','month'].indexOf(s)<0)return;mode=s;showDone=false;render()};
+ window.vitaV5Completed=function(){showDone=!showDone;render()};
+ window.vitaV5NewTask=function(){openForm('task');var input=document.getElementById('f_date');if(input&&!input.value)input.value=selected+'T09:00'};
+ function viewTasks(){
+  var active=activeTasks(),done=completedTasks(),now=todayISO();
+  var overdue=active.filter(function(t){return taskDate(t)&&taskDate(t)<now}).sort(cmp);
+  var first=isoDate(month+'-01'),last=new Date(first.getFullYear(),first.getMonth()+1,0);
+  var offset=(first.getDay()+6)%7,cellCount=Math.ceil((offset+last.getDate())/7)*7;
+  var dateCells='';
+  for(var i=0;i<cellCount;i++){
+   var d=i-offset+1,valid=d>=1&&d<=last.getDate(),iso=valid?month+'-'+String(d).padStart(2,'0'):'';
+   if(!valid){dateCells+='<span class="vc5Day vc5Empty" aria-hidden="true"></span>';continue}
+   var onDate=active.filter(function(t){return taskDate(t)===iso});
+   var dots=onDate.slice(0,3).map(function(){return '<i class="vc5Dot'+(iso<now?' vc5Overdue':'')+'"></i>'}).join('');
+   dateCells+='<button class="vc5Day'+(iso===now?' vc5Today':'')+(iso===selected?' vc5Selected':'')+'" aria-pressed="'+(iso===selected)+'" aria-label="'+esc(formatDate(iso,{day:'numeric',month:'long'}))+'" onclick="vitaV5Choose(\''+iso+'\')"><span class="vc5Num">'+d+'</span><span class="vc5Dots">'+dots+'</span></button>';
+  }
+  var start=selected,end=selected;
+  if(mode==='week'){var wd=isoDate(selected);wd.setDate(wd.getDate()-(wd.getDay()+6)%7);start=localDateISO(wd);wd.setDate(wd.getDate()+6);end=localDateISO(wd)}
+  if(mode==='month'){start=selected.slice(0,7)+'-01';var lastDay=new Date(isoDate(start).getFullYear(),isoDate(start).getMonth()+1,0);end=localDateISO(lastDay)}
+  var picked=showDone?done:active.filter(function(t){var dt=taskDate(t);return dt&&dt>=start&&dt<=end}).sort(cmp);
+  var title=showDone?'Выполненные':mode==='day'?formatDate(selected,{weekday:'long',day:'numeric',month:'long'}):mode==='week'?'Неделя · '+formatDate(selected,{day:'numeric',month:'long'}):monthNames[isoDate(selected).getMonth()]+' '+isoDate(selected).getFullYear();
+  var modeButtons=['day','week','month'].map(function(m,i){return '<button aria-pressed="'+(!showDone&&mode===m)+'" onclick="vitaV5Mode(\''+m+'\')">'+['День','Неделя','Месяц'][i]+'</button>'}).join('');
+  var monthCount=active.filter(function(t){return taskDate(t).slice(0,7)===month}).length;
+  return '<div class="vitaCalV5"><div class="vc5Kicker">VITA / TIME & FOCUS</div>'+
+   '<h1 class="vc5Title">Мой космический календарь</h1><div class="vc5Sub">Настоящие задачи Vita · напоминания по дате и времени</div>'+
+   '<div class="vc5Columns"><section class="vc5Panel" aria-label="Календарь месяца">'+
+   '<div class="vc5Head"><h2>'+monthNames[first.getMonth()]+' '+first.getFullYear()+'</h2><div class="vc5MonthNav">'+
+   '<button class="vc5SmallBtn" onclick="vitaV5Month(-1)" aria-label="Предыдущий месяц">❮</button>'+
+   '<button class="vc5SmallBtn" onclick="vitaV5Today()">Сегодня</button>'+
+   '<button class="vc5SmallBtn" onclick="vitaV5Month(1)" aria-label="Следующий месяц">❯</button></div></div>'+
+   '<div class="vc5Weekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>'+
+   '<div class="vc5Days">'+dateCells+'</div><div class="vc5Counters">'+
+   '<div class="vc5Counter"><b>'+overdue.length+'</b><span>Просрочено</span></div>'+
+   '<div class="vc5Counter"><b>'+monthCount+'</b><span>В этом месяце</span></div>'+
+   '<div class="vc5Counter"><b>'+done.length+'</b><span>Выполнено</span></div></div></section>'+
+   '<section class="vc5Panel" aria-label="Задачи календаря"><div class="vc5Head"><h2>Мои дела</h2><div class="vc5Modes" role="group" aria-label="Период">'+modeButtons+'</div></div>'+
+   '<div class="vc5SelectedHead"><strong>'+esc(title)+'</strong><span>'+picked.length+' задач</span></div>'+
+   '<div class="vc5Items">'+(picked.length?picked.map(taskMarkup).join(''):'<div class="vc5EmptyMsg">На выбранный период задач нет</div>')+'</div>'+
+   (!showDone?'<details class="vc5Details"><summary>Просроченные задачи <span>'+overdue.length+' ▾</span></summary><div class="vc5DetailItems">'+(overdue.length?overdue.map(taskMarkup).join(''):'<div class="vc5EmptyMsg">Просроченных задач нет</div>')+'</div></details>':'')+
+   '<div class="vc5Actions"><button class="vc5Add" onclick="vitaV5NewTask()">+ Добавить задачу / напоминание</button>'+
+   '<button class="vc5Alt" onclick="vitaV5Completed()">'+(showDone?'← К календарю':'✓ Выполненные ('+done.length+')')+'</button>'+
+   '<button class="vc5Alt" onclick="vitaTaskSelect(\'overview\')">Список задач</button></div>'+
+   '<p class="vc5Note">Напоминания создаются автоматически для задач с будущей датой и временем. Выполненные задачи удаляются через 7 суток.</p>'+
+   '</section></div></div>';
+ }
+ views.tasks=function(){return desktop.matches?viewTasks():oldCalendar()};
+})();
 /* Run on app startup and after returning to the app; background timers may pause on iPhone. */
 vitaTaskRetentionSweep();
 render();
