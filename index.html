@@ -1558,6 +1558,59 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  }
  #overlay.show:has(#sheetContent .vitaTaskFormHeader) .vitaTaskEditDelete{margin-top:10px!important}
 }
+</style><style id="vita-mac-task-datetime-v2-20261103">
+@media(min-width:1024px) and (pointer:fine){
+ #overlay.show:has(.vitaTaskFormHeader)>.sheet{
+  flex:0 0 min(570px,calc(100vw - 70px))!important;
+  flex-basis:min(570px,calc(100vw - 70px))!important;
+  width:min(570px,calc(100vw - 70px))!important;
+  max-width:min(570px,calc(100vw - 70px))!important;
+  max-height:calc(100dvh - 55px)!important;
+ }
+ #overlay #sheetContent .vitaMacDateOriginal{display:none!important}
+ #overlay #sheetContent .vitaMacDatePicker{display:block;max-width:100%!important;margin:0 0 9px}
+ #overlay #sheetContent .vitaMacDateBtn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border:1px solid #5489b7;border-radius:12px;min-height:46px;
+  color:#e9f7ff;background:#102742;padding:10px 14px;font-size:15px;text-align:left
+ }
+ #overlay #sheetContent .vitaMacDateBtn::after{content:"▦";font-size:21px;color:#8fdcff}
+ #overlay #sheetContent .vitaMacTimeLabel{display:block;color:#acc9e6;margin:10px 0 6px;font-size:12px}
+ #overlay #sheetContent .vitaMacTimePicker{display:flex;align-items:center;gap:9px}
+ #overlay #sheetContent .vitaMacTimePicker select{
+  width:calc(50% - 20px)!important;flex:1;min-height:46px!important;height:46px!important;
+  border:1px solid #5489b7!important;border-radius:12px!important;
+  color:#eff9ff!important;background:#102742!important;padding:7px 12px!important;font-size:17px!important;
+  text-align:center;cursor:pointer
+ }
+ #overlay #sheetContent .vitaMacTimePicker .vitaMacColon{color:#8fdcff;font-size:22px;font-weight:800}
+ #overlay #sheetContent .vitaMacCalendar{
+  margin:9px 0 10px;padding:15px;border:1px solid #679ac7;border-radius:15px;
+  background:linear-gradient(145deg,#1d385b,#11233c);box-shadow:inset 0 1px 0 #c6e9ff20
+ }
+ #overlay #sheetContent .vitaMacCalendar[hidden]{display:none!important}
+ #overlay #sheetContent .vitaMacCalTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:7px}
+ #overlay #sheetContent .vitaMacCalTop strong{font-size:16px}
+ #overlay #sheetContent .vitaMacCalTop button{
+  width:40px!important;min-width:40px!important;height:36px!important;min-height:36px!important;
+  padding:4px!important;border:1px solid #5986b4;border-radius:9px;
+  background:#26456c;color:#edf9ff
+ }
+ #overlay #sheetContent .vitaMacWeekdays,
+ #overlay #sheetContent .vitaMacDays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+ #overlay #sheetContent .vitaMacWeekdays{margin-bottom:6px}
+ #overlay #sheetContent .vitaMacWeekdays span{text-align:center;font-size:12px;color:#a9c7e5}
+ #overlay #sheetContent .vitaMacDays button{
+  width:100%!important;min-height:42px!important;height:42px!important;padding:5px!important;
+  border-radius:10px;border:1px solid #3b6388;background:#152e4f;color:#eaf9ff;font-size:14px;
+ }
+ #overlay #sheetContent .vitaMacDays button:hover{background:#34618b;border-color:#8dd9ff}
+ #overlay #sheetContent .vitaMacDays button[aria-pressed="true"]{
+  background:#28638f;border-color:#b5ebff;box-shadow:0 0 14px #59bfff40
+ }
+ #overlay #sheetContent .vitaMacDays .vitaMacBlank{visibility:hidden}
+ #overlay #sheetContent .vitaMacDateHint{margin:9px 0 0;font-size:11px;color:#9dbbd9}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -2192,7 +2245,7 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
  window.vitaV5Mode=function(s){if(['day','week','month'].indexOf(s)<0)return;mode=s;showDone=false;render()};
  window.vitaV5Completed=function(){showDone=!showDone;listView=false;render()};
  window.vitaV5List=function(){listView=!listView;vitaTaskMode='overview';render()};
- window.vitaV5NewTask=function(){openForm('task');var input=document.getElementById('f_date');if(input&&!input.value)input.value=selected+'T09:00'};
+ window.vitaV5NewTask=function(){openForm('task');var input=document.getElementById('f_date');if(input&&!input.value)input.value=selected+'T09:00';if(typeof window.vitaMacTaskDateRefresh==='function')window.vitaMacTaskDateRefresh()};
  function viewTasks(){
   var active=activeTasks(),done=completedTasks(),now=todayISO();
   var overdue=active.filter(function(t){return taskDate(t)&&taskDate(t)<now}).sort(cmp);
@@ -2236,6 +2289,104 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
    '</section></div></div>';
  }
  views.tasks=function(){return desktop.matches&&listView?'<button class="vitaAllTasksBack" onclick="vitaV5List()">✦ Космический календарь</button>'+oldCalendar():desktop.matches?viewTasks():oldCalendar()};
+})();
+
+/* Desktop-only accessible date grid and explicit hour/minute selectors.
+   Keeps the original datetime-local field as the sole source of truth for addTask/saveTaskEdit.
+   Does not change saved task format, reminder scheduling, or iPhone forms. */
+(function(){
+ 'use strict';
+ var desktop=window.matchMedia('(min-width:1024px) and (pointer:fine)');
+ var oldShow=window.showSheet,active=null;
+ var months=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+ function pad(n){return String(n).padStart(2,'0')}
+ function validDate(value){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
+  var p=value.split('-').map(Number),d=new Date(p[0],p[1]-1,p[2]);
+  return d.getFullYear()===p[0]&&d.getMonth()===p[1]-1&&d.getDate()===p[2];
+ }
+ function formatDate(value){
+  var p=value.split('-').map(Number),d=new Date(p[0],p[1]-1,p[2]);
+  return d.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ }
+ function sync(){
+  if(!active||!active.root.isConnected)return;
+  active.target.value=active.date+'T'+pad(active.hour)+':'+pad(active.minute);
+  active.label.textContent=formatDate(active.date);
+ }
+ function draw(){
+  if(!active||!active.root.isConnected)return;
+  var y=active.year,m=active.month;
+  active.heading.textContent=months[m]+' '+y;
+  var first=new Date(y,m,1),offset=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate();
+  var count=Math.ceil((offset+days)/7)*7;
+  active.grid.replaceChildren();
+  for(var i=0;i<count;i++){
+   var number=i-offset+1,valid=number>0&&number<=days;
+   var cell=document.createElement(valid?'button':'span');
+   if(!valid){cell.className='vitaMacBlank';active.grid.append(cell);continue}
+   var date=y+'-'+pad(m+1)+'-'+pad(number);
+   cell.type='button';cell.textContent=number;cell.setAttribute('aria-label',formatDate(date));
+   cell.setAttribute('aria-pressed',String(date===active.date));
+   cell.addEventListener('click',function(d){return function(){
+    active.date=d;sync();active.popup.hidden=true;active.button.setAttribute('aria-expanded','false');
+   }}(date));
+   active.grid.append(cell);
+  }
+ }
+ function enhance(){
+  if(!desktop.matches)return;
+  var target=document.getElementById('f_date')||document.getElementById('et_date');
+  if(!target||target.dataset.vitaMacEnhanced)return;
+  var parent=target.parentElement;if(!parent)return;
+  var raw=target.value,defaultValue=localDateISO(new Date())+'T09:00';
+  if(!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(raw))raw=defaultValue;
+  var root=document.createElement('div');root.className='vitaMacDatePicker';
+  root.innerHTML='<button type="button" class="vitaMacDateBtn" aria-expanded="false"></button>'+
+   '<div class="vitaMacTimeLabel">Время напоминания</div>'+
+   '<div class="vitaMacTimePicker"><select aria-label="Часы" class="vitaMacHour"></select><span class="vitaMacColon">:</span><select aria-label="Минуты" class="vitaMacMinute"></select></div>'+
+   '<div class="vitaMacCalendar" hidden><div class="vitaMacCalTop"><button type="button" class="vitaMacPrev" aria-label="Предыдущий месяц">‹</button><strong class="vitaMacHeading"></strong><button type="button" class="vitaMacNext" aria-label="Следующий месяц">›</button></div>'+
+   '<div class="vitaMacWeekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div><div class="vitaMacDays"></div>'+
+   '<div class="vitaMacDateHint">Нажми на число, чтобы выбрать дату</div></div>';
+  parent.insertBefore(root,target.nextSibling);
+  target.classList.add('vitaMacDateOriginal');target.dataset.vitaMacEnhanced='1';
+  var parts=raw.slice(0,10).split('-').map(Number);
+  active={
+   root:root,target:target,date:raw.slice(0,10),hour:Number(raw.slice(11,13)),minute:Number(raw.slice(14,16)),
+   year:parts[0],month:parts[1]-1,button:root.querySelector('.vitaMacDateBtn'),
+   label:root.querySelector('.vitaMacDateBtn'),popup:root.querySelector('.vitaMacCalendar'),
+   heading:root.querySelector('.vitaMacHeading'),grid:root.querySelector('.vitaMacDays')
+  };
+  var hour=root.querySelector('.vitaMacHour'),minute=root.querySelector('.vitaMacMinute');
+  for(var h=0;h<24;h++){var o=document.createElement('option');o.value=pad(h);o.textContent=pad(h)+' ч';hour.append(o)}
+  for(var mm=0;mm<60;mm++){var opt=document.createElement('option');opt.value=pad(mm);opt.textContent=pad(mm)+' мин';minute.append(opt)}
+  hour.value=pad(active.hour);minute.value=pad(active.minute);
+  hour.addEventListener('change',function(){active.hour=Number(hour.value);sync()});
+  minute.addEventListener('change',function(){active.minute=Number(minute.value);sync()});
+  active.button.addEventListener('click',function(){
+   active.popup.hidden=!active.popup.hidden;active.button.setAttribute('aria-expanded',String(!active.popup.hidden));
+   if(!active.popup.hidden)draw();
+  });
+  root.querySelector('.vitaMacPrev').addEventListener('click',function(){var d=new Date(active.year,active.month-1,1);active.year=d.getFullYear();active.month=d.getMonth();draw()});
+  root.querySelector('.vitaMacNext').addEventListener('click',function(){var d=new Date(active.year,active.month+1,1);active.year=d.getFullYear();active.month=d.getMonth();draw()});
+  sync();
+ }
+ window.vitaMacTaskDateRefresh=function(){
+  if(!active||!active.target.isConnected)return;
+  var raw=active.target.value;
+  if(!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(raw)||!validDate(raw.slice(0,10)))return;
+  var parts=raw.slice(0,10).split('-').map(Number);
+  active.date=raw.slice(0,10);active.hour=Number(raw.slice(11,13));active.minute=Number(raw.slice(14,16));
+  active.year=parts[0];active.month=parts[1]-1;
+  active.root.querySelector('.vitaMacHour').value=pad(active.hour);
+  active.root.querySelector('.vitaMacMinute').value=pad(active.minute);
+  sync();
+ };
+ window.showSheet=function(content){
+  var result=oldShow(content);
+  if(desktop.matches&&String(content).includes('vitaTaskFormHeader'))enhance();
+  return result;
+ };
 })();
 /* Run on app startup and after returning to the app; background timers may pause on iPhone. */
 vitaTaskRetentionSweep();
