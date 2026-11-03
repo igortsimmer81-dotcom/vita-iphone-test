@@ -46,6 +46,41 @@ main{padding:35px clamp(22px,3.8vw,58px) 58px;min-width:0}.wrap{max-width:1440px
 @media(max-width:1140px){.columns{grid-template-columns:1fr}}
 @media(max-width:700px){.layout{display:block}aside{height:auto;position:static;padding:15px}.brand{padding:2px 7px;border:0}nav,.foot{display:none}main{padding:19px 13px}.top h1{font-size:24px}.columns{grid-template-columns:1fr}.panel{padding:14px}.weeknames,.days{gap:4px}.day{min-height:49px;padding:6px}.day-num{font-size:13px}.head{align-items:flex-start;flex-wrap:wrap}.viewmodes{flex-wrap:wrap}.summary{grid-template-columns:repeat(3,1fr)}}
 @media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+</style><style id="v5-compact-calendar-fix">
+/* Calendar V5.1: show all six month rows on MacBook without shrinking day number readability. */
+@media(min-width:701px){
+ main{padding-top:23px;padding-bottom:30px}
+ .top{margin-bottom:14px}
+ .top h1{margin:3px 0;font-size:27px}
+ .notice{margin-bottom:14px;padding:9px 14px}
+ .panel{padding:16px 18px}
+ .head{margin-bottom:12px}
+ .head h2{font-size:18px}
+ .weeknames{margin-bottom:4px}
+ .weeknames span{padding:3px 0}
+ .weeknames,.days{gap:5px}
+ .day{min-height:43px;padding:6px 8px;gap:3px;border-radius:10px}
+ .day-num{font-size:14px}
+ .dots{gap:3px}
+ .dot{width:4px;height:4px}
+ .day.muted{background:transparent;border-color:transparent;opacity:.1}
+ .day.muted:hover{background:transparent;border-color:transparent}
+ .summary{margin-top:12px;gap:7px}
+ .summary div{padding:8px 10px}
+ .summary b{font-size:20px}
+ .help{margin-top:12px}
+}
+@media(min-width:701px) and (max-height:850px){
+ main{padding-top:16px}
+ .top{margin-bottom:10px}
+ .notice{margin-bottom:11px}
+ .panel{padding:13px 16px}
+ .head{margin-bottom:9px}
+ .day{min-height:39px;padding:5px 7px;gap:2px}
+ .summary{margin-top:9px}
+ .summary div{padding:6px 9px}
+ .help{margin-top:9px}
+}
 </style></head><body>
 <div class="layout">
 <aside><div class="brand">✦ VITA<small>COSMIC · CALENDAR V5</small></div><nav><div>⌂　Главная</div><div class="active">▦　Календарь</div><div>◇　Поставщики</div><div>⇄　Деньги</div><div>▣　Инвестиции</div><div>＄　Сбережения</div></nav><div class="foot">✦ HOLOGRAPHIC PREVIEW</div></aside>
