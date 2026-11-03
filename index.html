@@ -1255,6 +1255,91 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #app:has(.homeStack) .homeWide,#app:has(.homeStack) .vitaHomeSavingsCompact,
  #nav button{transition:none!important;transform:none!important}
 }
+</style><style id="vita-cosmic-intelligence-v4-20261103">
+/* V4 visual-only Desktop refinement; mobile and storage logic unchanged. */
+@media(min-width:1024px) and (pointer:fine){
+ #nav{flex-basis:214px!important;width:214px!important;max-width:214px!important;padding:21px 10px 15px!important;gap:4px!important}
+ #nav::before{font-size:15px!important;letter-spacing:1.7px!important;line-height:1.55!important;margin-bottom:18px!important;padding:8px 10px 16px!important}
+ #nav::after{font-size:9px!important;letter-spacing:1px!important;padding-top:13px!important}
+ #nav button{
+  display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;
+  flex-wrap:nowrap!important;gap:12px!important;min-height:43px!important;height:43px!important;
+  padding:8px 12px!important;text-align:left!important;font-size:13px!important;line-height:1.1!important
+ }
+ #nav .navico{display:flex!important;flex:0 0 22px!important;width:22px!important;height:23px!important;
+  margin:0!important;padding:0!important;align-items:center!important;justify-content:center!important}
+ #nav .navico svg{width:19px!important;height:19px!important}
+ #nav button.active{box-shadow:inset 2px 0 0 #ffc28b,0 0 20px #70bbff29!important}
+ #app.safe{padding:25px clamp(23px,3.3vw,47px) 34px!important}
+ #app:has(.homeStack){gap:13px 15px!important;grid-template-columns:minmax(0,1.43fr) minmax(310px,1fr)}
+ #app:has(.homeStack) .homeWide,#app:has(.homeStack) .vitaHomeSavingsCompact{
+  --v4-x:70%;--v4-y:10%;
+  position:relative!important;
+  background-blend-mode:screen,normal;
+  box-shadow:inset 0 1px 0 #e5fbff3d,inset 0 -1px 0 #6fa7ff16,0 13px 34px #01091b8a,
+   0 0 24px #4caaff25!important;
+  transform:translateZ(0);
+ }
+ #app:has(.homeStack) .homeWide::after,
+ #app:has(.homeStack) .vitaHomeSavingsCompact::after{
+  content:"";position:absolute!important;inset:0!important;display:block!important;
+  border-radius:inherit!important;background:radial-gradient(280px circle at var(--v4-x) var(--v4-y),
+   #daeeff26,transparent 66%)!important;opacity:.67!important;
+  pointer-events:none!important;z-index:0!important;transition:opacity .22s!important
+ }
+ #app:has(.homeStack) .homeWide:hover::after,
+ #app:has(.homeStack) .vitaHomeSavingsCompact:hover::after{opacity:1!important}
+ #app:has(.homeStack) .homeWide:hover,#app:has(.homeStack) .vitaHomeSavingsCompact:hover{
+  border-color:#b7e2ffdf!important;transform:translateY(-2px);
+  box-shadow:inset 0 1px 0 #edfdff77,0 18px 42px #01081cb0,0 0 33px #77baff5b!important
+ }
+ #app:has(.homeStack) .homeWide.agendaCard{min-height:0!important}
+ #app:has(.homeStack) .vitaAgendaItem{min-height:46px!important;padding:7px 11px!important;margin:6px 0!important}
+ #app:has(.homeStack) .vitaAgendaHeader{margin:8px 0 4px!important}
+ #app:has(.homeStack) .vitaAgendaTomorrow{margin-top:8px!important}
+ #app:has(.homeStack) .homeWide .kicker,#app:has(.homeStack) .vsHomeTitle{letter-spacing:1.05px!important}
+ #app .vitaPremiumSettings .settingsGroup{border-radius:15px!important;margin:10px 0!important;padding:4px 11px!important}
+ #overlay.show:has(.vitaPremiumSettings){align-items:stretch!important;justify-content:flex-end!important;
+  background:#020714b8!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
+ #overlay.show:has(.vitaPremiumSettings) .sheet{
+  width:min(490px,43vw)!important;height:100dvh!important;max-height:100dvh!important;
+  margin:0!important;padding:29px 23px 28px!important;
+  border-radius:23px 0 0 23px!important;
+  border:1px solid #6eb4eb8c!important;border-right:0!important;
+  background:radial-gradient(circle at 90% 2%,#6a6dd23e,transparent 38%),linear-gradient(165deg,#1a3150f5,#101c33f8)!important;
+  box-shadow:-22px 0 68px #010716b0,0 0 32px #459dff29!important;
+  overflow-y:auto!important;scrollbar-width:thin!important
+ }
+ #overlay.show:has(.vitaPremiumSettings) .sheet>.handle{display:none!important}
+ #overlay.show:has(.vitaPremiumSettings) .sheetClose{position:sticky!important;top:0;float:right;
+  z-index:3!important;min-width:39px;min-height:39px;border-radius:12px!important}
+ #overlay.show:has(.vitaPremiumSettings) .vitaPremiumSettings>h2{font-size:25px!important;margin:0 52px 16px 0!important}
+ #overlay.show:has(.vitaPremiumSettings) .settingsRow{
+  min-height:45px!important;height:auto!important;padding:8px 7px!important;
+  font-size:13px!important;line-height:1.35!important;transition:background .15s!important
+ }
+ #overlay.show:has(.vitaPremiumSettings) .settingsRow:hover{background:#446a9954!important;border-radius:8px!important}
+ #overlay.show:has(.vitaPremiumSettings) .settingsRow span:first-child{width:27px!important;min-width:27px!important;height:27px!important}
+ #overlay.show:has(.vitaPremiumSettings) .vitaSettingsFoot{font-size:11px!important;line-height:1.5!important}
+ #app .vitaOverviewGroup,#app .vitaSupplierList,#app .vitaInvestOverview .card,#app .vsCard{
+  box-shadow:inset 0 1px 0 #daedff22,0 12px 26px #0005!important
+ }
+ #app .vitaSupplierList .vitaLine,#app .vitaInvestOverview .vitaLine{
+  transition:background .18s ease,transform .18s ease!important
+ }
+ #app .vitaSupplierList .vitaLine:hover,#app .vitaInvestOverview .vitaLine:hover{
+  background:#426c9c28!important;transform:translateX(2px)!important
+ }
+}
+@media(min-width:1024px) and (pointer:fine) and (max-width:1180px){
+ #nav{flex-basis:194px!important;width:194px!important;max-width:194px!important}
+ #app.safe{padding-left:20px!important;padding-right:20px!important}
+ #overlay.show:has(.vitaPremiumSettings) .sheet{width:min(470px,48vw)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #app:has(.homeStack) .homeWide,#app:has(.homeStack) .vitaHomeSavingsCompact,
+ #app .vitaSupplierList .vitaLine,#app .vitaInvestOverview .vitaLine{transition:none!important;transform:none!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -1819,5 +1904,29 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
 
 render();
 </script>
-<script>document.body.classList.add("vita-ready")</script></body>
+<script id="vita-cosmic-intelligence-v4-glow">
+/* Purely visual optical cursor effect. No data access, no storage, no network. */
+(function(){
+ 'use strict';
+ const desktop=window.matchMedia('(min-width:1024px) and (pointer:fine)');
+ const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+ let frame=0,active=null,xy=null;
+ function reset(node){if(!node)return;node.style.removeProperty('--v4-x');node.style.removeProperty('--v4-y')}
+ document.addEventListener('pointermove',function(ev){
+  if(!desktop.matches||reduce.matches||ev.pointerType==='touch')return;
+  const el=ev.target&&ev.target.closest?ev.target.closest('#app .homeWide, #app .vitaHomeSavingsCompact'):null;
+  if(active!==el){reset(active);active=el}
+  if(!el)return;
+  xy={x:ev.clientX,y:ev.clientY};
+  if(frame)return;
+  frame=requestAnimationFrame(function(){
+   frame=0;
+   if(!active||!active.isConnected||!xy)return;
+   const r=active.getBoundingClientRect();
+   if(r.width&&r.height){active.style.setProperty('--v4-x',((xy.x-r.left)/r.width*100).toFixed(1)+'%');active.style.setProperty('--v4-y',((xy.y-r.top)/r.height*100).toFixed(1)+'%')}
+  });
+ },{passive:true});
+ document.addEventListener('pointerleave',function(){reset(active);active=null});
+})();
+</script><script>document.body.classList.add("vita-ready")</script></body>
 </html>
