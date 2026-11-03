@@ -1340,6 +1340,69 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #app:has(.homeStack) .homeWide,#app:has(.homeStack) .vitaHomeSavingsCompact,
  #app .vitaSupplierList .vitaLine,#app .vitaInvestOverview .vitaLine{transition:none!important;transform:none!important}
 }
+</style><style id="vita-cosmic-desktop-v41-20261103">
+/* Desktop-only corrective patch to V4. No storage or business logic changes. */
+@media(min-width:1024px) and (pointer:fine){
+ /* Existing sheet CSS sets flex-basis:100%, overriding width. Correct basis explicitly. */
+ #overlay.show:has(#sheetContent .vitaPremiumSettings){
+  align-items:stretch!important;justify-content:flex-end!important;
+ }
+ #overlay.show:has(#sheetContent .vitaPremiumSettings) > .sheet{
+  flex:0 0 min(490px,43vw)!important;
+  flex-basis:min(490px,43vw)!important;
+  width:min(490px,43vw)!important;
+  max-width:min(490px,43vw)!important;
+  min-width:0!important;
+  height:100dvh!important;max-height:100dvh!important;
+  border-radius:22px 0 0 22px!important;
+  margin:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+ }
+ /* Make right cards tall enough for their content. Don't mask rows. */
+ #app:has(.homeStack){
+  grid-template-rows:auto minmax(245px,max-content) minmax(205px,max-content) auto auto!important;
+  align-items:stretch!important
+ }
+ #app:has(.homeStack) .homeStack > .homeWide.supplier{
+  min-height:245px!important;height:auto!important;max-height:none!important;
+  overflow:visible!important
+ }
+ #app:has(.homeStack) .homeStack > .homeWide.money{
+  min-height:205px!important;height:auto!important;max-height:none!important
+ }
+ #app:has(.homeStack) > .homeWide.agendaCard{
+  min-height:463px!important;height:auto!important;max-height:none!important
+ }
+ /* Replace old horizontal rectangular header shines with soft optical radial glow. */
+ #app:has(.homeStack) .homeWide::before,
+ #app:has(.homeStack) .vitaHomeSavingsCompact::before{
+  content:""!important;position:absolute!important;inset:0!important;
+  width:auto!important;height:auto!important;border-radius:inherit!important;
+  background:radial-gradient(ellipse 48% 46% at var(--v4-x,65%) var(--v4-y,15%),#d1ebff14,transparent 100%)!important;
+  z-index:0!important;opacity:.78!important;pointer-events:none!important
+ }
+ #app:has(.homeStack) .homeWide::after,
+ #app:has(.homeStack) .vitaHomeSavingsCompact::after{
+  background:radial-gradient(circle 205px at var(--v4-x,65%) var(--v4-y,15%),#d8f2ff23,transparent 74%)!important;
+  border-radius:inherit!important;opacity:.42!important
+ }
+ #app:has(.homeStack) .homeWide:hover::after,
+ #app:has(.homeStack) .vitaHomeSavingsCompact:hover::after{opacity:.83!important}
+ /* The financial rows stay visible if more than two entries are present. */
+ #app:has(.homeStack) .homeWide.supplier .dashRows,
+ #app:has(.homeStack) .homeWide.supplier .dashRow{
+  max-height:none!important;overflow:visible!important
+ }
+}
+@media(min-width:1024px) and (pointer:fine) and (max-width:1180px){
+ #overlay.show:has(#sheetContent .vitaPremiumSettings) > .sheet{
+  flex:0 0 min(460px,48vw)!important;flex-basis:min(460px,48vw)!important;
+  width:min(460px,48vw)!important;max-width:min(460px,48vw)!important
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #app:has(.homeStack) .homeWide::after,
+ #app:has(.homeStack) .vitaHomeSavingsCompact::after{transition:none!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
