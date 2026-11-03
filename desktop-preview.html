@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0d1626">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Vita Premium — Desktop Preview</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0b1320;color:#edf3fc;font-size:15px}
+*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #74c5f8;outline-offset:3px}
+.shell{display:grid;grid-template-columns:244px minmax(0,1fr);min-height:100vh}.shell.compact{grid-template-columns:76px minmax(0,1fr)}
+aside{position:sticky;top:0;align-self:start;height:100vh;background:#111e30;border-right:1px solid #293c54;display:flex;flex-direction:column;padding:24px 15px 19px;gap:24px}
+.brand{display:flex;align-items:center;gap:12px;padding:3px 9px}.mark{width:38px;height:38px;background:linear-gradient(135deg,#ffb065,#f47d27);border-radius:12px;display:grid;place-items:center;color:#17243b;font-size:22px;font-weight:900;box-shadow:0 4px 25px #f68a3729}.brand-name{font-size:19px;letter-spacing:2px;font-weight:800}.brand-sub{font-size:10px;color:#899eb9;letter-spacing:1.4px}
+nav{display:grid;gap:7px}nav button{display:flex;align-items:center;gap:13px;text-align:left;background:transparent;border:1px solid transparent;color:#acbed5;min-height:45px;padding:0 14px;border-radius:12px;font-size:14px;white-space:nowrap}nav button:hover{background:#1b304a;color:#fff}nav button.active{background:#263c59;border-color:#345678;color:#fff;box-shadow:inset 3px 0 0 #f5a45c}nav .ico{width:24px;flex-shrink:0;font-size:19px;text-align:center}nav button.active .ico{color:#ffad62}
+.sidebar-bottom{margin-top:auto;border-top:1px solid #2a3b51;padding-top:16px;display:grid;gap:11px}
+.test-label{font-size:11px;color:#f3bd86;background:#55341f;border-radius:50px;padding:7px 10px;text-align:center}
+.collapse{background:#1e3048;border:1px solid #39516a;border-radius:10px;color:#bfd2e7;padding:9px}
+.compact .brand{justify-content:center;padding:0}.compact .brand-name,.compact .brand-sub,.compact nav .label,.compact .test-label{display:none}.compact nav button{justify-content:center;padding:0}
+main{padding:34px clamp(22px,4vw,64px);min-width:0}.content{max-width:1370px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
+.kicker{text-transform:uppercase;letter-spacing:2.4px;color:#85a9d2;font-size:11px;font-weight:700}
+h1{font-size:29px;letter-spacing:-.8px;margin:5px 0 6px;font-weight:770}h2{font-size:17px;margin:0;font-weight:730}p{margin:0}.muted{color:#a5b8ce;font-size:13px}.actions{display:flex;gap:10px;align-items:center}.today{color:#cfdded;background:#1a2a42;border:1px solid #334962;border-radius:11px;padding:10px 14px;font-size:13px}.avatar{width:42px;height:42px;border:1px solid #ed9a50;background:#372737;border-radius:50%;display:grid;place-items:center;color:#ffc98b;font-size:20px}
+.banner{display:flex;justify-content:space-between;gap:20px;align-items:center;border:1px solid #65533d;background:linear-gradient(105deg,#312b36,#1d2e43 75%);padding:13px 18px;border-radius:14px;margin-bottom:22px}.banner strong{font-size:13px;color:#ffd3a5}.banner span{font-size:12px;color:#b9c8da}
+.dashboard{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,1fr);gap:18px}
+.panel{border:1px solid #344f6d;background:linear-gradient(145deg,#1d324e,#192a42);border-radius:19px;padding:21px;min-width:0;box-shadow:0 10px 30px #00000018}
+.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}.eyebrow{font-weight:760;color:#bdd2ed;font-size:12px;letter-spacing:1.2px;text-transform:uppercase}.link{background:none;border:0;color:#9acbf5;font-size:13px;padding:4px 0}.task-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.stat{background:#16273f;border:1px solid #2d4561;padding:14px;border-radius:14px}.stat strong{display:block;font-size:26px;line-height:1.2;font-variant-numeric:tabular-nums}.stat span{font-size:12px;color:#abc0d8}.danger{color:#ff8d96}.blue{color:#95d6fa}.green{color:#83e0ba}
+.task-list{display:grid;gap:9px}.task{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 14px;background:#1a2b43;border:1px solid #34516c;border-radius:11px;min-height:55px}.task .task-main{font-size:13px;font-weight:650}.task small{display:block;color:#9fb6ce;margin-top:4px;font-size:11px}.dot{width:8px;height:8px;border-radius:50%;background:#ff8e91;flex-shrink:0}.task-time{color:#a8bdd4;font-size:12px;white-space:nowrap}.task.today-task .dot{background:#7ebfe8}
+.right-stack{display:grid;gap:18px;align-content:start}.compact-card{padding:20px;min-height:154px}.metric{font-size:28px;font-weight:790;letter-spacing:-.7px;line-height:1.3;margin:12px 0 4px;font-variant-numeric:tabular-nums}.badge{display:inline-block;background:#264d42;color:#89e0bd;border-radius:7px;padding:4px 8px;font-size:11px;font-weight:700}.badge.warn{background:#51343b;color:#ffb0b4}
+.double{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.tint-purple{border-color:#5d4b83;background:linear-gradient(135deg,#302b51,#202b46)}.tint-teal{border-color:#3c6e78;background:linear-gradient(135deg,#1b4248,#1c2f48)}.tint-orange{border-color:#7a5b42;background:linear-gradient(135deg,#403143,#1d2c45)}.subrow{display:flex;justify-content:space-between;gap:12px;margin-top:13px;align-items:center;color:#bad0e8;font-size:12px}
+.segmented{display:flex;gap:4px;border:1px solid #364c65;background:#15243b;border-radius:10px;padding:3px}.segmented button{border:0;background:transparent;padding:7px 10px;color:#96b2d0;font-size:12px;border-radius:7px}.segmented button.selected{background:#344e6d;color:#fff}
+.section-view{display:none}.section-view.visible{display:block}.subview{margin-top:20px}.subview .panel{max-width:860px}
+.compact-note{color:#8fa6bf;font-size:12px;margin-top:19px}
+@media(max-width:1100px){.dashboard{grid-template-columns:1fr}.right-stack{grid-template-columns:1fr 1fr}.double{grid-template-columns:1fr 1fr}}
+@media(max-width:730px){.shell,.shell.compact{display:block}aside{position:static;height:auto;padding:13px;gap:9px}nav{display:flex;overflow:auto}nav button{min-width:46px}.sidebar-bottom{display:none}.brand{padding:0 6px}nav .label{display:none}.compact .brand-name,.compact .brand-sub{display:block}main{padding:20px 14px}.top{align-items:flex-start}.actions .today{display:none}h1{font-size:24px}.right-stack,.double{grid-template-columns:1fr}.task-stats{gap:6px}.stat{padding:10px}.stat strong{font-size:22px}.banner{display:block}.banner span{display:block;margin-top:5px}}
+</style></head><body>
+<div class="shell" id="shell">
+<aside>
+ <div class="brand"><div class="mark">V</div><div><div class="brand-name">VITA</div><div class="brand-sub">PREMIUM DESKTOP</div></div></div>
+ <nav aria-label="Разделы">
+  <button class="active" data-view="home" aria-current="page"><span class="ico">⌂</span><span class="label">Главная</span></button>
+  <button data-view="calendar"><span class="ico">▦</span><span class="label">Календарь</span></button>
+  <button data-view="suppliers"><span class="ico">◇</span><span class="label">Поставщики</span></button>
+  <button data-view="debts"><span class="ico">⇄</span><span class="label">Деньги и долги</span></button>
+  <button data-view="investments"><span class="ico">▣</span><span class="label">Инвестиции</span></button>
+  <button data-view="savings"><span class="ico">＄</span><span class="label">Сбережения</span></button>
+ </nav>
+ <div class="sidebar-bottom"><div class="test-label">● ТЕСТОВЫЙ МАКЕТ</div><button class="collapse" id="collapse">◧ <span class="collapse-label">Свернуть меню</span></button></div>
+</aside>
+<main><div class="content">
+ <div class="top"><div><div class="kicker">Личное пространство</div><h1 id="page-title">Главная</h1><p class="muted" id="subtitle">Важное сегодня — без лишней информации</p></div><div class="actions"><div class="today">Демонстрация · 3 ноября</div><div class="avatar" aria-label="Профиль">✦</div></div></div>
+ <div class="banner"><strong>✦ Дизайн-прототип, не основная Vita</strong><span>Вымышленные суммы и задачи · без доступа к данным и облаку</span></div>
+ <section class="section-view visible" id="view-home">
+ <div class="dashboard">
+  <article class="panel">
+   <div class="panel-heading"><span class="eyebrow">Задачи и напоминания</span><button class="link" data-go="calendar">Все задачи ↗</button></div>
+   <div class="task-stats"><div class="stat"><strong class="danger">4</strong><span>Просрочены</span></div><div class="stat"><strong class="blue">2</strong><span>Сегодня</span></div><div class="stat"><strong class="green">6</strong><span>На неделе</span></div></div>
+   <div class="task-list">
+    <div class="task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Проверить документы</div><small>Проект: Личный · Просрочено</small></div></div><span class="task-time">13:00</span></div>
+    <div class="task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Согласовать поставку</div><small>Проект: Тестовый магазин · Просрочено</small></div></div><span class="task-time">14:30</span></div>
+    <div class="task today-task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Подготовить встречу</div><small>Проект: Личный · Сегодня</small></div></div><span class="task-time">16:00</span></div>
+    <div class="task today-task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Проверить отчёт</div><small>Проект: Бизнес · Сегодня</small></div></div><span class="task-time">18:00</span></div>
+   </div>
+  </article>
+  <div class="right-stack">
+   <article class="panel compact-card tint-orange"><div class="panel-heading"><span class="eyebrow">Поставщики</span><button class="link" data-go="suppliers">Открыть ↗</button></div><div class="metric">128 400 ₽</div><p class="muted">К оплате по тестовым поставкам</p><div class="subrow"><span>Авансы учитываются отдельно</span><span class="badge warn">2 записи</span></div></article>
+   <article class="panel compact-card"><div class="panel-heading"><span class="eyebrow">Деньги и долги</span><button class="link" data-go="debts">Открыть ↗</button></div><div class="metric">3 записи</div><p class="muted">Раздельный учёт: должны мне / должен я</p><div class="subrow"><span>Последняя запись: сегодня</span><span class="badge">Учтено</span></div></article>
+  </div>
+ </div>
+ <div class="double">
+  <article class="panel tint-purple"><div class="panel-heading"><span class="eyebrow">Инвестиции</span><button class="link" data-go="investments">Подробнее ↗</button></div><div class="metric">4 проекта</div><p class="muted">Вложения, доходность и операции</p><div class="subrow"><span>Отдельный учёт недвижимости</span><span>◈</span></div></article>
+  <article class="panel tint-teal"><div class="panel-heading"><span class="eyebrow">Сбережения</span><button class="link" data-go="savings">Подробнее ↗</button></div><div class="metric">3 вклада</div><p class="muted">Капитал, проценты и история операций</p><div class="subrow"><span>Данные макета, не реальные счета</span><span>◎</span></div></article>
+ </div>
+ </section>
+ <section class="section-view" id="view-other"><article class="panel subview"><div class="panel-heading"><span class="eyebrow" id="other-heading"></span><span class="badge">Макет</span></div><h2 id="other-title"></h2><p class="muted" style="margin-top:12px;max-width:580px">Сейчас мы утверждаем главную страницу и навигацию на MacBook. После согласования отдельно адаптируем этот раздел под работу с таблицами, фильтрами и компактными формами. Ни одна настоящая запись не открывается.</p><p style="margin-top:22px"><button class="link" data-go="home">← Вернуться на главную</button></p></article></section>
+ <p class="compact-note">Vita Premium Desktop · только визуальная демонстрация · локальные данные Vita и ключи хранения не затрагиваются</p>
+</div></main></div>
+<script>
+'use strict';
+const titles={home:'Главная',calendar:'Календарь',suppliers:'Поставщики',debts:'Деньги и долги',investments:'Инвестиции',savings:'Сбережения'};
+function showView(view){if(!titles[view])return;
+ document.querySelectorAll('nav button').forEach(b=>{const on=b.dataset.view===view;b.classList.toggle('active',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ document.querySelector('#view-home').classList.toggle('visible',view==='home');
+ document.querySelector('#view-other').classList.toggle('visible',view!=='home');
+ document.querySelector('#page-title').textContent=titles[view];
+ document.querySelector('#subtitle').textContent=view==='home'?'Важное сегодня — без лишней информации':'Предпросмотр раздела для MacBook';
+ if(view!=='home'){document.querySelector('#other-heading').textContent=titles[view];document.querySelector('#other-title').textContent='Раздел «'+titles[view]+'»'}
+}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.go)));
+document.querySelector('#collapse').addEventListener('click',()=>{const c=document.querySelector('#shell').classList.toggle('compact');document.querySelector('.collapse-label').textContent=c?'Развернуть меню':'Свернуть меню'});
+</script></body></html>
