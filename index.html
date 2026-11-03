@@ -1661,6 +1661,54 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #overlay #sheetContent .vitaMacDateHint{margin-top:6px!important}
  #overlay.show:has(.vitaTaskFormHeader) .vitaTaskHint{margin-top:6px!important}
 }
+</style><style id="vita-cosmic-task-list-v54">
+/* Cosmic V5.4 compact task list — Mac only. No changes to storage, notifications, or iPhone. */
+@media(min-width:1024px) and (pointer:fine){
+ #app.safe:has(.vitaListV54){height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;align-content:start!important;padding-top:19px!important;padding-bottom:35px!important}
+ #app .vitaListV54{max-width:1300px;margin:0 auto;color:#ecf5ff}
+ #app .vitaListV54 *{box-sizing:border-box}
+ #app .vitaListV54 .vl54Head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:15px}
+ #app .vitaListV54 .vl54Eyebrow{font-size:10px;font-weight:800;letter-spacing:1.9px;color:#7cdcff}
+ #app .vitaListV54 h1{font-size:27px;margin:4px 0;line-height:1.2;color:#f0f8ff}
+ #app .vitaListV54 .vl54Sub{font-size:12px;color:#aac4de}
+ #app .vitaListV54 .vl54Controls{display:flex;gap:8px;flex-wrap:wrap}
+ #app .vitaListV54 button{cursor:pointer;font:inherit}
+ #app .vitaListV54 button:focus-visible{outline:2px solid #90ddff;outline-offset:2px}
+ #app .vitaListV54 .vl54Button{min-height:39px;border:1px solid #5480a8;background:#243f62;color:#d9efff;border-radius:11px;padding:8px 13px;font-size:12px}
+ #app .vitaListV54 .vl54Button:hover{border-color:#93ddff;background:#345479}
+ #app .vitaListV54 .vl54Primary{border-color:#ffaa65;background:linear-gradient(105deg,#f89835,#fb791f);color:white;font-weight:750}
+ #app .vitaListV54 .vl54Stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+ #app .vitaListV54 .vl54Stat{border:1px solid #4e7298a3;background:linear-gradient(140deg,#1b3556b9,#132641e8);border-radius:13px;padding:12px 15px;text-align:left;min-width:0}
+ #app .vitaListV54 .vl54Stat strong{display:block;font-size:24px;line-height:1;color:#c9ecff}
+ #app .vitaListV54 .vl54Stat span{display:block;margin-top:6px;font-size:11px;color:#a9c5db}
+ #app .vitaListV54 .vl54Stat.isLate strong{color:#ff9eaf}
+ #app .vitaListV54 .vl54Stat.isToday strong{color:#96d9ff}
+ #app .vitaListV54 .vl54Stat.isFuture strong{color:#a4e8d1}
+ #app .vitaListV54 .vl54Stat.isDone strong{color:#d1c3ff}
+ #app .vitaListV54 .vl54Sections{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+ #app .vitaListV54 .vl54Section{min-width:0;border:1px solid #567da59c;border-radius:16px;background:linear-gradient(145deg,#1e395ac7,#122943df);padding:10px 13px;box-shadow:inset 0 1px 0 #c7edff25,0 12px 30px #020a1b50}
+ #app .vitaListV54 .vl54Section.isLate{border-color:#a86584a6}
+ #app .vitaListV54 .vl54SectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:3px 3px 9px}
+ #app .vitaListV54 .vl54SectionHead h2{font-size:16px;margin:0;color:#d3ecff}
+ #app .vitaListV54 .vl54Section.isLate .vl54SectionHead h2{color:#ffa4b7}
+ #app .vitaListV54 .vl54Section.isToday .vl54SectionHead h2{color:#8fdbff}
+ #app .vitaListV54 .vl54Section.isFuture .vl54SectionHead h2{color:#9deacb}
+ #app .vitaListV54 .vl54SectionHead span{font-size:11px;padding:3px 8px;background:#233e60;border:1px solid #4a759c;border-radius:8px;color:#bedbf5}
+ #app .vitaListV54 .vl54Rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px}
+ #app .vitaListV54 .vl54Row{display:flex;align-items:center;gap:10px;min-width:0;min-height:53px;padding:8px 10px;border:1px solid #43668a88;border-radius:10px;background:#10263fa8}
+ #app .vitaListV54 .vl54Row:hover{background:#24446a;border-color:#6ba4cd}
+ #app .vitaListV54 .vl54Check{display:grid;place-items:center;flex:0 0 27px;width:27px;height:27px;border-radius:50%;border:2px solid #93b1cc;background:#11253f;color:#ecfff9;font-size:15px}
+ #app .vitaListV54 .vl54Section.isLate .vl54Check{border-color:#f2839f}
+ #app .vitaListV54 .vl54Row.isDone .vl54Check{border-color:#5adebb;background:#21775f}
+ #app .vitaListV54 .vl54Info{flex:1;min-width:0}
+ #app .vitaListV54 .vl54Info b{display:block;font-size:13px;font-weight:700;color:#f2f7ff;line-height:1.3;overflow-wrap:anywhere}
+ #app .vitaListV54 .vl54Info small{display:block;margin-top:4px;color:#a4bad2;font-size:11px;overflow-wrap:anywhere}
+ #app .vitaListV54 .vl54Edit{flex:0 0 auto;border:1px solid #477097;border-radius:8px;background:#254466;color:#c8e9ff;padding:7px 9px;font-size:11px}
+ #app .vitaListV54 .vl54Edit:hover{background:#365d85}
+ #app .vitaListV54 .vl54Empty{padding:14px 6px;color:#aec6d9;font-size:12px}
+ #app .vitaListV54 .vl54Foot{color:#9eb8d0;font-size:11px;margin:12px 2px 0}
+ @media(max-width:1200px){#app .vitaListV54 .vl54Rows{grid-template-columns:1fr}}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -2338,7 +2386,54 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
    '<p class="vc5Note">Напоминания создаются автоматически для задач с будущей датой и временем. Выполненные задачи удаляются через 7 суток.</p>'+
    '</section></div></div>';
  }
- views.tasks=function(){return desktop.matches&&listView?'<button class="vitaAllTasksBack" onclick="vitaV5List()">✦ Космический календарь</button>'+oldCalendar():desktop.matches?viewTasks():oldCalendar()};
+
+ function compactRow(t){
+  var id=esc(encodeURIComponent(String(t.id||''))),date=taskDate(t);
+  var stamp=t.date&&String(t.date).includes('T')?String(t.date).slice(11,16):'';
+  var when=date?formatDate(date,{day:'2-digit',month:'2-digit'}):'Без даты';
+  var details=when+(stamp?' · '+stamp:'')+' · '+projectName(t.project);
+  return '<div class="vl54Row'+(t.done?' isDone':'')+'">'+
+   '<button class="vl54Check" aria-label="'+(t.done?'Вернуть задачу':'Выполнить задачу')+'" onclick="vitaV5Toggle(\''+id+'\')">'+(t.done?'✓':'')+'</button>'+
+   '<div class="vl54Info"><b>'+esc(t.title||'Без названия')+'</b><small>'+esc(details)+'</small></div>'+
+   '<button class="vl54Edit" aria-label="Редактировать задачу" onclick="vitaV5Edit(\''+id+'\')">Изменить</button></div>';
+ }
+ function compactSection(name,items,state,allowEmpty){
+  if(!items.length&&!allowEmpty)return '';
+  return '<section class="vl54Section '+state+'"><div class="vl54SectionHead"><h2>'+name+'</h2><span>'+items.length+'</span></div>'+
+   (items.length?'<div class="vl54Rows">'+items.map(compactRow).join('')+'</div>':'<div class="vl54Empty">Нет задач</div>')+'</section>';
+ }
+ function compactList(){
+  var active=activeTasks().slice().sort(cmp),now=todayISO(),done=completedTasks();
+  var late=active.filter(function(t){return taskDate(t)&&taskDate(t)<now});
+  var today=active.filter(function(t){return taskDate(t)===now});
+  var future=active.filter(function(t){return taskDate(t)&&taskDate(t)>now});
+  var noDate=active.filter(function(t){return !taskDate(t)});
+  var history=vitaTaskMode==='done';
+  var buttons='<button class="vl54Button" onclick="vitaV5List()">✦ К календарю</button>'+
+   '<button class="vl54Button" onclick="vitaTaskSelect(\'day\')">Выбрать день</button>'+
+   '<button class="vl54Button" onclick="vitaTaskSelect(\''+(history?'overview':'done')+'\')">'+(history?'← Все дела':'✓ Выполненные ('+done.length+')')+'</button>'+
+   '<button class="vl54Button vl54Primary" onclick="vitaV5NewTask()">+ Добавить задачу</button>';
+  var stats='<div class="vl54Stats">'+
+   '<div class="vl54Stat isLate"><strong>'+late.length+'</strong><span>Просрочено</span></div>'+
+   '<div class="vl54Stat isToday"><strong>'+today.length+'</strong><span>Сегодня</span></div>'+
+   '<div class="vl54Stat isFuture"><strong>'+future.length+'</strong><span>Предстоит</span></div>'+
+   '<div class="vl54Stat isDone"><strong>'+done.length+'</strong><span>Выполнено</span></div></div>';
+  var sections=history?compactSection('Выполненные задачи',done,'isDone',true):
+   compactSection('Просрочено',late,'isLate',false)+
+   compactSection('Сегодня',today,'isToday',true)+
+   compactSection('Предстоящие',future,'isFuture',false)+
+   compactSection('Без даты',noDate,'isOther',false);
+  return '<div class="vitaListV54"><div class="vl54Head"><div><div class="vl54Eyebrow">VITA COSMIC · TASKS</div><h1>'+(history?'Выполненные задачи':'Мои дела')+'</h1>'+
+   '<div class="vl54Sub">'+(history?'Здесь можно вернуть задачу в работу':'Все важные дела на одном экране')+'</div></div><div class="vl54Controls">'+buttons+'</div></div>'+
+   stats+'<div class="vl54Sections">'+sections+'</div>'+
+   '<p class="vl54Foot">Выполненные задачи автоматически удаляются через 7 суток после завершения.</p></div>';
+ }
+ views.tasks=function(){
+  if(!desktop.matches)return oldCalendar();
+  if(!listView)return viewTasks();
+  if(vitaTaskMode==='overview'||vitaTaskMode==='done')return compactList();
+  return '<button class="vitaAllTasksBack" onclick="vitaTaskSelect(\'overview\')">‹ Все дела</button>'+oldCalendar();
+ };
 })();
 
 /* Desktop-only accessible date grid and explicit hour/minute selectors.
