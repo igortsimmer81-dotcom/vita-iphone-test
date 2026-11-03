@@ -1709,6 +1709,13 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #app .vitaListV54 .vl54Foot{color:#9eb8d0;font-size:11px;margin:12px 2px 0}
  @media(max-width:1200px){#app .vitaListV54 .vl54Rows{grid-template-columns:1fr}}
 }
+</style><style id="vita-cosmic-list-day-v55">
+@media(min-width:1024px) and (pointer:fine){
+ #app .vitaListV54 .vl54DayNav{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin:0 0 14px;background:linear-gradient(120deg,#1c3455,#132641);border:1px solid #547ca4;border-radius:13px;padding:11px 13px}
+ #app .vitaListV54 .vl54DayNav label{display:flex;flex:1;min-width:195px;align-items:center;gap:10px;color:#b6d8f2;font-size:12px}
+ #app .vitaListV54 .vl54DayNav input[type="date"]{flex:1;min-width:0;min-height:39px;border-radius:9px;border:1px solid #537fa8;background:#0e243e;color:#e5f5ff;padding:6px 10px;font:inherit;font-size:14px;color-scheme:dark}
+ #app .vitaListV54 .vl54DayNav .vl54Button{min-width:40px}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -2408,9 +2415,10 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
   var today=active.filter(function(t){return taskDate(t)===now});
   var future=active.filter(function(t){return taskDate(t)&&taskDate(t)>now});
   var noDate=active.filter(function(t){return !taskDate(t)});
-  var history=vitaTaskMode==='done';
+  var history=vitaTaskMode==='done',dayView=vitaTaskMode==='day';
   var buttons='<button class="vl54Button" onclick="vitaV5List()">✦ К календарю</button>'+
-   '<button class="vl54Button" onclick="vitaTaskSelect(\'day\')">Выбрать день</button>'+
+   (dayView?'<button class="vl54Button" onclick="vitaTaskSelect(\'overview\')">← Все дела</button>':'')+
+   (!dayView&&!history?'<button class="vl54Button" onclick="vitaTaskSelect(\'day\')">Выбрать день</button>':'')+
    '<button class="vl54Button" onclick="vitaTaskSelect(\''+(history?'overview':'done')+'\')">'+(history?'← Все дела':'✓ Выполненные ('+done.length+')')+'</button>'+
    '<button class="vl54Button vl54Primary" onclick="vitaV5NewTask()">+ Добавить задачу</button>';
   var stats='<div class="vl54Stats">'+
@@ -2418,21 +2426,27 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
    '<div class="vl54Stat isToday"><strong>'+today.length+'</strong><span>Сегодня</span></div>'+
    '<div class="vl54Stat isFuture"><strong>'+future.length+'</strong><span>Предстоит</span></div>'+
    '<div class="vl54Stat isDone"><strong>'+done.length+'</strong><span>Выполнено</span></div></div>';
+  var chosen=dayView?active.filter(function(t){return taskDate(t)===vitaDay}):[];
+  var dayNav=dayView?'<div class="vl54DayNav"><button class="vl54Button" onclick="vitaDayShift(-1)" aria-label="Предыдущий день">‹</button>'+
+   '<label>Дата <input type="date" aria-label="Выбрать дату" value="'+esc(vitaDay)+'" onchange="vitaDayChange(this.value)"></label>'+
+   '<button class="vl54Button" onclick="vitaDayShift(1)" aria-label="Следующий день">›</button>'+
+   '<button class="vl54Button" onclick="vitaDayChange(todayISO())">Сегодня</button></div>':'';
   var sections=history?compactSection('Выполненные задачи',done,'isDone',true):
+   dayView?compactSection('Задачи на '+formatDate(vitaDay,{day:'numeric',month:'long',year:'numeric'}),chosen,'isToday',true):
    compactSection('Просрочено',late,'isLate',false)+
    compactSection('Сегодня',today,'isToday',true)+
    compactSection('Предстоящие',future,'isFuture',false)+
    compactSection('Без даты',noDate,'isOther',false);
-  return '<div class="vitaListV54"><div class="vl54Head"><div><div class="vl54Eyebrow">VITA COSMIC · TASKS</div><h1>'+(history?'Выполненные задачи':'Мои дела')+'</h1>'+
-   '<div class="vl54Sub">'+(history?'Здесь можно вернуть задачу в работу':'Все важные дела на одном экране')+'</div></div><div class="vl54Controls">'+buttons+'</div></div>'+
-   stats+'<div class="vl54Sections">'+sections+'</div>'+
+  return '<div class="vitaListV54"><div class="vl54Head"><div><div class="vl54Eyebrow">VITA COSMIC · TASKS</div><h1>'+(history?'Выполненные задачи':dayView?'Выбранный день':'Мои дела')+'</h1>'+
+   '<div class="vl54Sub">'+(history?'Здесь можно вернуть задачу в работу':dayView?'Дела на выбранную дату':'Все важные дела на одном экране')+'</div></div><div class="vl54Controls">'+buttons+'</div></div>'+
+   dayNav+stats+'<div class="vl54Sections">'+sections+'</div>'+
    '<p class="vl54Foot">Выполненные задачи автоматически удаляются через 7 суток после завершения.</p></div>';
  }
  views.tasks=function(){
   if(!desktop.matches)return oldCalendar();
   if(!listView)return viewTasks();
-  if(vitaTaskMode==='overview'||vitaTaskMode==='done')return compactList();
-  return '<button class="vitaAllTasksBack" onclick="vitaTaskSelect(\'overview\')">‹ Все дела</button>'+oldCalendar();
+  if(vitaTaskMode==='overview'||vitaTaskMode==='done'||vitaTaskMode==='day')return compactList();
+  return oldCalendar();
  };
 })();
 
