@@ -1567,7 +1567,7 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
   max-width:min(570px,calc(100vw - 70px))!important;
   max-height:calc(100dvh - 55px)!important;
  }
- #overlay #sheetContent .vitaMacDateOriginal{display:none!important}
+ #overlay #sheetContent:has(.vitaTaskFormHeader) input.vitaMacDateOriginal{display:none!important}
  #overlay #sheetContent .vitaMacDatePicker{display:block;max-width:100%!important;margin:0 0 9px}
  #overlay #sheetContent .vitaMacDateBtn{
   width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
