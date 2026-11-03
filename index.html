@@ -2098,7 +2098,7 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
  'use strict';
  var desktop=window.matchMedia('(min-width:1024px) and (pointer:fine)');
  var oldCalendar=views.tasks;
- var selected=todayISO(),month=selected.slice(0,7),mode='day',showDone=false;
+ var selected=todayISO(),month=selected.slice(0,7),mode='day',showDone=false,listView=false;
  var monthNames=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
  function isoDate(s){var a=String(s).slice(0,10).split('-').map(Number);return new Date(a[0],a[1]-1,a[2])}
  function formatDate(s,opts){return isoDate(s).toLocaleDateString('ru-RU',opts)}
@@ -2121,7 +2121,8 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
  window.vitaV5Today=function(){selected=todayISO();month=selected.slice(0,7);showDone=false;render()};
  window.vitaV5Choose=function(s){if(!/^\d{4}-\d{2}-\d{2}$/.test(s))return;selected=s;month=s.slice(0,7);showDone=false;render()};
  window.vitaV5Mode=function(s){if(['day','week','month'].indexOf(s)<0)return;mode=s;showDone=false;render()};
- window.vitaV5Completed=function(){showDone=!showDone;render()};
+ window.vitaV5Completed=function(){showDone=!showDone;listView=false;render()};
+ window.vitaV5List=function(){listView=!listView;vitaTaskMode='overview';render()};
  window.vitaV5NewTask=function(){openForm('task');var input=document.getElementById('f_date');if(input&&!input.value)input.value=selected+'T09:00'};
  function viewTasks(){
   var active=activeTasks(),done=completedTasks(),now=todayISO();
@@ -2161,11 +2162,11 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
    (!showDone?'<details class="vc5Details"><summary>Просроченные задачи <span>'+overdue.length+' ▾</span></summary><div class="vc5DetailItems">'+(overdue.length?overdue.map(taskMarkup).join(''):'<div class="vc5EmptyMsg">Просроченных задач нет</div>')+'</div></details>':'')+
    '<div class="vc5Actions"><button class="vc5Add" onclick="vitaV5NewTask()">+ Добавить задачу / напоминание</button>'+
    '<button class="vc5Alt" onclick="vitaV5Completed()">'+(showDone?'← К календарю':'✓ Выполненные ('+done.length+')')+'</button>'+
-   '<button class="vc5Alt" onclick="vitaTaskSelect(\'overview\')">Список задач</button></div>'+
+   '<button class="vc5Alt" onclick="vitaV5List()">Список задач</button></div>'+
    '<p class="vc5Note">Напоминания создаются автоматически для задач с будущей датой и временем. Выполненные задачи удаляются через 7 суток.</p>'+
    '</section></div></div>';
  }
- views.tasks=function(){return desktop.matches?viewTasks():oldCalendar()};
+ views.tasks=function(){return desktop.matches&&listView?'<button class="vitaAllTasksBack" onclick="vitaV5List()">✦ Космический календарь</button>'+oldCalendar():desktop.matches?viewTasks():oldCalendar()};
 })();
 /* Run on app startup and after returning to the app; background timers may pause on iPhone. */
 vitaTaskRetentionSweep();
