@@ -1888,6 +1888,107 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #sheetContent .vitaV6PayPickerItem>span:last-child{font-size:24px;line-height:1;color:#8acfff}
  #sheetContent .vitaV6PayPickerItem:focus-visible{outline:2px solid #92ddff;outline-offset:-3px}
 }
+</style><style id="vita-cosmic-suppliers-v7">
+/* Vita Cosmic Suppliers V7: desktop presentation only. Supplier calculations and storage untouched. */
+@media(min-width:1024px) and (pointer:fine){
+ #app.safe:has(.vitaSupplierOverview){height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;align-content:start!important;padding-top:26px!important;padding-bottom:50px!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierOverview{max-width:1350px!important;margin:0 auto!important;width:100%}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierOverview .sectionTitle{font-size:29px!important;margin:0 0 6px!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierOverview .vitaSub{font-size:12px!important;color:#a9c5df!important;margin-bottom:15px!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;padding:0!important;max-width:1350px!important;width:100%!important;
+  margin:0 auto!important;background:transparent!important;border:0!important;
+  box-shadow:none!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine{
+  display:flex!important;min-height:110px!important;margin:0!important;padding:17px!important;
+  border:1px solid #5d98c8a8!important;border-radius:17px!important;
+  background:radial-gradient(240px circle at 85% 0%,#84d8ff12,transparent 90%),linear-gradient(140deg,#22426ae6,#132840f5)!important;
+  box-shadow:inset 0 1px 0 #e0f8ff38,0 12px 30px #01081985,0 0 22px #4898f21c!important;
+  transition:border-color .18s,background .18s!important;
+  cursor:pointer!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine:hover{border-color:#9ed9f7!important;background:linear-gradient(140deg,#2b527e,#1b3555)!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .vitaSupplierMark{
+  flex:0 0 43px!important;width:43px!important;height:43px!important;
+  border:1px solid #648db4!important;border-radius:12px!important;
+  background:#224b72!important;display:grid!important;place-items:center!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .grow{flex:1;min-width:0!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .grow b{font-size:17px!important;color:#f0f8ff!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .vitaSub{color:#a9c9e0!important;font-size:11px!important;margin-top:5px!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .vitaAdvanceGreen{color:#76e0bf!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .amount{font-size:17px!important;overflow-wrap:anywhere!important;white-space:normal!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .chev{flex:0 0 27px!important;width:27px!important;height:32px!important;display:grid!important;place-items:center!important;border-radius:9px!important;border:1px solid #578ab6!important;background:#26476d!important;color:#96daff!important}
+ #app:has(.vitaSupplierOverview)>.primary{width:min(400px,100%)!important;max-width:400px!important;min-height:49px!important;display:block!important;margin:17px auto 0!important;border-radius:12px!important}
+ #overlay.show:has(#sheetContent .vitaSupplierBalance),
+ #overlay.show:has(#sheetContent .vitaSupplierForm),
+ #overlay.show:has(#sheetContent .vitaPaymentHead),
+ #overlay.show:has(#sheetContent #se_product),
+ #overlay.show:has(#sheetContent #pe_date),
+ #overlay.show:has(#sheetContent #bp_amount){
+  align-items:center!important;justify-content:center!important;padding:22px!important;
+  background:#020819c9!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)
+ }
+ #overlay.show:has(#sheetContent .vitaSupplierBalance)>.sheet{
+  flex:0 0 min(820px,calc(100vw - 74px))!important;
+  flex-basis:min(820px,calc(100vw - 74px))!important;
+  width:min(820px,calc(100vw - 74px))!important;
+  max-width:min(820px,calc(100vw - 74px))!important;
+  max-height:min(86dvh,840px)!important;height:auto!important;
+  margin:auto!important;overflow-y:auto!important;overflow-x:hidden!important;
+  padding:21px 23px 25px!important;border:1px solid #7ab7df!important;border-radius:21px!important;
+  background:radial-gradient(ellipse at 92% 0%,#36599d38,transparent 60%),linear-gradient(150deg,#1b3454,#101d30)!important;
+  box-shadow:0 27px 75px #000c,0 0 35px #4a9bf423!important
+ }
+ #overlay.show:has(#sheetContent .vitaSupplierForm)>.sheet,
+ #overlay.show:has(#sheetContent .vitaPaymentHead)>.sheet,
+ #overlay.show:has(#sheetContent #se_product)>.sheet,
+ #overlay.show:has(#sheetContent #pe_date)>.sheet{
+  flex:0 0 min(575px,calc(100vw - 74px))!important;
+  flex-basis:min(575px,calc(100vw - 74px))!important;
+  width:min(575px,calc(100vw - 74px))!important;
+  max-width:min(575px,calc(100vw - 74px))!important;
+  max-height:min(85dvh,830px)!important;height:auto!important;margin:auto!important;
+  padding:22px 23px 25px!important;overflow-y:auto!important;overflow-x:hidden!important;
+  border-radius:20px!important;border:1px solid #6fa3d0!important;
+  background:linear-gradient(145deg,#1d3554,#111e33)!important;
+  box-shadow:0 25px 75px #000c!important
+ }
+ #overlay.show:has(#sheetContent .vitaSupplierBalance) .handle,
+ #overlay.show:has(#sheetContent .vitaSupplierForm) .handle,
+ #overlay.show:has(#sheetContent .vitaPaymentHead) .handle{display:none!important}
+ #overlay.show:has(#sheetContent .vitaSupplierBalance) .sheetClose,
+ #overlay.show:has(#sheetContent .vitaSupplierForm) .sheetClose,
+ #overlay.show:has(#sheetContent .vitaPaymentHead) .sheetClose{
+  width:39px!important;height:39px!important;min-height:39px!important;
+  border-radius:11px!important;background:#294467!important;border-color:#6d91b9!important
+ }
+ #overlay #sheetContent .supplierHero{margin:0 42px 11px 0!important;padding:0!important}
+ #overlay #sheetContent .supplierHero h2{font-size:24px!important;margin:2px 0 9px!important}
+ #overlay #sheetContent .supplierHero .brand{color:#94dcff!important;letter-spacing:1.5px!important;font-size:10px!important}
+ #overlay #sheetContent .vitaSupplierBalance{margin:6px 0 12px!important;padding:13px 16px!important;border:1px solid #538ac2!important;border-radius:14px!important}
+ #overlay #sheetContent .vitaSupplierBalance>.amount{font-size:24px!important}
+ #overlay #sheetContent .vitaSupplierBalance .quickgrid{gap:8px!important;margin-top:9px!important}
+ #overlay #sheetContent .vitaSupplierBalance .quickgrid>div{padding:9px 10px!important;background:#19345096!important;border-radius:10px!important}
+ #overlay #sheetContent .vitaHeading{font-size:16px!important;margin:15px 0 8px!important}
+ #overlay #sheetContent .vitaSupplierForm h2{font-size:23px!important;margin:0 46px 13px 0!important}
+ #overlay #sheetContent .vitaSupplierForm .field{margin:10px 0!important}
+ #overlay #sheetContent .vitaSupplierForm .field label{font-size:12px!important;margin-bottom:5px!important}
+ #overlay #sheetContent .vitaSupplierForm .field input,
+ #overlay #sheetContent .vitaSupplierForm .field select{min-height:43px!important;height:43px!important;font-size:14px!important}
+ #overlay #sheetContent .vitaSupplierForm .field textarea{min-height:65px!important;font-size:14px!important}
+ #overlay #sheetContent .vitaSupplierForm .primary{min-height:46px!important}
+ #overlay #sheetContent .vitaSupplierBalance~.quickgrid{margin-top:11px!important;gap:10px!important}
+ #overlay #sheetContent .vitaSupplierBalance~.quickgrid>button{min-height:43px!important;border-radius:11px!important}
+ #overlay #sheetContent .saleCard{border-radius:12px!important;margin:7px 0!important}
+ #overlay #sheetContent .saleInner{padding:10px 12px!important}
+ #overlay #sheetContent .vitaArchive{margin-top:12px!important}
+}
+@media(min-width:1024px) and (pointer:fine) and (max-width:1180px){
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList{grid-template-columns:1fr!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
