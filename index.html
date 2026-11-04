@@ -2994,6 +2994,37 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #app>.vitaDebtOverview>.vitaMoneyColumn .vitaMoneyRows{max-height:calc(100dvh - 330px)!important}
  #overlay.show:has(#sheetContent #dp_amount)>.sheet{max-height:calc(100dvh - 74px)!important}
 }
+</style><style id="vita-cosmic-money-final-v3">
+@media(min-width:1024px) and (pointer:fine){
+ /* Remove legacy duplicate strapline; keep the cosmic halo behind the section. */
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview::before{
+  content:""!important;position:absolute!important;z-index:-1!important;inset:-8px -8px 0!important;
+  display:block!important;margin:0!important;font-size:0!important;pointer-events:none!important;border-radius:27px!important;
+  background:radial-gradient(ellipse 58% 45% at 7% 8%,#237fbd30,transparent 80%),radial-gradient(ellipse 52% 38% at 95% 3%,#9c47c92e,transparent 80%)!important
+ }
+ #app>.vitaDebtOverview>.sectionTitle::before{content:"VITA / COSMIC FINANCIAL SPACE"!important}
+ /* A true action button using the existing debt form; never writes until user confirms. */
+ #app>.vitaDebtOverview>.vitaCosmicMoneyActions{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:-4px 0 15px!important}
+ #app>.vitaDebtOverview>.vitaCosmicMoneyActions button{display:inline-flex;justify-content:center;align-items:center;min-height:45px;min-width:190px;padding:11px 20px;border:1px solid #ffb783;border-radius:13px;color:#fff;font-weight:850;font-size:14px;cursor:pointer;
+ background:linear-gradient(110deg,#f7952e,#e57127)!important;box-shadow:inset 0 1px #fff4,0 9px 27px #f47b2b35!important;transition:transform .16s,filter .16s}
+ #app>.vitaDebtOverview>.vitaCosmicMoneyActions button:hover{transform:translateY(-1px);filter:brightness(1.08)}
+ #app>.vitaDebtOverview>.vitaCosmicMoneyActions button:focus-visible{outline:3px solid #88ebff;outline-offset:3px}
+ /* Keep totals visible while scrolling only the debt holders. */
+ #app>.vitaDebtOverview>.vitaMoneyColumns{align-items:start!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn{display:flex!important;flex-direction:column!important;height:calc(100dvh - 350px)!important;min-height:355px!important;max-height:650px!important;overflow:hidden!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn>.vitaMetric{flex:0 0 auto!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn>.vitaMoneyRows{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7195c1 transparent}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine[data-vita-debt]{
+  flex:0 0 auto!important;min-height:77px!important;margin-bottom:9px!important;
+  border-radius:15px!important;box-shadow:inset 0 1px #d3e9ff18,0 4px 10px #0003!important
+ }
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isMine .vitaLine[data-vita-debt]{background:linear-gradient(120deg,#265d826b,#132e514f)!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe .vitaLine[data-vita-debt]{background:linear-gradient(120deg,#62458660,#24295065)!important}
+}
+@media(min-width:1024px) and (pointer:fine) and (max-height:760px){
+ #app>.vitaDebtOverview>.vitaMoneyColumn{height:calc(100dvh - 320px)!important;min-height:270px!important}
+ #app>.vitaDebtOverview>.vitaCosmicMoneyActions{margin-bottom:10px!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -4031,6 +4062,11 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
   panels.appendChild(buildColumn('toMe',ms[0],mine));
   panels.appendChild(buildColumn('iOwe',ms[1],owe));
   metrics.remove();list.replaceWith(panels);
+  var moneyActions=document.createElement('div');moneyActions.className='vitaCosmicMoneyActions';
+  var newDebt=document.createElement('button');newDebt.type='button';newDebt.textContent='＋ Новый долг';
+  newDebt.setAttribute('onclick',"openForm('debt')");
+  moneyActions.appendChild(newDebt);
+  panels.parentNode.insertBefore(moneyActions,panels);
   return root.innerHTML;
  };
  var previousApply=window.vitaDebtApply;
