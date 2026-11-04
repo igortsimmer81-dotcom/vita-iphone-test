@@ -2140,6 +2140,83 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
 @media(prefers-reduced-motion:reduce){
  #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine{transition:none!important}
 }
+</style><style id="vita-cosmic-supplier-clarity-v72">
+/* Mac-only supplier UX: calendar popover, unobstructed figures, labeled payments. */
+@media(min-width:1024px) and (pointer:fine){
+ #overlay #sheetContent:has(.vitaSupplierBalance) .saleCard{display:flex!important;flex-direction:column!important}
+ #overlay #sheetContent:has(.vitaSupplierBalance) .saleCard .saleInner{
+  width:100%!important;transform:none!important;transition:none!important;
+  position:relative!important;order:0!important;min-width:0!important
+ }
+ #overlay #sheetContent:has(.vitaSupplierBalance) .saleCard .swipeDelete{
+  position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;
+  order:1!important;align-self:flex-end!important;width:auto!important;height:auto!important;
+  min-height:30px!important;padding:5px 12px!important;margin:0 10px 9px 0!important;
+  background:#3c1b36a8!important;color:#ffb0c5!important;
+  border:1px solid #9f5270ad!important;border-radius:8px!important;
+  font-size:11px!important;line-height:1.1!important;font-weight:650!important
+ }
+ #overlay #sheetContent:has(.vitaSupplierBalance) .saleCard .swipeDelete:hover{
+  background:#6b2949!important;border-color:#ff8eaf!important
+ }
+ #overlay #sheetContent:has(.vitaSupplierBalance) .tapHint{display:none!important}
+ #overlay #sheetContent .vitaSupplierClarity{
+  font-size:12px!important;line-height:1.45!important;color:#b7d7f0!important;
+  padding:10px 12px!important;margin:10px 0!important;
+  border:1px solid #428cb281!important;border-radius:11px!important;
+  background:linear-gradient(115deg,#103152c9,#20254ac9)!important
+ }
+ #overlay #sheetContent .vitaSupplierClarity strong{color:#8ff1d9!important}
+ #overlay #sheetContent #bp_date.vitaPayDateNative{display:none!important}
+ #overlay #sheetContent .vitaPayDateButton{
+  width:100%!important;display:flex!important;justify-content:space-between!important;align-items:center!important;
+  min-height:44px!important;padding:9px 13px!important;border:1px solid #53a2ca!important;
+  border-radius:11px!important;color:#eaf8ff!important;text-align:left!important;
+  font-size:14px!important;background:#0b2441!important;cursor:pointer!important
+ }
+ #overlay #sheetContent .vitaPayDateButton::after{content:"▦";font-size:22px;color:#58e2f7}
+ #overlay #sheetContent .vitaPayDateCalendar[hidden]{display:none!important}
+ #overlay #sheetContent .vitaPayDateCalendar{
+  position:fixed!important;inset:auto!important;
+  left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;
+  width:min(440px,calc(100vw - 90px))!important;max-height:calc(100dvh - 90px)!important;
+  overflow-y:auto!important;z-index:50!important;
+  border:1px solid #73d9f8!important;border-radius:17px!important;
+  padding:17px!important;margin:0!important;
+  background:linear-gradient(155deg,#1c3464,#101d3f 65%,#092a40)!important;
+  box-shadow:0 0 0 999px #010615b5,0 24px 75px #000e,0 0 28px #31d7f75c!important
+ }
+ #overlay #sheetContent .vitaPayDateCalendarTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+ #overlay #sheetContent .vitaPayDateCalendarTop strong{color:#f0f9ff;font-size:17px}
+ #overlay #sheetContent .vitaPayDateCalendarTop button{
+  min-width:39px!important;width:39px!important;height:38px!important;min-height:38px!important;
+  border:1px solid #5a99c2!important;border-radius:9px!important;
+  background:#24496b!important;color:#e4f8ff!important;padding:0!important
+ }
+ #overlay #sheetContent .vitaPayDateWeekdays,
+ #overlay #sheetContent .vitaPayDateGrid{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:6px!important}
+ #overlay #sheetContent .vitaPayDateWeekdays{margin-bottom:7px!important}
+ #overlay #sheetContent .vitaPayDateWeekdays span{text-align:center;font-size:12px;color:#a9c5e6}
+ #overlay #sheetContent .vitaPayDateGrid button{
+  width:100%!important;min-height:44px!important;height:44px!important;
+  padding:4px!important;font-size:15px!important;font-weight:700!important;
+  border:1px solid #436f9b!important;border-radius:10px!important;
+  background:#142d51!important;color:#effbff!important
+ }
+ #overlay #sheetContent .vitaPayDateGrid button:hover{background:#295a83!important;border-color:#66dbff!important}
+ #overlay #sheetContent .vitaPayDateGrid button[aria-pressed="true"]{
+  background:#246799!important;border-color:#a4f1ff!important;
+  box-shadow:0 0 13px #35cfff58!important
+ }
+ #overlay #sheetContent .vitaPayDateGrid span{min-height:44px}
+ #overlay #sheetContent .vitaPayDateCalendarFooter{
+  display:flex;justify-content:space-between;gap:12px;margin-top:13px;color:#a9c9df;font-size:12px
+ }
+ #overlay #sheetContent .vitaPayDateCalendarFooter button{
+  background:#21436e!important;color:#d6f6ff!important;border:1px solid #5095c1!important;
+  padding:6px 12px!important;border-radius:9px!important
+ }
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -3033,6 +3110,92 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
   }
   originalCard.appendChild(business);originalCard.appendChild(realty);
   return root.innerHTML;
+ };
+})();
+
+
+/* Mac-only supplier clarity. Wrap existing sheet renderer without touching payments. */
+(function(){
+ 'use strict';
+ var desktop=window.matchMedia('(min-width:1024px) and (pointer:fine)');
+ var previous=window.showSheet;
+ var months=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+ function pad(n){return String(n).padStart(2,'0')}
+ function validDate(s){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;
+  var z=s.split('-').map(Number),d=new Date(z[0],z[1]-1,z[2]);
+  return z[0]===d.getFullYear()&&z[1]-1===d.getMonth()&&z[2]===d.getDate();
+ }
+ function fmtDate(s){
+  if(!validDate(s))return 'Выбрать дату оплаты';
+  var z=s.split('-').map(Number);
+  return new Date(z[0],z[1]-1,z[2]).toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ }
+ function paymentCalendar(){
+  var input=document.getElementById('bp_date');
+  if(!input||input.dataset.cosmicPaymentDate)return;
+  input.dataset.cosmicPaymentDate='1';
+  input.classList.add('vitaPayDateNative');
+  var field=input.parentElement;
+  var button=document.createElement('button');button.type='button';button.className='vitaPayDateButton';
+  button.setAttribute('aria-expanded','false');button.textContent=fmtDate(input.value);
+  input.insertAdjacentElement('afterend',button);
+  var popup=document.createElement('div');popup.className='vitaPayDateCalendar';popup.hidden=true;
+  popup.innerHTML='<div class="vitaPayDateCalendarTop"><button type="button" aria-label="Предыдущий месяц">‹</button><strong></strong><button type="button" aria-label="Следующий месяц">›</button></div>'+
+  '<div class="vitaPayDateWeekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>'+
+  '<div class="vitaPayDateGrid"></div><div class="vitaPayDateCalendarFooter"><span>Нажми на нужное число</span><button type="button">Закрыть</button></div>';
+  field.appendChild(popup);
+  var now=new Date(),selected=validDate(input.value)?input.value:'';
+  var parts=selected?selected.split('-').map(Number):[now.getFullYear(),now.getMonth()+1,now.getDate()];
+  var year=parts[0],month=parts[1]-1,heading=popup.querySelector('strong');
+  var grid=popup.querySelector('.vitaPayDateGrid'),nav=popup.querySelectorAll('.vitaPayDateCalendarTop button');
+  function toggle(open){popup.hidden=!open;button.setAttribute('aria-expanded',String(open));if(open)draw()}
+  function draw(){
+   heading.textContent=months[month]+' '+year;grid.replaceChildren();
+   var offset=(new Date(year,month,1).getDay()+6)%7,days=new Date(year,month+1,0).getDate();
+   var count=Math.ceil((offset+days)/7)*7;
+   for(var i=0;i<count;i++){
+    var n=i-offset+1;
+    if(n<1||n>days){grid.appendChild(document.createElement('span'));continue}
+    var iso=year+'-'+pad(month+1)+'-'+pad(n);
+    var day=document.createElement('button');day.type='button';day.textContent=String(n);
+    day.setAttribute('aria-label',fmtDate(iso));
+    day.setAttribute('aria-pressed',String(iso===selected));
+    day.addEventListener('click',function(value){return function(){
+     selected=value;input.value=value;input.dispatchEvent(new Event('change',{bubbles:true}));
+     button.textContent=fmtDate(value);toggle(false);
+    }}(iso));
+    grid.appendChild(day);
+   }
+  }
+  nav[0].addEventListener('click',function(){var d=new Date(year,month-1,1);year=d.getFullYear();month=d.getMonth();draw()});
+  nav[1].addEventListener('click',function(){var d=new Date(year,month+1,1);year=d.getFullYear();month=d.getMonth();draw()});
+  popup.querySelector('.vitaPayDateCalendarFooter button').addEventListener('click',function(){toggle(false)});
+  button.addEventListener('click',function(){toggle(popup.hidden)});
+  popup.addEventListener('keydown',function(e){if(e.key==='Escape'){toggle(false);button.focus()}});
+  input.addEventListener('change',function(){selected=validDate(input.value)?input.value:'';button.textContent=fmtDate(input.value)});
+ }
+ function noteAfter(reference,text){
+  if(!reference||!reference.parentElement)return;
+  var note=document.createElement('div');note.className='vitaSupplierClarity';note.textContent=text;
+  reference.insertAdjacentElement('afterend',note);
+ }
+ window.showSheet=function(content){
+  var result=previous(content);
+  if(!desktop.matches)return result;
+  var root=document.getElementById('sheetContent');
+  if(!root)return result;
+  var payment=root.querySelector('.vitaPaymentHead');
+  if(payment){
+   noteAfter(payment,'Новая оплата — только если деньги действительно переданы сейчас. Если сумма уже записана в авансе, вернись в карточку поставщика и нажми «Зачесть аванс» — повторно записывать оплату не нужно.');
+   paymentCalendar();
+  }else if(root.querySelector('.vitaSupplierBalance')){
+   var advanceButton=Array.from(root.querySelectorAll('button')).find(function(x){return x.textContent.includes('Зачесть аванс')});
+   if(advanceButton){
+    noteAfter(advanceButton,'Аванс уже учтён как переданные деньги, но ещё не распределён на товары. Нажми «Зачесть аванс», чтобы уменьшить остаток по товарам. Не создавай повторную оплату для тех же денег.');
+   }
+  }
+  return result;
  };
 })();
 
