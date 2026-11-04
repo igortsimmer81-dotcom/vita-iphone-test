@@ -2772,6 +2772,51 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
   #app .taskItem:focus-within,#app .vitaAgendaItem:focus-visible{outline:2px solid #8edbfa;outline-offset:2px}
 }
 @media(prefers-reduced-motion:reduce){#app .vitaAgendaItem,#app .taskItem{transition:none!important}}
+</style><style id="vita-cosmic-mac-six-sections-v2">
+/* Unified Mac-only design treatment: retains the existing functional HTML and storage. */
+@media (min-width:1024px) and (pointer:fine){
+ #app .sectionTitle{font-size:clamp(25px,2.6vw,34px)!important;letter-spacing:-.7px;color:#eff8ff;margin:6px 0 18px!important}
+ #app .vitaSub{color:#b7c9e1}
+ #app .vitaDateNav,#app .vitaCalendarHistoryNav{max-width:1200px;margin-left:auto;margin-right:auto}
+ #app .vitaDateNav{border:1px solid #608ab387;background:linear-gradient(125deg,#1d3657df,#242950e2);border-radius:17px;padding:11px;gap:10px}
+ #app .vitaDateNav input,#app .vitaDateNav button,#app .vitaCalendarHistoryNav button{background:#213b60!important;border:1px solid #5e8db7!important;border-radius:11px!important;color:#e9f6ff!important;min-height:44px}
+ #app .vitaHeading{color:#d5eaff;font-weight:800;letter-spacing:.2px}
+ #app .taskListCard{background:linear-gradient(140deg,#1d3455d9,#182842e6)!important;border:1px solid #588ab887!important;border-radius:19px!important;padding:8px 16px!important;box-shadow:0 12px 28px #02081750}
+ #app .taskItem{min-height:60px;border-bottom-color:#50709780!important;padding:13px 8px!important}
+ #app .taskItem .taskCheck{border-color:#6eacd3!important;color:#a1e6ff!important}
+ #app .vitaOverviewGroup{border-radius:20px!important;border:1px solid #608bb180!important;background:linear-gradient(138deg,#203758e8,#192841e8)!important;box-shadow:inset 0 1px #d9f8ff14,0 13px 28px #01091b60!important}
+ #app .vitaOverviewGroup.vitaOverviewLate{border-color:#a56f8b80!important;background:linear-gradient(125deg,#332b45de,#1b2b46e3)!important}
+ #app .vitaSupplierOverview .card,#app .vitaDebtOverview .card,#app .vitaInvestOverview .card{
+   border-radius:19px!important;border:1px solid #6b96c185!important;
+   background:linear-gradient(140deg,#223b5ee4,#172842ee 72%)!important;
+   box-shadow:inset 0 1px #d2e7ff24,0 14px 28px #030a1a70!important
+ }
+ #app .vitaSupplierOverview .vitaLine,#app .vitaInvestOverview .vitaLine,
+ #app .vitaDebtOverview .vitaLine{min-height:66px;border-bottom-color:#50749a65!important}
+ #app .vitaSupplierOverview .vitaLine:hover,#app .vitaInvestOverview .vitaLine:hover,
+ #app .vitaDebtOverview .vitaLine:hover{background:#3b527126;border-radius:11px}
+ #app .vitaSupplierOverview .vitaAdvanceGreen{color:#8eebc8!important}
+ #app .vitaDebtOverview .vitaMetric{border:1px solid #5e85b082!important;border-radius:17px!important;background:linear-gradient(135deg,#233e60d9,#1c2c4ae5)!important}
+ #app .vitaDebtOverview .quickgrid>.vitaMetric:first-child{border-left:3px solid #58d7b3!important}
+ #app .vitaDebtOverview .quickgrid>.vitaMetric:last-child{border-left:3px solid #cd8eb4!important}
+ #app .vitaDebtOverview .dashTotal.pos{color:#89ebcb!important}
+ #app .vitaDebtOverview .dashTotal.neg{color:#e5a5bd!important}
+ #app .vitaDebtOverview .noteSearchWrap input{background:#122b48!important;border:1px solid #527fb0!important;border-radius:12px!important;color:#eff9ff!important}
+ #app .vitaDebtOverview .vitaChips button{border-color:#5879a180!important;border-radius:11px!important}
+ #app .vitaInvestOverview .vitaBusinessHead{color:#b7dafa!important}
+ #app .vitaInvestOverview .vitaRealtyHead{color:#d3b7ff!important}
+ #app .vitaInvestOverview .vitaLine{border-radius:13px}
+ #app .vsPage{max-width:1200px!important;color:#e9f5ff}
+ #app .vsPage .vsCard{border:1px solid #65a3b88a!important;border-radius:20px!important;background:linear-gradient(135deg,#17404de0,#192b49e8 75%)!important;box-shadow:inset 0 1px #b6ffef24,0 13px 28px #010c1d60!important}
+ #app .vsPage .vsCard:focus-within{border-color:#80e9d4!important}
+ #app .vsPage .vsAmount{color:#e0fff8!important}
+ #app .primary{min-height:48px;border-radius:13px!important}
+ #app :is(button,input,select,textarea):focus-visible{outline:2px solid #91dfff!important;outline-offset:2px}
+}
+@media (min-width:1024px) and (pointer:fine) and (max-width:1180px){
+ #app .taskListCard{padding:7px 11px!important}
+ #app .vitaDebtOverview .dashTotal{font-size:clamp(17px,2vw,27px)!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
