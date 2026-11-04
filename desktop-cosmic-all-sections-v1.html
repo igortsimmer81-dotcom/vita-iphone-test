@@ -152,13 +152,17 @@ button:focus-visible,.month-day:focus-visible{outline:2px solid var(--cyan);outl
 <style id="cosmic-calendar-task-actions-v2">
 .cal-add-button{display:block;width:100%;margin-top:17px;padding:14px 18px;border:1px solid #ffbe82;border-radius:13px;background:linear-gradient(110deg,#ff932b,#ff6800);color:white;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px #fa742536}
 .cal-add-button:hover{filter:brightness(1.1)}
-.overdue{border-color:#ff6d9a;box-shadow:0 0 20px #ff4dcd1e;background:linear-gradient(135deg,#59264291,#27244dc0)}
-.overdue summary{color:#ffc2d2;list-style-position:inside;font-size:14px}
-.overdue .record,.record.is-overdue{border:1px solid #ff628eae;border-left:4px solid #ff587e;background:linear-gradient(120deg,#48243bc9,#281f40dc);box-shadow:inset 0 0 18px #ff50731a}
-.overdue .record strong,.record.is-overdue strong{color:#ffd2dc}
-.overdue .record small,.record.is-overdue small{color:#ff9ab8}
-.month-day.has-overdue{border-color:#dc658b99;background:linear-gradient(135deg,#352341,#172b48)}
-.month-day.has-overdue .mini-dots{color:#ff719c;text-shadow:0 0 9px #ff4dcd}
+.overdue{border-color:#a5688680;box-shadow:0 0 10px #ce789115;background:linear-gradient(135deg,#30283f9c,#202848c0)}
+.overdue summary{color:#eeb4c5;list-style-position:inside;font-size:14px}
+.overdue .record,.record.is-overdue{border:1px solid #9f68827d;border-left:3px solid #cb819f;background:linear-gradient(120deg,#322a43b7,#1b2b46c9);box-shadow:none}
+.overdue .record strong,.record.is-overdue strong{color:#f7e7ef}
+.overdue .record small,.record.is-overdue small{color:#cba6ba}
+.month-day.has-overdue{border-color:#a56d8980;background:linear-gradient(135deg,#292b45,#172b48)}
+.month-day.has-overdue .mini-dots{color:#e397b6;text-shadow:none}
+#view-home .task.overdue-task{background:linear-gradient(100deg,#302b45d9,#192a44c7);border-color:#a2688573;border-left:3px solid #c77f9d;box-shadow:inset 0 0 12px #cb75920b}
+#view-home .task.overdue-task .dot{background:#dc91ae;box-shadow:0 0 5px #dc91ae45}
+#view-home .task.overdue-task small{color:#d9afc1}
+#view-home .task.overdue-task .task-main{color:#f3eaf2}
 .cal-dialog{width:min(460px,calc(100% - 28px));border-radius:20px;border:1px solid #8d80e4;color:#f6f8ff;background:linear-gradient(145deg,#25264e,#102b45);box-shadow:0 20px 70px #000b,0 0 33px #895fff50;padding:0}
 .cal-dialog::backdrop{background:#020612bc;backdrop-filter:blur(6px)}
 .cal-form{display:grid;gap:15px;padding:24px}.cal-form h2{font-size:23px;margin:0}.cal-form label{display:grid;gap:7px;font-size:13px;color:#bbd7f4}.cal-form input{width:100%;min-width:0;padding:12px 13px;border-radius:11px;border:1px solid #547aa4;background:#0d2139;color:#fff;font:inherit;color-scheme:dark}.cal-form input:focus{outline:2px solid #00e5ff;outline-offset:1px}
@@ -186,8 +190,8 @@ button:focus-visible,.month-day:focus-visible{outline:2px solid var(--cyan);outl
    <div class="panel-heading"><span class="eyebrow">Задачи и напоминания</span><button class="link" data-go="calendar">Все задачи ↗</button></div>
    <div class="task-stats"><div class="stat"><strong class="danger">4</strong><span>Просрочены</span></div><div class="stat"><strong class="blue">2</strong><span>Сегодня</span></div><div class="stat"><strong class="green">6</strong><span>На неделе</span></div></div>
    <div class="task-list">
-    <div class="task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Проверить документы</div><small>Проект: Личный · Просрочено</small></div></div><span class="task-time">13:00</span></div>
-    <div class="task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Согласовать поставку</div><small>Проект: Тестовый магазин · Просрочено</small></div></div><span class="task-time">14:30</span></div>
+    <div class="task overdue-task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Проверить документы</div><small>Проект: Личный · Просрочено</small></div></div><span class="task-time">13:00</span></div>
+    <div class="task overdue-task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Согласовать поставку</div><small>Проект: Тестовый магазин · Просрочено</small></div></div><span class="task-time">14:30</span></div>
     <div class="task today-task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Подготовить встречу</div><small>Проект: Личный · Сегодня</small></div></div><span class="task-time">16:00</span></div>
     <div class="task today-task"><div style="display:flex;gap:12px;align-items:center"><i class="dot"></i><div><div class="task-main">Проверить отчёт</div><small>Проект: Бизнес · Сегодня</small></div></div><span class="task-time">18:00</span></div>
    </div>
