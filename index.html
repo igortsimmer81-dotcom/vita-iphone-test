@@ -2469,6 +2469,123 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
 @media(prefers-reduced-motion:reduce){
  #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.card>.vitaLine{transition:none!important}
 }
+</style><style id="vita-cosmic-money-v81">
+/* V8.1 polish. Desktop presentation only; no changes to debts/payment data or calculations. */
+@media(min-width:1024px) and (pointer:fine){
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric{
+  min-height:145px!important;padding:22px 24px 20px!important;
+  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+  justify-content:center!important;gap:7px!important;isolation:isolate!important;
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:first-child{
+  background:radial-gradient(ellipse 80% 160% at 90% -15%,#05a6cf28,transparent 79%),
+             linear-gradient(125deg,#102d4d 0%,#132a53 60%,#121e42 100%)!important;
+  border-color:#45cde5ad!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:nth-child(2){
+  background:radial-gradient(ellipse 80% 160% at 90% -15%,#8f4ec037,transparent 79%),
+             linear-gradient(125deg,#24204a 0%,#251e4b 65%,#161d3f 100%)!important;
+  border-color:#9c70d1ad!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric .dashLabel{
+  margin:0!important;font-size:13px!important;font-weight:750!important;
+  text-transform:none!important;letter-spacing:.4px!important;color:#c3d5ee!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric .dashTotal{
+  font-size:clamp(29px,3.25vw,45px)!important;
+  font-weight:850!important;line-height:1.12!important;letter-spacing:-1px!important;
+  margin:0!important;max-width:calc(100% - 66px)!important;
+  white-space:normal!important;overflow:visible!important;overflow-wrap:anywhere!important;
+  font-variant-numeric:tabular-nums!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:first-child .dashTotal{
+  color:#44eddb!important;text-shadow:0 0 23px #0ddcc63c!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:nth-child(2) .dashTotal{
+  color:#ffb0ce!important;text-shadow:0 0 22px #e58abc33!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric::before{
+  content:"Остаток по действующим долгам";display:block!important;
+  order:3!important;position:relative!important;color:#95b6d3!important;
+  font-size:11px!important;letter-spacing:.15px!important;margin-top:4px!important;
+  background:none!important;border:0!important;box-shadow:none!important;
+  width:auto!important;height:auto!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:first-child::after,
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:nth-child(2)::after{
+  position:absolute!important;top:22px!important;right:21px!important;
+  left:auto!important;bottom:auto!important;
+  display:grid!important;place-items:center!important;
+  width:45px!important;height:45px!important;padding:0!important;
+  border-radius:14px!important;font-size:25px!important;font-weight:700!important;
+  box-shadow:inset 0 1px 0 #baf2ff3a,0 0 20px #09bcf51e!important;
+  z-index:0!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:first-child::after{
+  content:"↙"!important;color:#6cf8dd!important;
+  background:linear-gradient(145deg,#144d68,#123755)!important;border:1px solid #49c9d0!important
+ }
+ #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.quickgrid>.vitaMetric:nth-child(2)::after{
+  content:"↗"!important;color:#ffb0d8!important;
+  background:linear-gradient(145deg,#4a305e,#30234f)!important;border:1px solid #a77dd8!important
+ }
+ #overlay.show:has(#sheetContent #f_direction)>.sheet{
+  max-height:min(80dvh,750px)!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  padding:22px 25px 25px!important
+ }
+ #overlay #sheetContent:has(> .field #f_direction){
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  column-gap:13px!important;row-gap:10px!important;align-content:start!important;
+  padding:0!important;margin:0!important
+ }
+ #overlay #sheetContent:has(> .field #f_direction)>h2{
+  grid-column:1/-1!important;display:block!important;
+  min-height:43px!important;line-height:1.22!important;
+  margin:0 40px 3px 0!important;padding:2px 0 0!important;
+  font-size:23px!important;letter-spacing:-.3px!important;
+  color:#f2f9ff!important;position:relative!important;z-index:1!important
+ }
+ #overlay #sheetContent:has(#f_direction)>.field{
+  margin:0!important;min-width:0!important;padding:0!important
+ }
+ #overlay #sheetContent:has(#f_direction)>.field label{
+  font-size:12px!important;line-height:1.35!important;color:#b7d0e9!important;
+  margin:0 0 5px!important
+ }
+ #overlay #sheetContent:has(#f_direction)>.field input,
+ #overlay #sheetContent:has(#f_direction)>.field select{
+  width:100%!important;min-width:0!important;height:44px!important;min-height:44px!important;
+  padding:8px 11px!important;
+  color:#f0faff!important;background:#091d3b!important;
+  border:1px solid #5088b6!important;border-radius:11px!important;
+  font-size:14px!important;box-shadow:none!important
+ }
+ #overlay #sheetContent:has(#f_direction)>.field textarea{
+  min-height:58px!important;max-height:115px!important;padding:11px!important;
+  color:#f0faff!important;background:#091d3b!important;
+  border:1px solid #5088b6!important;border-radius:11px!important;
+  font-size:14px!important
+ }
+ #overlay #sheetContent:has(#f_direction)>.field:has(#f_debtComment),
+ #overlay #sheetContent:has(#f_direction)>.field:has(#f_project){
+  grid-column:1/-1!important
+ }
+ #overlay #sheetContent:has(#f_direction)>button.primary{
+  grid-column:1/-1!important;width:100%!important;
+  min-height:47px!important;margin:4px 0 0!important;
+  border-radius:12px!important
+ }
+ #overlay.show:has(#sheetContent #f_direction) .sheetClose{
+  position:sticky!important;top:0!important;margin:-6px -7px -37px auto!important;
+  width:38px!important;height:38px!important;min-height:38px!important;
+  z-index:8!important;border-radius:10px!important
+ }
+}
+@media(min-width:1024px) and (pointer:fine) and (max-height:690px){
+ #overlay #sheetContent:has(#f_direction){row-gap:7px!important}
+ #overlay.show:has(#sheetContent #f_direction)>.sheet{padding-top:17px!important;padding-bottom:17px!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -3446,6 +3563,22 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
    if(advanceButton){
     noteAfter(advanceButton,'Переплата уже записана как переданные деньги, но ещё не распределена по товарам. Нажми «Использовать переплату», чтобы уменьшить остаток по товарам. Не создавай повторную оплату для тех же денег.');
    }
+  }
+  return result;
+ };
+})();
+
+
+/* Reset reused sheet scroll position only for the Mac new-debt form.
+   Keeps the original addDebt/save behaviour unchanged. */
+(function(){
+ var desktop=window.matchMedia('(min-width:1024px) and (pointer:fine)');
+ var previous=window.showSheet;
+ window.showSheet=function(content){
+  var result=previous(content);
+  if(desktop.matches&&String(content).includes('id="f_direction"')){
+   var sheet=document.querySelector('#overlay>.sheet');
+   if(sheet)sheet.scrollTop=0;
   }
   return result;
  };
