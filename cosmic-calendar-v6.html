@@ -120,6 +120,34 @@ main{padding:35px clamp(22px,3.8vw,58px) 58px;min-width:0}.wrap{max-width:1440px
 }
 @media(prefers-reduced-motion:reduce){.day{transition:none!important}}
 </style>
+
+<style id="cosmic-calendar-v6-macbook-fit">
+/* Fit six calendar rows and summary in a MacBook window without hiding content. */
+@media (min-width:1141px) and (max-height:950px){
+  main{padding-top:20px;padding-bottom:26px}
+  .top{margin-bottom:12px}
+  .notice{padding:9px 14px;margin-bottom:12px}
+  .panel{padding:16px 19px}
+  .panel:nth-child(2){min-height:0}
+  .head{margin-bottom:10px}
+  .weeknames,.days{gap:6px}
+  .weeknames{margin-bottom:4px}
+  .weeknames span{padding:4px 0}
+  .day{min-height:56px;padding:8px 10px;gap:4px}
+  .day-num{font-size:16px}
+  .summary{margin-top:12px}
+  .summary div{padding:8px 10px}
+  .summary b{font-size:22px}
+  .selected-header{margin:12px 0}
+  .task{min-height:60px;padding:12px}
+  .help{margin-top:10px}
+}
+@media (min-width:1141px) and (max-height:760px){
+  .day{min-height:47px;padding:6px 8px}
+  .top h1{font-size:25px}
+  .summary div{padding:6px 8px}
+}
+</style>
 </head><body>
 <div class="layout">
 <aside><div class="brand">✦ VITA<small>COSMIC · CALENDAR V6</small></div><nav><div>⌂　Главная</div><div class="active">▦　Календарь</div><div>◇　Поставщики</div><div>⇄　Деньги</div><div>▣　Инвестиции</div><div>＄　Сбережения</div></nav><div class="foot">✦ HOLOGRAPHIC PREVIEW</div></aside>
@@ -128,7 +156,7 @@ main{padding:35px clamp(22px,3.8vw,58px) 58px;min-width:0}.wrap{max-width:1440px
 <div class="notice">✦ COSMIC CALENDAR V6 — отдельный прототип. Все задачи вымышлены. Рабочая Vita и данные iPhone/Mac не используются и не изменяются.</div>
 <div class="columns">
 <section class="panel" aria-label="Календарная сетка">
-<div class="head"><h2 id="month-title">Ноябрь 2026</h2><div class="month-buttons"><button class="nav-btn" id="prev-month" aria-label="Предыдущий месяц">❮</button><button class="nav-btn" id="go-today">3 ноября</button><button class="nav-btn" id="next-month" aria-label="Следующий месяц">❯</button></div></div>
+<div class="head"><h2 id="month-title">Ноябрь 2026</h2><div class="month-buttons"><button class="nav-btn" id="prev-month" aria-label="Предыдущий месяц">❮</button><button class="nav-btn" id="go-today">Сегодня</button><button class="nav-btn" id="next-month" aria-label="Следующий месяц">❯</button></div></div>
 <div class="weeknames"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div><div class="days" id="calendar-grid"></div>
 <div class="summary"><div><b id="s-overdue">4</b><small>Просрочено</small></div><div><b id="s-month">—</b><small>В этом месяце</small></div><div><b id="s-selected">—</b><small>В выбранный день</small></div></div>
 <p class="help">Нажми на день, чтобы посмотреть задачи. Точки показывают дни с записями.</p>
@@ -144,7 +172,7 @@ main{padding:35px clamp(22px,3.8vw,58px) 58px;min-width:0}.wrap{max-width:1440px
 <script>
 (function(){
 'use strict';
-const today=new Date(2026,10,3), monthLabels=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const today=new Date(), monthLabels=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const fictive=[
 {date:'2026-10-17',time:'13:05',title:'Подготовить список материалов',project:'Тестовый проект'},
 {date:'2026-10-27',time:'13:00',title:'Согласовать расчёты',project:'Личный'},
@@ -158,7 +186,7 @@ const fictive=[
 {date:'2026-11-25',time:'14:00',title:'Планирование расходов',project:'Личный'},
 {date:'2026-12-04',time:'10:20',title:'Составить план на месяц',project:'Личный'}
 ];
-let selected=new Date(today), shownMonth=new Date(2026,10,1), mode='day', expanded=false;
+let selected=new Date(today), shownMonth=new Date(today.getFullYear(),today.getMonth(),1), mode='day', expanded=false;
 const el=id=>document.getElementById(id);
 function key(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function dateOf(k){const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)}
