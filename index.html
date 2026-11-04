@@ -4062,6 +4062,10 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
   panels.appendChild(buildColumn('toMe',ms[0],mine));
   panels.appendChild(buildColumn('iOwe',ms[1],owe));
   metrics.remove();list.replaceWith(panels);
+  /* Desktop only: remove redundant bottom debt button, keep original iPhone button. */
+  Array.from(main.children).forEach(function(child){
+   if(child.tagName==='BUTTON'&&child.getAttribute('onclick')==="openForm('debt')")child.remove();
+  });
   var moneyActions=document.createElement('div');moneyActions.className='vitaCosmicMoneyActions';
   var newDebt=document.createElement('button');newDebt.type='button';newDebt.textContent='＋ Новый долг';
   newDebt.setAttribute('onclick',"openForm('debt')");
