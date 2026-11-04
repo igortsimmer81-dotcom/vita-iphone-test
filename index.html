@@ -3759,7 +3759,7 @@ window.vitaAuthLogout=async function(){const old=session();sessionStorage.remove
   col.appendChild(metric);
   var rows=document.createElement('div');rows.className='vitaMoneyRows';
   items.forEach(function(item){rows.appendChild(item)});
-  var none=document.createElement('div');none.className='vitaMoneyEmpty';none.textContent='Здесь пока нет долгов';
+  var none=document.createElement('div');none.className='vitaMoneyEmpty';none.textContent='Здесь пока нет долгов';none.hidden=items.length>0;
   rows.appendChild(none);col.appendChild(rows);return col;
  }
  function emptyStates(){
