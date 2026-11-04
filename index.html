@@ -2817,6 +2817,62 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #app .taskListCard{padding:7px 11px!important}
  #app .vitaDebtOverview .dashTotal{font-size:clamp(17px,2vw,27px)!important}
 }
+</style><style id="vita-cosmic-functional-calendar-v1">
+@media (min-width:1024px) and (pointer:fine){
+ #app .vitaCosmicCalendar{max-width:1440px;margin:0 auto}
+ #app .vitaCosmicCalendarHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px}
+ #app .vitaCosmicCalendarHead h1{font-size:29px;margin:0;color:#f1f8ff}
+ #app .vitaCosmicCalendarHead p{margin:5px 0 0;color:#b0c5df;font-size:13px}
+ #app .vitaCosmicCalendarColumns{display:grid;grid-template-columns:minmax(420px,1.1fr) minmax(340px,.9fr);gap:19px;align-items:start}
+ #app .vitaCosmicPanel{min-width:0;background:linear-gradient(140deg,#213d60e9,#182b49ef 76%);border:1px solid #71a4d08f;border-radius:21px;padding:19px 21px;box-shadow:inset 0 1px #cce9ff24,0 14px 35px #02091878}
+ #app .vitaCosmicPanel:nth-child(2){border-color:#a087d29c;background:linear-gradient(140deg,#2d2c53e9,#1a2c48ef 75%)}
+ #app .vitaCosmicTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+ #app .vitaCosmicTop h2{margin:0;color:#f1f7ff;font-size:19px}
+ #app .vitaCosmicMonthButtons{display:flex;align-items:center;gap:8px}
+ #app .vitaCosmicMonthButtons button{min-width:35px;height:35px;border-radius:10px;border:1px solid #5e88b2;background:#264367;color:#e8f6ff;cursor:pointer;font-size:20px}
+ #app .vitaCosmicMonthButtons button:focus-visible,#app .vitaCosmicDay:focus-visible{outline:2px solid #8de6ff;outline-offset:2px}
+ #app .vitaCosmicWeek,#app .vitaCosmicDays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+ #app .vitaCosmicWeek{margin:0 0 7px}
+ #app .vitaCosmicWeek span{text-align:center;color:#acc1dc;font-size:12px;padding:4px}
+ #app .vitaCosmicDay{min-height:59px;padding:8px 10px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;cursor:pointer;border:1px solid #466d9299;border-radius:11px;color:#edf7ff;background:#102a48ad;font-weight:800;font-size:15px}
+ #app .vitaCosmicDay[disabled]{visibility:hidden}
+ #app .vitaCosmicDay:hover{background:#2c4c74b5;border-color:#87c7f1}
+ #app .vitaCosmicDay[aria-pressed="true"]{border-color:#70e3f4;background:linear-gradient(135deg,#255788,#484579);box-shadow:0 0 15px #48b5e54a}
+ #app .vitaCosmicDay.isToday{border-color:#91cdeea3}
+ #app .vitaCosmicDay.isLate:not([aria-pressed="true"]){border-color:#a9759480;background:linear-gradient(135deg,#292a47d9,#142a47d9)}
+ #app .vitaCosmicDots{font-size:11px;color:#6fddfb;letter-spacing:3px;line-height:1}
+ #app .vitaCosmicDay.isLate .vitaCosmicDots{color:#d8a0bb}
+ #app .vitaCosmicSummary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}
+ #app .vitaCosmicSummary div{padding:11px 12px;border:1px solid #597eaa8f;border-radius:11px;background:#112b48b5}
+ #app .vitaCosmicSummary strong{display:block;font-size:22px;color:#e4f6ff}
+ #app .vitaCosmicSummary span{display:block;color:#b9c8de;font-size:11px;margin-top:4px}
+ #app .vitaCosmicModes{display:flex;gap:3px;padding:3px;border:1px solid #5778a09b;border-radius:10px;background:#112744a1}
+ #app .vitaCosmicModes button{border:0;background:transparent;border-radius:7px;padding:8px 9px;cursor:pointer;color:#c6d8ed;font-size:12px}
+ #app .vitaCosmicModes button[aria-pressed="true"]{background:#365b86;color:white}
+ #app .vitaCosmicSelected{font-size:17px;color:#e6f4ff;margin:3px 0 14px}
+ #app .vitaCosmicTasks{display:grid;gap:10px}
+ #app .vitaCosmicTasks .taskItem{background:#112b48bb;border:1px solid #4e77999b;border-radius:12px;padding:12px!important;margin:0}
+ #app .vitaCosmicTasks .taskItem.isOverdue{border:1px solid #9f708c8c!important;border-left:3px solid #c188a9!important;background:linear-gradient(120deg,#332b43c5,#182b45cc)!important}
+ #app .vitaCosmicTasks .taskItem:last-child{border-bottom:1px solid #4e77999b}
+ #app .vitaCosmicTasks .taskCheck{flex:0 0 32px;min-height:32px}
+ #app .vitaCosmicEmpty{padding:15px 12px;border:1px dashed #50749a91;border-radius:11px;color:#b9cbe2;font-size:13px}
+ #app .vitaCosmicOverdue{border:1px solid #a4769680;border-radius:14px;margin-top:16px;padding:12px;background:#322b4491}
+ #app .vitaCosmicOverdue summary{cursor:pointer;color:#e7b4c9;font-weight:750;font-size:14px}
+ #app .vitaCosmicOverdue .taskItem{margin-top:10px}
+ #app .vitaCosmicAdd{width:100%;margin-top:16px;min-height:49px;border:1px solid #ffb36e;border-radius:13px;color:white;background:linear-gradient(110deg,#ee8c35,#db6d25);font-size:15px;font-weight:800;cursor:pointer}
+ #app .vitaCosmicHelp{margin:12px 0 0;color:#9db9d2;font-size:11px}
+}
+@media (min-width:1024px) and (pointer:fine) and (max-width:1220px){
+ #app .vitaCosmicCalendarColumns{grid-template-columns:minmax(0,1fr)}
+ #app .vitaCosmicPanel{padding:16px 18px}
+}
+@media (min-width:1221px) and (pointer:fine) and (max-height:800px){
+ #app .vitaCosmicPanel{padding:15px 17px}
+ #app .vitaCosmicDay{min-height:47px;padding:6px 8px;gap:3px}
+ #app .vitaCosmicCalendarHead{margin-bottom:11px}
+ #app .vitaCosmicTop{margin-bottom:10px}
+ #app .vitaCosmicSummary{margin-top:10px}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -3911,5 +3967,81 @@ setInterval(function(){if(!document.hidden&&vitaTaskRetentionSweep()>0)render()}
  },{passive:true});
  document.addEventListener('pointerleave',function(){reset(active);active=null});
 })();
-</script><script>document.body.classList.add("vita-ready")</script></body>
+</script><script>document.body.classList.add("vita-ready")</script><script id="vita-cosmic-functional-calendar-script-v1">
+/* Override presentation on desktop only. Existing task persistence and actions remain untouched. */
+(function(){
+ 'use strict';
+ if(typeof views!=='object'||typeof views.tasks!=='function')return;
+ const original=views.tasks;
+ const desktop=window.matchMedia('(min-width:1024px) and (pointer:fine)');
+ let period='day';
+ function iso(d){return localDateISO(d)}
+ function dateAt(s){return new Date(s+'T12:00:00')}
+ function firstOfMonth(s){const d=dateAt(s);return new Date(d.getFullYear(),d.getMonth(),1)}
+ function dateLabel(s){return new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long',year:'numeric'}).format(dateAt(s))}
+ function monthLabel(d){return new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(d)}
+ function active(t){return t&&!t.done}
+ function tDate(t){return t&&t.date?String(t.date).slice(0,10):''}
+ function overdue(t){return active(t)&&tDate(t)&&tDate(t)<todayISO()}
+ function sortTasks(list){return list.slice().sort((a,b)=>String(a.date||'').localeCompare(String(b.date||'')))}
+ function periodTasks(){
+  const day=vitaDay,month=day.slice(0,7),selected=dateAt(day);
+  if(period==='done')return sortTasks(data.tasks.filter(t=>t.done)).reverse();
+  if(period==='day')return sortTasks(data.tasks.filter(t=>active(t)&&tDate(t)===day));
+  if(period==='month')return sortTasks(data.tasks.filter(t=>active(t)&&tDate(t).slice(0,7)===month));
+  const start=new Date(selected);start.setDate(start.getDate()-(start.getDay()+6)%7);
+  const end=new Date(start);end.setDate(start.getDate()+6);
+  const from=iso(start),to=iso(end);
+  return sortTasks(data.tasks.filter(t=>active(t)&&tDate(t)>=from&&tDate(t)<=to));
+ }
+ function renderCalendar(){
+  const selected=dateAt(vitaDay),month=new Date(selected.getFullYear(),selected.getMonth(),1);
+  const days=new Date(month.getFullYear(),month.getMonth()+1,0).getDate();
+  const lead=(month.getDay()+6)%7;
+  const count=Array.isArray(data.tasks)?data.tasks.length:0;
+  const late=data.tasks.filter(overdue);
+  let grid='';
+  for(let i=0;i<lead;i++)grid+='<button type="button" class="vitaCosmicDay" disabled aria-hidden="true"></button>';
+  for(let day=1;day<=days;day++){
+   const d=iso(new Date(month.getFullYear(),month.getMonth(),day));
+   const records=data.tasks.filter(t=>active(t)&&tDate(t)===d);
+   const lateHere=records.some(overdue);
+   const today=d===todayISO(),chosen=d===vitaDay;
+   const flags=(today?' isToday':'')+(lateHere?' isLate':'');
+   const dots=records.length?'<span class="vitaCosmicDots" aria-hidden="true">'+('● '.repeat(Math.min(records.length,3)))+'</span>':'';
+   grid+='<button type="button" class="vitaCosmicDay'+flags+'" aria-pressed="'+chosen+'" aria-label="'+esc(dateLabel(d))+(records.length?', задач: '+records.length:'')+'" onclick="vitaCosmicSelectDate(\''+d+'\')">'+day+dots+'</button>';
+  }
+  const current=periodTasks(),monthly=data.tasks.filter(t=>active(t)&&tDate(t).slice(0,7)===vitaDay.slice(0,7));
+  const selectedTasks=data.tasks.filter(t=>active(t)&&tDate(t)===vitaDay);
+  let modes='';
+  for(const [key,label] of [['day','День'],['week','Неделя'],['month','Месяц'],['done','Готово']]){
+   modes+='<button type="button" aria-pressed="'+(period===key)+'" onclick="vitaCosmicSetPeriod(\''+key+'\')">'+label+'</button>';
+  }
+  const tasks=current.length?current.map(taskRow).join(''):'<div class="vitaCosmicEmpty">На выбранный период задач нет</div>';
+  const overdueHtml=late.length?sortTasks(late).map(taskRow).join(''):'<div class="vitaCosmicEmpty">Просроченных задач нет</div>';
+  return '<div class="vitaCosmicCalendar">'+
+   '<div class="vitaCosmicCalendarHead"><div><h1>Мой космический календарь</h1><p>Задачи, время и проекты в одном пространстве</p></div></div>'+
+   '<div class="vitaCosmicCalendarColumns">'+
+   '<section class="vitaCosmicPanel" aria-label="Месячный календарь">'+
+    '<div class="vitaCosmicTop"><h2>'+monthLabel(month)+'</h2><div class="vitaCosmicMonthButtons"><button type="button" aria-label="Предыдущий месяц" onclick="vitaCosmicShiftMonth(-1)">‹</button><button type="button" aria-label="Текущий день" onclick="vitaCosmicSelectDate(todayISO())">⌂</button><button type="button" aria-label="Следующий месяц" onclick="vitaCosmicShiftMonth(1)">›</button></div></div>'+
+    '<div class="vitaCosmicWeek"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>'+
+    '<div class="vitaCosmicDays">'+grid+'</div>'+
+    '<div class="vitaCosmicSummary"><div><strong>'+late.length+'</strong><span>Просрочено</span></div><div><strong>'+monthly.length+'</strong><span>В этом месяце</span></div><div><strong>'+selectedTasks.length+'</strong><span>В выбранный день</span></div></div>'+
+   '</section>'+
+   '<section class="vitaCosmicPanel" aria-label="Задачи и дела">'+
+    '<div class="vitaCosmicTop"><h2>Мои дела</h2><div class="vitaCosmicModes">'+modes+'</div></div>'+
+    '<div class="vitaCosmicSelected">'+(period==='done'?'Выполненные задачи':dateLabel(vitaDay))+' · '+current.length+'</div>'+
+    '<div class="vitaCosmicTasks">'+tasks+'</div>'+
+    '<details class="vitaCosmicOverdue" open><summary>Просроченные задачи · '+late.length+'</summary><div class="vitaCosmicTasks">'+overdueHtml+'</div></details>'+
+    '<button type="button" class="vitaCosmicAdd" onclick="vitaCosmicAddTask()">＋ Добавить задачу</button>'+
+    '<p class="vitaCosmicHelp">Рабочие действия тестовой Vita: задачи сохраняются, редактируются и отмечаются выполненными.</p>'+
+   '</section></div></div>';
+ }
+ window.vitaCosmicSetPeriod=function(next){if(['day','week','month','done'].includes(next)){period=next;render()}};
+ window.vitaCosmicSelectDate=function(day){if(!/^\d{4}-\d{2}-\d{2}$/.test(day))return;const actual=dateAt(day);if(iso(actual)!==day)return;vitaDay=day;vitaTaskMode='day';period='day';render()};
+ window.vitaCosmicShiftMonth=function(n){if(n!==1&&n!==-1)return;const d=firstOfMonth(vitaDay);d.setMonth(d.getMonth()+n);vitaDay=iso(d);vitaTaskMode='day';period='day';render()};
+ window.vitaCosmicAddTask=function(){openForm('task');const f=document.getElementById('f_date');if(f&&!f.value)f.value=vitaDay+'T10:00'};
+ views.tasks=function(){if(!desktop.matches)return original();try{return renderCalendar()}catch(error){console.error('Cosmic calendar preview:',error);return original()}};
+})();
+</script></body>
 </html>
