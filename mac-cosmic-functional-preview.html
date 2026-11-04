@@ -2873,7 +2873,34 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #app .vitaCosmicTop{margin-bottom:10px}
  #app .vitaCosmicSummary{margin-top:10px}
 }
-</style><style id="vita-cosmic-preview-banner">@media(min-width:1024px) and (pointer:fine){#vita-cosmic-preview-note{position:fixed;z-index:100;right:16px;bottom:12px;padding:7px 11px;border:1px solid #6a90ad8c;border-radius:9px;background:#102740f0;color:#a7c6dc;font-size:11px;letter-spacing:.35px;pointer-events:none}}@media(max-width:1023px){#vita-cosmic-preview-note{display:none}}</style></head>
+</style><style id="vita-cosmic-preview-banner">@media(min-width:1024px) and (pointer:fine){#vita-cosmic-preview-note{position:fixed;z-index:100;left:14px;bottom:8px;max-width:200px;white-space:normal;padding:7px 11px;border:1px solid #6a90ad8c;border-radius:9px;background:#102740f0;color:#a7c6dc;font-size:9px;line-height:1.3;letter-spacing:.25px;pointer-events:none}}@media(max-width:1023px){#vita-cosmic-preview-note{display:none}}</style><style id="vita-cosmic-mac-calendar-fit-v2">
+/* Constrain the right task panel to the Mac viewport while keeping task actions visible. */
+@media (min-width:1221px) and (pointer:fine){
+ #app .vitaCosmicCalendarColumns>.vitaCosmicPanel:nth-child(2){
+   display:flex;flex-direction:column;max-height:calc(100dvh - 175px);
+   min-height:470px;overflow:hidden;
+ }
+ #app .vitaCosmicCalendarColumns>.vitaCosmicPanel:nth-child(2)>.vitaCosmicTasks{
+   flex:0 1 auto;min-height:0;max-height:185px;overflow-y:auto;scrollbar-width:thin;
+   scrollbar-color:#627a9f transparent;
+ }
+ #app .vitaCosmicCalendarColumns>.vitaCosmicPanel:nth-child(2)>.vitaCosmicOverdue{
+   flex:1 1 auto;min-height:82px;overflow-y:auto;scrollbar-width:thin;
+   scrollbar-color:#876e94 transparent;margin-bottom:12px;
+ }
+ #app .vitaCosmicOverdue summary{
+   position:sticky;top:-12px;z-index:1;padding:7px 2px 9px;
+   background:#302c4ae9;backdrop-filter:blur(8px);
+ }
+ #app .vitaCosmicAdd{flex:0 0 auto;margin-top:6px}
+ #app .vitaCosmicHelp{flex:0 0 auto;margin-top:8px;line-height:1.35}
+}
+@media (min-width:1221px) and (pointer:fine) and (max-height:760px){
+ #app .vitaCosmicCalendarColumns>.vitaCosmicPanel:nth-child(2){max-height:calc(100dvh - 154px);min-height:390px}
+ #app .vitaCosmicCalendarColumns>.vitaCosmicPanel:nth-child(2)>.vitaCosmicTasks{max-height:132px}
+ #app .vitaCosmicHelp{display:none}
+}
+</style></head>
 <body><div id="vita-cosmic-preview-note" role="status" aria-label="Тестовая версия для Mac">ТЕСТОВАЯ VITA COSMIC · НЕ РАБОЧЕЕ ПРИЛОЖЕНИЕ</div>
 <div id="app" class="safe"></div>
 <nav id="nav"></nav>
