@@ -148,6 +148,21 @@ button:focus-visible,.month-day:focus-visible{outline:2px solid var(--cyan);outl
 @media (max-width:1120px){.calendar-grid,.section-grid{grid-template-columns:1fr}.triple strong{font-size:20px}}
 @media (max-width:730px){.triple{gap:6px}.triple>div{padding:9px}.triple strong{font-size:16px}.month-day{min-height:43px;padding:5px}.section-heading h2{font-size:24px}.month-controls{flex-wrap:wrap}}
 @media (prefers-reduced-motion:reduce){.month-day{transition:none}}
+</style>
+<style id="cosmic-calendar-task-actions-v2">
+.cal-add-button{display:block;width:100%;margin-top:17px;padding:14px 18px;border:1px solid #ffbe82;border-radius:13px;background:linear-gradient(110deg,#ff932b,#ff6800);color:white;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px #fa742536}
+.cal-add-button:hover{filter:brightness(1.1)}
+.overdue{border-color:#ff6d9a;box-shadow:0 0 20px #ff4dcd1e;background:linear-gradient(135deg,#59264291,#27244dc0)}
+.overdue summary{color:#ffc2d2;list-style-position:inside;font-size:14px}
+.overdue .record,.record.is-overdue{border:1px solid #ff628eae;border-left:4px solid #ff587e;background:linear-gradient(120deg,#48243bc9,#281f40dc);box-shadow:inset 0 0 18px #ff50731a}
+.overdue .record strong,.record.is-overdue strong{color:#ffd2dc}
+.overdue .record small,.record.is-overdue small{color:#ff9ab8}
+.month-day.has-overdue{border-color:#dc658b99;background:linear-gradient(135deg,#352341,#172b48)}
+.month-day.has-overdue .mini-dots{color:#ff719c;text-shadow:0 0 9px #ff4dcd}
+.cal-dialog{width:min(460px,calc(100% - 28px));border-radius:20px;border:1px solid #8d80e4;color:#f6f8ff;background:linear-gradient(145deg,#25264e,#102b45);box-shadow:0 20px 70px #000b,0 0 33px #895fff50;padding:0}
+.cal-dialog::backdrop{background:#020612bc;backdrop-filter:blur(6px)}
+.cal-form{display:grid;gap:15px;padding:24px}.cal-form h2{font-size:23px;margin:0}.cal-form label{display:grid;gap:7px;font-size:13px;color:#bbd7f4}.cal-form input{width:100%;min-width:0;padding:12px 13px;border-radius:11px;border:1px solid #547aa4;background:#0d2139;color:#fff;font:inherit;color-scheme:dark}.cal-form input:focus{outline:2px solid #00e5ff;outline-offset:1px}
+.cal-form-actions{display:flex;gap:10px;justify-content:flex-end}.cal-form-actions button{border:1px solid #567ca2;border-radius:11px;background:#1e3a60;color:#f4f8ff;padding:12px 14px;font:inherit;cursor:pointer}.cal-form-actions button[type="submit"]{background:linear-gradient(115deg,#07aac8,#6f54d7);border-color:#60dfff;font-weight:800}
 </style></head><body>
 <div class="ambient-orbit orbit-one" aria-hidden="true"></div><div class="ambient-orbit orbit-two" aria-hidden="true"></div><div class="shell" id="shell">
 <aside>
@@ -190,8 +205,8 @@ button:focus-visible,.month-day:focus-visible{outline:2px solid var(--cyan);outl
 
 <section class="section-view" id="view-calendar"><div class="section-grid calendar-grid">
  <article class="panel holo-blue"><div class="panel-heading"><span class="eyebrow">Календарь · даты и напоминания</span><div class="month-controls"><button id="cal-prev" aria-label="Предыдущий месяц">‹</button><strong id="cal-month"></strong><button id="cal-next" aria-label="Следующий месяц">›</button></div></div><div class="weekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div><div id="cal-days" class="month-grid"></div><div class="triple"><div><strong id="cal-late">2</strong><span>Просрочено</span></div><div><strong id="cal-count">—</strong><span>В этом месяце</span></div><div><strong id="cal-day-count">—</strong><span>В выбранный день</span></div></div></article>
- <article class="panel holo-purple"><div class="panel-heading"><span class="eyebrow">Мои дела</span><div class="segments" role="group" aria-label="Период задач"><button class="on" data-period="day">День</button><button data-period="week">Неделя</button><button data-period="month">Месяц</button></div></div><h2 id="cal-selected"></h2><div id="cal-tasks" class="records"></div><details class="overdue"><summary>Просроченные задачи · 2</summary><div class="record"><strong>Отправить тестовое письмо</strong><small>Вымышленная задача</small></div><div class="record"><strong>Проверить демо-счёт</strong><small>Вымышленная задача</small></div></details><p class="muted hint">Напоминания и изменение записей выключены в прототипе.</p></article>
-</div></section>
+ <article class="panel holo-purple"><div class="panel-heading"><span class="eyebrow">Мои дела</span><div class="segments" role="group" aria-label="Период задач"><button class="on" data-period="day">День</button><button data-period="week">Неделя</button><button data-period="month">Месяц</button></div></div><h2 id="cal-selected"></h2><div id="cal-tasks" class="records"></div><details class="overdue" open><summary id="cal-overdue-title">Просроченные задачи</summary><div id="cal-overdue-list" class="records"></div></details><button type="button" id="cal-add" class="cal-add-button">＋ Добавить задачу</button><p class="muted hint">Тестовые задачи добавляются только на время открытой страницы. Настоящие записи, синхронизация и уведомления не затрагиваются.</p></article>
+</div><dialog id="cal-dialog" class="cal-dialog" aria-labelledby="cal-dialog-heading"><form id="cal-form" class="cal-form"><h2 id="cal-dialog-heading">Новая задача</h2><p class="muted">Только для демонстрации — без сохранения в Vita</p><label>Название задачи<input name="title" required maxlength="120" placeholder="Что нужно сделать?"></label><label>Дата<input name="date" type="date" required></label><label>Время<input name="time" type="time" required value="10:00"></label><label>Проект / категория<input name="tag" maxlength="60" placeholder="Личный"></label><div class="cal-form-actions"><button type="button" id="cal-cancel">Отмена</button><button type="submit">Добавить задачу</button></div></form></dialog></section>
 <section class="section-view" id="view-suppliers"><div class="section-heading"><div><span class="eyebrow">SUPPLY / COSMIC NETWORK</span><h2>Поставщики</h2><p class="muted">Сумма к оплате и переплата показаны отдельно</p></div></div><div class="triple supplier-stats"><div><small>К оплате</small><strong class="danger">42 300 ₽</strong></div><div><small>Переплата</small><strong class="green">12 000 ₽</strong></div><div><small>Поставщиков</small><strong>4</strong></div></div><div class="section-grid card-list" id="sup-list"><article class="panel holo-blue"><div class="panel-heading"><strong>Тестовый поставщик А</strong><span class="danger">42 300 ₽</span></div><p class="muted">К оплате · 2 записи</p></article><article class="panel holo-teal"><div class="panel-heading"><strong>Тестовый поставщик Б</strong><span class="green">12 000 ₽</span></div><p class="muted">Переплата · 1 запись</p></article><article class="panel holo-purple"><div class="panel-heading"><strong>Тестовый поставщик В</strong><span>Нет долга</span></div><p class="muted">Оплачено · 3 записи</p></article><article class="panel holo-cyan"><div class="panel-heading"><strong>Тестовый поставщик Г</strong><span>Нет долга</span></div><p class="muted">0 открытых записей</p></article></div></section>
 <section class="section-view" id="view-debts"><div class="section-heading"><div><span class="eyebrow">VITA / FINANCIAL SPACE</span><h2>Деньги и долги</h2><p class="muted">Два независимых списка: кто должен мне и кому должен я</p></div></div><label class="search-label">Поиск по человеку<input id="debt-filter" type="search" placeholder="Введите имя из демо-списка" autocomplete="off"></label><div class="section-grid"><div class="panel holo-teal"><div class="pane-head"><span>Получить</span><strong class="green">185 000 ₽</strong></div><div class="records debt-records" id="debt-get"><div class="record" data-person="Алексей"><strong>Алексей</strong><span class="green">120 000 ₽</span><small>Мне должны · 2 записи</small></div><div class="record" data-person="Марина"><strong>Марина</strong><span class="green">65 000 ₽</span><small>Мне должны · 1 запись</small></div></div></div><div class="panel holo-purple"><div class="pane-head"><span>Отдать</span><strong class="danger">76 000 ₽</strong></div><div class="records debt-records" id="debt-give"><div class="record" data-person="Иван"><strong>Иван</strong><span class="danger">50 000 ₽</span><small>Я должен · 1 запись</small></div><div class="record" data-person="Ольга"><strong>Ольга</strong><span class="danger">26 000 ₽</span><small>Я должен · 1 запись</small></div></div></div></div></section>
 <section class="section-view" id="view-investments"><div class="section-heading"><div><span class="eyebrow">VITA / CAPITAL</span><h2>Инвестиции</h2><p class="muted">Бизнес и недвижимость · история вложений и доходов</p></div></div><div class="triple"><div><small>Всего вложено</small><strong>1 500 000 ₽</strong></div><div><small>Получено дохода</small><strong class="green">150 000 ₽</strong></div><div><small>Возврат вложений</small><strong class="purple">10%</strong></div></div><div class="section-grid"><article class="panel holo-purple"><h2>Бизнес</h2><div class="record"><strong>Учебный магазин</strong><span>600 000 ₽</span><small>3 операции</small></div><div class="record"><strong>Учебный проект</strong><span>200 000 ₽</span><small>2 операции</small></div></article><article class="panel holo-cyan"><h2>Недвижимость</h2><div class="record"><strong>Тестовая квартира</strong><span>700 000 ₽</span><small>Доход за период: 150 000 ₽</small></div></article></div><article class="panel investment-roi"><div class="panel-heading"><span class="eyebrow">Окупаемость · демонстрация расчёта</span><strong>10%</strong></div><div class="track"><div style="width:10%"></div></div><p class="muted">Возврат вложений = полученный доход / вложенный капитал. Это не прогноз доходности.</p></article></section>
@@ -251,6 +266,8 @@ document.addEventListener('pointermove',event=>{
 'use strict';
 const today=new Date(),demo=[
 {day:3,month:10,year:2026,time:'09:30',title:'Подготовить презентацию',tag:'Демо-проект'},
+{day:2,month:10,year:2026,time:'10:45',title:'Отправить тестовое письмо',tag:'Демо-проект'},
+{day:30,month:9,year:2026,time:'14:00',title:'Проверить демо-счёт',tag:'Тестовый проект'},
 {day:5,month:10,year:2026,time:'14:00',title:'Проверить поставку',tag:'Демо-магазин'},
 {day:9,month:10,year:2026,time:'11:30',title:'Согласовать документы',tag:'Личный пример'},
 {day:17,month:10,year:2026,time:'16:10',title:'Отчёт по проекту',tag:'Демо-проект'}
@@ -259,6 +276,8 @@ let selected=new Date(today.getFullYear(),today.getMonth(),today.getDate()),show
 const q=x=>document.getElementById(x);
 const format=d=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long',year:'numeric'}).format(d);
 const key=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+const asDateInput=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+const isLate=t=>taskDate(t)<new Date(today.getFullYear(),today.getMonth(),today.getDate());
 function taskDate(t){return new Date(t.year,t.month,t.day)}
 function drawCalendar(){
 q('cal-month').textContent=new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(shown);
@@ -268,9 +287,11 @@ for(let i=0;i<shift;i++){let empty=document.createElement('span');empty.classNam
 for(let d=1;d<=n;d++){
 const date=new Date(shown.getFullYear(),shown.getMonth(),d),entries=demo.filter(x=>key(taskDate(x))===key(date));
 const b=document.createElement('button');b.type='button';b.className='month-day'+(key(date)===key(selected)?' active':'')+(key(date)===key(today)?' current':'');b.textContent=String(d);
+if(entries.some(isLate))b.classList.add('has-overdue');
 b.setAttribute('aria-label',format(date)+(entries.length?', задач: '+entries.length:''));if(entries.length){const dots=document.createElement('span');dots.className='mini-dots';dots.textContent='● '.repeat(Math.min(entries.length,3));b.append(dots)}
 b.addEventListener('click',()=>{selected=date;drawCalendar();drawTasks()});q('cal-days').append(b)
 }
+q('cal-late').textContent=demo.filter(isLate).length;
 q('cal-count').textContent=demo.filter(t=>t.year===shown.getFullYear()&&t.month===shown.getMonth()).length;
 q('cal-day-count').textContent=demo.filter(t=>key(taskDate(t))===key(selected)).length;
 }
@@ -285,12 +306,32 @@ const start=new Date(selected);start.setDate(start.getDate()-(start.getDay()+6)%
 const end=new Date(start);end.setDate(end.getDate()+6);return date>=start&&date<=end;
 });
 if(!relevant.length){const p=document.createElement('p');p.className='muted';p.textContent='На выбранный период демонстрационных задач нет';root.append(p)}
-for(const t of relevant){const row=document.createElement('div');row.className='record';const strong=document.createElement('strong');strong.textContent=t.time+' · '+t.title;const small=document.createElement('small');small.textContent=t.tag+' · '+format(taskDate(t));row.append(strong,small);root.append(row)}
+for(const t of relevant){const row=document.createElement('div');row.className='record'+(isLate(t)?' is-overdue':'');const strong=document.createElement('strong');strong.textContent=t.time+' · '+t.title;const small=document.createElement('small');small.textContent=t.tag+' · '+format(taskDate(t));row.append(strong,small);root.append(row)}
+
+const overdue=demo.filter(isLate).sort((a,b)=>taskDate(a)-taskDate(b));
+q('cal-overdue-title').textContent='Просроченные задачи · '+overdue.length;
+const lateRoot=q('cal-overdue-list');lateRoot.replaceChildren();
+if(!overdue.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Просроченных задач нет';lateRoot.append(empty)}
+for(const t of overdue){const r=document.createElement('div');r.className='record is-overdue';const name=document.createElement('strong');name.textContent=t.title;const detail=document.createElement('small');detail.textContent=format(taskDate(t))+' · '+t.time+' · '+t.tag;r.append(name,detail);lateRoot.append(r)}
 document.querySelectorAll('[data-period]').forEach(b=>b.classList.toggle('on',b.dataset.period===period))
 }
 q('cal-prev').addEventListener('click',()=>{shown=new Date(shown.getFullYear(),shown.getMonth()-1,1);selected=new Date(shown);drawCalendar();drawTasks()});
 q('cal-next').addEventListener('click',()=>{shown=new Date(shown.getFullYear(),shown.getMonth()+1,1);selected=new Date(shown);drawCalendar();drawTasks()});
 document.querySelectorAll('[data-period]').forEach(b=>b.addEventListener('click',()=>{period=b.dataset.period;drawTasks()}));
+
+const dlg=q('cal-dialog'),form=q('cal-form');
+q('cal-add').addEventListener('click',()=>{form.reset();form.elements.date.value=asDateInput(selected);dlg.showModal();form.elements.title.focus()});
+q('cal-cancel').addEventListener('click',()=>dlg.close());
+form.addEventListener('submit',event=>{
+event.preventDefault();
+if(!form.reportValidity())return;
+const name=form.elements.title.value.trim(),dateValue=form.elements.date.value;
+const [y,m,d]=dateValue.split('-').map(Number),valid=new Date(y,m-1,d);
+if(!name||valid.getFullYear()!==y||valid.getMonth()!==m-1||valid.getDate()!==d)return;
+demo.push({year:y,month:m-1,day:d,time:form.elements.time.value,title:name,tag:form.elements.tag.value.trim()||'Личный'});
+selected=valid;shown=new Date(y,m-1,1);dlg.close();drawCalendar();drawTasks();
+});
+
 q('debt-filter').addEventListener('input',e=>{const word=e.target.value.toLocaleLowerCase('ru');document.querySelectorAll('.debt-records .record').forEach(row=>{row.hidden=!row.dataset.person.toLocaleLowerCase('ru').includes(word)})});
 drawCalendar();drawTasks();
 })();
