@@ -1989,6 +1989,157 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
 @media(min-width:1024px) and (pointer:fine) and (max-width:1180px){
  #app:has(.vitaSupplierOverview)>.vitaSupplierList{grid-template-columns:1fr!important}
 }
+</style><style id="vita-cosmic-suppliers-neon-v71">
+/* COSMIC NEON v7.1. Presentation-only: no currency conversions, payment allocation, stored data or iPhone changes. */
+@media(min-width:1024px) and (pointer:fine){
+ #app.safe:has(.vitaSupplierOverview){
+  background:radial-gradient(ellipse 40% 44% at 87% 7%,#4c2ba52e,transparent 88%),
+             radial-gradient(ellipse 57% 60% at 15% 85%,#04669a1d,transparent 85%),
+             linear-gradient(150deg,#070e26 5%,#080f26 50%,#071d2e 100%)!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierOverview{position:relative;isolation:isolate}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierOverview::before{
+  content:"SUPPLY  /  COSMIC NETWORK";display:block;
+  color:#67e4ff!important;font-size:10px!important;line-height:1.4!important;
+  font-weight:800!important;letter-spacing:2.5px!important;
+  margin:0 0 8px!important;text-shadow:0 0 17px #18d5fd90
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierOverview .sectionTitle{
+  font-size:31px!important;letter-spacing:-.5px!important;color:#f6faff!important;
+  text-shadow:0 2px 25px #83aeff26!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList{gap:14px!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine{
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;
+  min-height:107px!important;
+  border:1px solid #299bbd94!important;
+  background:radial-gradient(ellipse 58% 85% at 86% 0%,#4c35b84b,transparent 80%),
+             linear-gradient(122deg,#0e2344f2,#131b42f5 61%,#0a2941ee)!important;
+  box-shadow:inset 0 1px 0 #a4e6ff36,inset 0 -1px 0 #12d7ef16,0 15px 36px #02071880,0 0 21px #1fe0ff15!important;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine::before{
+  content:"";position:absolute;z-index:0;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 30%,#6f50f70a 54%,#12f2f812 88%,transparent);
+  opacity:.68
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine::after{
+  content:"";position:absolute;bottom:0;left:18px;right:18px;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,#25cfff8a,#a376ff75,transparent);
+  opacity:.63
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine>*{position:relative;z-index:1}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine:hover{
+  transform:translateY(-2px)!important;border-color:#44dfffbd!important;
+  box-shadow:inset 0 1px 0 #d8f9ff75,0 18px 39px #010819a6,0 0 25px #04e7ff45,0 0 9px #956aff24!important;
+  background:radial-gradient(ellipse 70% 90% at 83% 0%,#5636b965,transparent 86%),linear-gradient(125deg,#123356,#17234a 60%,#0e3a57)!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .vitaSupplierMark{
+  background:linear-gradient(140deg,#193a6d,#182349)!important;border:1px solid #56dcff91!important;
+  box-shadow:inset 0 1px #bdeeff45,0 0 21px #23caff27!important;color:#76edff!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .vitaSupplierMark svg{color:#76edff!important;stroke:#76edff!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .grow b{
+  font-size:17px!important;letter-spacing:.1px!important;color:#f8fbff!important
+ }
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .vitaSub{color:#a3bedf!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .vitaAdvanceGreen{color:#49ebc7!important;text-shadow:0 0 13px #32e3bf3b}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .amount:not(.neg){color:#e6f7ff!important}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .amount.neg{color:#ff819d!important;text-shadow:0 0 18px #ef34602b}
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine .chev{
+  color:#7aefff!important;background:linear-gradient(140deg,#22345f,#183f63)!important;
+  border-color:#43cded9c!important;box-shadow:0 0 14px #20d3fa2c!important
+ }
+ #app:has(.vitaSupplierOverview)>.primary{
+  border:1px solid #ffc17b!important;background:linear-gradient(95deg,#f99c33,#ff791d)!important;
+  box-shadow:inset 0 1px #ffebd38c,0 8px 24px #f8852f40!important
+ }
+ #overlay.show:has(#sheetContent .vitaSupplierBalance),
+ #overlay.show:has(#sheetContent .vitaSupplierForm),
+ #overlay.show:has(#sheetContent .vitaPaymentHead){
+  background:#010716d3!important;backdrop-filter:blur(9px)!important
+ }
+ #overlay.show:has(#sheetContent .vitaSupplierBalance)>.sheet,
+ #overlay.show:has(#sheetContent .vitaSupplierForm)>.sheet,
+ #overlay.show:has(#sheetContent .vitaPaymentHead)>.sheet{
+  border-color:#48d5f0a8!important;
+  background:radial-gradient(ellipse 52% 35% at 88% 0%,#5237a14a,transparent 90%),
+             radial-gradient(ellipse 40% 42% at 0% 95%,#057d8e23,transparent 88%),
+             linear-gradient(145deg,#101e43,#101b35 58%,#091c32)!important;
+  box-shadow:inset 0 1px #d1f5ff40,0 26px 75px #000c,0 0 32px #1a9bf32b!important
+ }
+ #overlay #sheetContent .supplierHero{position:relative}
+ #overlay #sheetContent .supplierHero .brand{color:#67e9ff!important;text-shadow:0 0 12px #3bdfff75!important}
+ #overlay #sheetContent .supplierHero h2{color:#f4f9ff!important;text-shadow:0 0 22px #7e91ff3b!important}
+ #overlay #sheetContent .vitaSupplierBalance{
+  border:1px solid #3bcbea91!important;
+  background:radial-gradient(ellipse 75% 120% at 85% 0%,#3c39977d,transparent 90%),
+             linear-gradient(120deg,#142f57,#121d3b)!important;
+  box-shadow:inset 0 1px #b1eaff38,0 0 22px #25d5f41f!important
+ }
+ #overlay #sheetContent .vitaSupplierBalance .quickgrid>div{
+  background:linear-gradient(145deg,#16274d,#0d2845)!important;
+  border:1px solid #427da374!important
+ }
+ #overlay #sheetContent .vitaSupplierBalance .pos{color:#49ecc6!important}
+ #overlay #sheetContent .vitaHeading{color:#b9f2ff!important}
+ #overlay #sheetContent .saleCard{
+  background:linear-gradient(125deg,#112a46,#181f42)!important;
+  border:1px solid #437fa093!important;
+  box-shadow:inset 0 1px #9fdfff1c!important
+ }
+ #overlay #sheetContent .saleInner{background:transparent!important}
+ #overlay #sheetContent .saleInner .amount.pos{color:#55ebc4!important}
+ #overlay #sheetContent .saleStatus .badge{border-color:#5593a88a!important}
+ #overlay #sheetContent .vitaSupplierForm .field input,
+ #overlay #sheetContent .vitaSupplierForm .field select,
+ #overlay #sheetContent .vitaSupplierForm .field textarea,
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field input,
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field select,
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field textarea{
+  background:#091a33!important;color:#f2fbff!important;
+  border:1px solid #4c81aa!important;border-radius:11px!important
+ }
+ #overlay #sheetContent .vitaSupplierForm .field input:focus,
+ #overlay #sheetContent .vitaSupplierForm .field select:focus,
+ #overlay #sheetContent .vitaSupplierForm .field textarea:focus,
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field input:focus,
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field select:focus{
+  outline:2px solid #4cdaff73!important;outline-offset:1px!important;border-color:#44dffc!important
+ }
+ #overlay #sheetContent .vitaPaymentHead{margin:0 42px 14px 0!important}
+ #overlay #sheetContent .vitaPaymentHead h2{
+  margin:0 0 5px!important;font-size:23px!important;color:#f5fbff!important
+ }
+ #overlay #sheetContent .vitaPaymentHead .vitaPaymentHint{color:#a3c8e8!important;font-size:12px!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field{margin:10px 0!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field label{font-size:12px!important;margin-bottom:6px!important;color:#bad3f1!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field input,
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field select{min-height:43px!important;height:43px!important;font-size:14px!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>.field textarea{min-height:53px!important;font-size:14px!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>h3{font-size:15px!important;margin:14px 0 5px!important;color:#aff0ff!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>.vitaPaymentCurrencyHint{font-size:11px!important;margin:4px 0 9px!important;color:#a6bfdc!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>.paymentCard{
+  background:#0d2241!important;border:1px solid #467da58c!important;
+  border-radius:12px!important;max-height:175px!important;overflow-y:auto!important
+ }
+ #overlay #sheetContent:has(.vitaPaymentHead)>.vitaAllocationSummary{
+  background:linear-gradient(115deg,#112a4b,#1d2451)!important;border:1px solid #4b9fc392!important;
+  border-radius:12px!important;margin:10px 0!important
+ }
+ #overlay #sheetContent:has(.vitaPaymentHead)>.vitaAllocationSummary strong{color:#78f2de!important}
+ #overlay.show:has(.vitaPaymentHead)>.sheet{scrollbar-width:thin!important;scrollbar-color:#437baf #101c35!important}
+ #overlay #sheetContent:has(.vitaPaymentHead){padding-bottom:3px!important}
+ #overlay #sheetContent:has(.vitaPaymentHead)>button.primary:last-child{
+  position:sticky!important;bottom:0!important;z-index:5!important;
+  min-height:49px!important;width:100%!important;margin-top:12px!important;
+  background:linear-gradient(95deg,#fc9b31,#ff7418)!important;border:1px solid #ffbe7a!important;
+  border-radius:12px!important;box-shadow:0 -8px 22px #0d1b35c7,0 7px 20px #fa7f2840!important
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #app:has(.vitaSupplierOverview)>.vitaSupplierList>.vitaLine{transition:none!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
