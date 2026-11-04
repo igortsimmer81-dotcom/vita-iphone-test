@@ -2923,6 +2923,77 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
  #overlay #sheetContent:has(#dp_amount)>.field input,#overlay #sheetContent:has(#dp_amount)>.field select{min-height:44px!important}
  #overlay #sheetContent:has(#dp_amount)>.field textarea{min-height:64px!important}
 }
+</style><style id="vita-cosmic-money-premium-v2">
+/* MAC-ONLY visual rework. Existing debt records, grouping, search and payment logic are unchanged. */
+@media(min-width:1024px) and (pointer:fine){
+ #app:has(>.vitaDebtOverview){background:transparent!important}
+ #app>.vitaDebtOverview{position:relative;isolation:isolate;padding:12px 12px 30px!important;border-radius:24px;overflow:visible}
+ #app>.vitaDebtOverview::before{content:"";position:absolute;z-index:-1;inset:-8px -8px 0;pointer-events:none;border-radius:28px;
+  background:radial-gradient(ellipse 58% 40% at 4% 10%,#1c7fba30,transparent 78%),radial-gradient(ellipse 56% 35% at 98% 0%,#8942d52b,transparent 80%);
+ }
+ #app>.vitaDebtOverview>.sectionTitle{position:relative;margin:2px 0 21px!important;padding:22px 0 0!important;font-size:clamp(28px,3vw,38px)!important;letter-spacing:-1.2px!important;text-shadow:0 0 28px #74bdff43}
+ #app>.vitaDebtOverview>.sectionTitle::before{content:"VITA / COSMIC FINANCIAL SPACE";position:absolute;left:0;top:0;font-size:10px;letter-spacing:2.4px;font-weight:850;color:#79e8ff;text-shadow:0 0 12px #2bb5ff80}
+ #app>.vitaDebtOverview>.noteSearchWrap{position:relative;margin:0 0 17px!important;box-shadow:0 7px 25px #000b}
+ #app>.vitaDebtOverview>.noteSearchWrap input{min-height:53px!important;border-radius:15px!important;padding-left:19px!important;border:1px solid #4d9bc9a8!important;background:linear-gradient(95deg,#112a49,#182648 85%)!important;box-shadow:inset 0 1px #b1dbff20,0 0 18px #30a9ff16!important;outline-offset:2px}
+ #app>.vitaDebtOverview>.vitaMoneyColumns{gap:20px!important;align-items:stretch!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn{position:relative;isolation:isolate;border:1px solid #57b6e5a8!important;border-radius:23px!important;min-height:470px;overflow:hidden!important;
+  background:radial-gradient(ellipse 90% 55% at 78% -8%,#267bc45d,transparent 75%),linear-gradient(155deg,#132d52,#0f1f3e 72%,#0a2440)!important;
+  box-shadow:inset 0 1px #ddfaff3a,0 0 29px #2cc4ed25,0 24px 45px #020a1cad!important;
+ }
+ #app>.vitaDebtOverview>.vitaMoneyColumn::before{content:"";position:absolute;inset:0 0 auto;height:125px;pointer-events:none;background:radial-gradient(ellipse at 36% 5%,#a3f8ff20,transparent 75%);opacity:.7}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe{border-color:#ac85e4b3!important;background:radial-gradient(ellipse 90% 55% at 90% -5%,#9b50c459,transparent 80%),linear-gradient(155deg,#2a244e,#171f42 72%,#10223c)!important;box-shadow:inset 0 1px #f3e2ff38,0 0 29px #ad73f82c,0 24px 45px #020a1cad!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaMetric{position:relative;z-index:1;min-height:136px!important;padding:22px 25px 20px!important;border:0!important;border-bottom:1px solid #71b7da66!important;border-radius:0!important;
+   background:linear-gradient(115deg,#2d719c28,#10365b18)!important;box-shadow:none!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe .vitaMetric{border-bottom-color:#ad82d469!important;background:linear-gradient(115deg,#7943a42b,#201e4927)!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .dashLabel{font-size:13px!important;font-weight:850!important;letter-spacing:2px!important;text-transform:uppercase!important;color:#bce7fa!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .dashTotal{font-size:clamp(25px,2.7vw,34px)!important;letter-spacing:-.8px!important;line-height:1.2!important;margin-top:9px!important;text-shadow:0 0 19px #57cdb840}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isMine .dashTotal{color:#84f1cc!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe .dashTotal{color:#efabc9!important;text-shadow:0 0 19px #d37cbe49}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaMoneyRows{padding:12px 14px 18px!important;max-height:calc(100dvh - 370px)!important;min-height:280px;overflow-y:auto!important;scrollbar-width:thin;scrollbar-color:#5889b4 transparent}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine[data-vita-debt]{position:relative;min-height:75px!important;padding:11px 13px!important;margin:0 0 7px!important;border:1px solid #6292b052!important;border-radius:14px!important;
+  background:linear-gradient(110deg,#28507745,#172b4845)!important;box-shadow:inset 0 1px #daecff10!important;transition:background .18s,border-color .18s,transform .18s}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe .vitaLine[data-vita-debt]{border-color:#9d82bd59!important;background:linear-gradient(110deg,#5e438a3c,#1f2a4b4b)!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine[data-vita-debt]:hover{background:linear-gradient(110deg,#346c9578,#28487584)!important;border-color:#83d7ffb6!important;transform:translateY(-1px)}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe .vitaLine[data-vita-debt]:hover{border-color:#c5a3f5b6!important;background:linear-gradient(110deg,#724c9e6c,#3a346b74)!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaDebtAvatar{width:44px!important;height:44px!important;flex:0 0 44px!important;border:1px solid #8bdcfcb0!important;box-shadow:inset 0 1px #efffff3d,0 0 15px #4abefb29;background:linear-gradient(145deg,#32688b,#224369)!important;color:#e7fbff!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe .vitaDebtAvatar{border-color:#bc9ee2b0!important;background:linear-gradient(145deg,#674c93,#3c3972)!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine .grow b{font-size:15px!important;color:#f0f7ff!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine .vitaSub{font-size:11px!important;color:#b9cee5!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine .amount{font-size:16px!important;font-weight:850!important;letter-spacing:-.3px}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isMine .vitaLine .amount{color:#74eabc!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn.isOwe .vitaLine .amount{color:#f1a4c3!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine .chev{color:#9ce6ff!important}
+ /* Debt person detail: design, not financial behavior */
+ #overlay.show:has(#sheetContent .vitaDebtDetail)>.sheet{scrollbar-width:thin!important;scrollbar-color:#6d99c2 transparent!important;padding:25px 27px!important;border-color:#74bceba6!important;
+  background:radial-gradient(ellipse 90% 36% at 85% 0%,#6551ba52,transparent 83%),linear-gradient(160deg,#142f54,#151c3e 73%,#0e2742)!important}
+ #overlay #sheetContent .vitaDebtDetail>h2{font-size:29px!important;letter-spacing:-.65px!important;color:#f2faff!important;text-shadow:0 0 20px #9c9bff4b}
+ #overlay #sheetContent .vitaDebtDetail>.card{border:1px solid #75b7ed9a!important;background:linear-gradient(120deg,#1e4b7396,#39316aa3)!important;box-shadow:inset 0 1px #f2ffff22,0 0 17px #45bdf528!important}
+ #overlay #sheetContent .vitaDebtDetail .saleCard{border:1px solid #558ac28d!important;border-radius:15px!important;background:linear-gradient(135deg,#234569,#242b52)!important}
+ #overlay #sheetContent .vitaDebtDetail .saleInner{background:transparent!important;padding:14px 15px!important}
+ #overlay #sheetContent .vitaDebtDetail>.tapHint{font-size:0!important}
+ #overlay #sheetContent .vitaDebtDetail>.tapHint::after{content:"Нажми на запись для редактирования";font-size:12px;color:#aecde4}
+ #overlay #sheetContent .vitaDebtDetail .vitaHeading{color:#aee6fa!important}
+ /* Payment form: put the complete form inside an accessible, contained scrolling dialog */
+ #overlay.show:has(#sheetContent #dp_amount)>.sheet{max-height:calc(100dvh - 96px)!important;height:auto!important;overflow-y:auto!important;
+  background:radial-gradient(ellipse 80% 36% at 90% 0%,#6650c45c,transparent 85%),linear-gradient(150deg,#193253,#181f42 80%)!important;border:1px solid #81b5f4b5!important;border-radius:21px!important;
+  scrollbar-width:thin!important;scrollbar-color:#648caf transparent!important;box-shadow:0 26px 90px #000c,0 0 35px #637eff36!important}
+ #overlay #sheetContent:has(#dp_amount)>h2:first-child{font-size:26px!important;letter-spacing:-.7px;color:#f1f9ff!important}
+ #overlay #sheetContent:has(#dp_amount)>.card{background:linear-gradient(135deg,#193e66,#292c5b)!important;border:1px solid #6ba6d28c!important;border-radius:14px!important}
+ #overlay #sheetContent:has(#dp_amount) #dp_amount{min-height:54px!important;background:#0d2b4e!important;border:1px solid #76bfe0!important;color:#fff!important;font-weight:800!important;font-size:19px!important}
+ #overlay #sheetContent:has(#dp_amount) #dp_amount::placeholder{color:#8daec9;font-size:14px;font-weight:450}
+ #overlay #sheetContent:has(#dp_amount) #dp_preview{max-height:120px!important;overflow-y:auto!important;padding-right:8px!important}
+ #overlay #sheetContent:has(#dp_amount)>button.primary:last-child{position:sticky!important;bottom:0!important;z-index:4!important;min-height:51px!important;margin:12px 0 0!important;box-shadow:0 -11px 19px #17213ae6!important}
+}
+@media(min-width:1024px) and (pointer:fine) and (max-width:1250px){
+ #app>.vitaDebtOverview>.vitaMoneyColumns{gap:12px!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaMoneyRows{padding:10px!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine[data-vita-debt]{padding:10px!important}
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaLine .amount{font-size:14px!important}
+}
+@media(min-width:1024px) and (pointer:fine) and (max-height:780px){
+ #app>.vitaDebtOverview>.vitaMoneyColumn .vitaMoneyRows{max-height:calc(100dvh - 330px)!important}
+ #overlay.show:has(#sheetContent #dp_amount)>.sheet{max-height:calc(100dvh - 74px)!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
