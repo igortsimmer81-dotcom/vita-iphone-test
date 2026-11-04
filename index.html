@@ -1852,6 +1852,42 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
 @media(min-width:1024px) and (pointer:fine) and (max-width:1150px){
  #app .vitaInvestV6 .vitaInvestColumns{grid-template-columns:1fr!important}
 }
+</style><style id="vita-cosmic-payback-picker-v61">
+/* Compact payback project picker on Mac. Mobile and calculation logic untouched. */
+@media(min-width:1024px) and (pointer:fine){
+ #overlay.show:has(.vitaV6PayPicker){justify-content:center!important;align-items:center!important;padding:22px!important;background:#020917bd!important;backdrop-filter:blur(7px)}
+ #overlay.show:has(.vitaV6PayPicker)>.sheet{
+  flex:0 0 min(530px,calc(100vw - 65px))!important;
+  flex-basis:min(530px,calc(100vw - 65px))!important;
+  width:min(530px,calc(100vw - 65px))!important;
+  max-width:min(530px,calc(100vw - 65px))!important;
+  max-height:min(82dvh,720px)!important;height:auto!important;margin:auto!important;
+  padding:24px!important;border-radius:21px!important;
+  border:1px solid #78abd6!important;
+  overflow-y:auto!important;overflow-x:hidden!important;
+  background:linear-gradient(145deg,#1e3554,#101d30)!important;
+  box-shadow:0 24px 72px #010512c7,0 0 27px #53a0e824!important;
+ }
+ #overlay.show:has(.vitaV6PayPicker) .handle{display:none!important}
+ #overlay.show:has(.vitaV6PayPicker) .sheetClose{width:38px!important;height:38px!important;min-height:38px!important;border-radius:10px!important;background:#2a4263!important;border-color:#6989ad!important}
+ #sheetContent .vitaV6PayPicker h2{font-size:23px;margin:0 42px 3px 0;color:#f3f9ff}
+ #sheetContent .vitaV6PayPicker>p{margin:0 0 15px;font-size:12px;color:#a7c2df}
+ #sheetContent .vitaV6PayPickerGroup{margin-top:12px;border:1px solid #557ba194;border-radius:13px;overflow:hidden;background:#132944aa}
+ #sheetContent .vitaV6PayPickerGroup.business{border-color:#c58d579e}
+ #sheetContent .vitaV6PayPickerGroup.realty{border-color:#54b6e5ac}
+ #sheetContent .vitaV6PayPickerGroup h3{margin:0;padding:9px 13px;font-size:13px;color:#f8d5a4;background:#493e44a0;border-bottom:1px solid #557b9b6b}
+ #sheetContent .vitaV6PayPickerGroup.realty h3{color:#b9e9ff;background:#21496ea0}
+ #sheetContent .vitaV6PayPickerGroup.other h3{color:#d6cefa;background:#2b3555a0}
+ #sheetContent .vitaV6PayPickerItems{display:grid;gap:0}
+ #sheetContent .vitaV6PayPickerItem{width:100%!important;min-height:53px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;padding:9px 13px;border:0;border-bottom:1px solid #4b729257;background:transparent;color:#eff8ff;cursor:pointer}
+ #sheetContent .vitaV6PayPickerItem:last-child{border-bottom:0}
+ #sheetContent .vitaV6PayPickerItem:hover{background:#315a805e}
+ #sheetContent .vitaV6PayPickerText{min-width:0;flex:1}
+ #sheetContent .vitaV6PayPickerText b{display:block;font-size:14px;overflow-wrap:anywhere}
+ #sheetContent .vitaV6PayPickerText small{display:block;font-size:11px;color:#a5bed7;margin-top:4px}
+ #sheetContent .vitaV6PayPickerItem>span:last-child{font-size:24px;line-height:1;color:#8acfff}
+ #sheetContent .vitaV6PayPickerItem:focus-visible{outline:2px solid #92ddff;outline-offset:-3px}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -1943,7 +1979,28 @@ function commitRentalImport(){
   render();showPaybackProject(project.id);alert('✅ История внесена. Проверь 2 вложения и 42 платежа аренды в окупаемости.');
  }catch(e){try{localStorage.setItem(KEY,old);data=JSON.parse(old);render()}catch(_){}alert('Не удалось внести историю. Выполнена попытка отката.')}
 }
-function openPaybackPicker(){showSheet('<h2>Окупаемость проекта</h2><div class="card" style="margin-top:0">'+data.projects.map(function(p){return '<div class="row" onclick="showPaybackProject(\''+p.id+'\')"><div class="grow"><b>'+esc(p.name)+'</b></div><span class="chev">›</span></div>'}).join('')+'</div>')}
+function openPaybackPicker(){
+ var original='<h2>Окупаемость проекта</h2><div class="card" style="margin-top:0">'+data.projects.map(function(p){return '<div class="row" onclick="showPaybackProject(\''+p.id+'\')"><div class="grow"><b>'+esc(p.name)+'</b></div><span class="chev">›</span></div>'}).join('')+'</div>';
+ if(!window.matchMedia('(min-width:1024px) and (pointer:fine)').matches){showSheet(original);return}
+ var groups=[
+  {name:'Бизнес',type:'business',projects:[]},
+  {name:'Недвижимость',type:'realty',projects:[]},
+  {name:'Другие проекты',type:'other',projects:[]}
+ ];
+ data.projects.forEach(function(p){
+  var name=String(p.name||'');
+  var bucket=/квартира|аренда|недвижим/i.test(name)?groups[1]:/личный/i.test(name)?groups[2]:groups[0];
+  bucket.projects.push(p);
+ });
+ var sections=groups.filter(function(g){return g.projects.length>0}).map(function(g){
+  return '<section class="vitaV6PayPickerGroup '+g.type+'"><h3>'+esc(g.name)+'</h3><div class="vitaV6PayPickerItems">'+g.projects.map(function(p){
+   var n=data.expenses.filter(function(x){return x.project===p.id}).length;
+   var returns=(data.projectReturns||[]).filter(function(x){return x.project===p.id}).length;
+   return '<button type="button" class="vitaV6PayPickerItem" onclick="showPaybackProject(\''+p.id+'\')"><span class="vitaV6PayPickerText"><b>'+esc(p.name)+'</b><small>'+n+' вложений · '+returns+' возвратов</small></span><span aria-hidden="true">›</span></button>';
+  }).join('')+'</div></section>';
+ }).join('');
+ showSheet('<div class="vitaV6PayPicker"><h2>Окупаемость</h2><p>Выбери проект, чтобы посмотреть вложения и возвраты</p>'+sections+'</div>');
+}
 function totalsFor(arr,projectId){var t={};arr.filter(function(x){return (x.project||'')===projectId}).forEach(function(x){var c=x.currency||'RUB';t[c]=(t[c]||0)+Number(x.amount||0)});return t}
 function vitaReturnItem(x){return '<div class="vitaReturnRow" onclick="editProjectReturn(\''+x.id+'\')"><div class="grow"><b>'+fmtDateOnly(x.date)+'</b><div class="vitaSub">'+esc(x.comment||'Нажми для редактирования')+'</div></div><div class="amount green">'+money(x.amount,x.currency||'RUB')+'</div><span class="chev">›</span></div>'}
 function vitaReturnHistory(projectId,mode){
