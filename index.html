@@ -2749,6 +2749,29 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
 @media(min-width:1024px) and (pointer:fine) and (max-width:1080px){
  #app:has(>.vitaDebtOverview)>.vitaDebtOverview>.vitaMoneyColumns{grid-template-columns:1fr!important}
 }
+</style><style id="vita-cosmic-mac-integration-v1">
+/* Desktop-only, visual-only integration trial against Vita Test's REAL render functions.
+   No changes to storage keys, task data, financial calculations, notifications or navigation. */
+@media (min-width:1024px) and (pointer:fine){
+  #app .vitaAgendaItem.isOverdue,
+  #app .taskItem.isOverdue,
+  #app .vitaOverviewLate .taskItem{
+    border:1px solid #a56f8b80!important;
+    border-left:3px solid #c584a5!important;
+    background:linear-gradient(110deg,#322c48c7,#172a43dc)!important;
+    box-shadow:inset 0 0 12px #e88ea90c,0 0 8px #e88ea90c!important;
+  }
+  #app .vitaAgendaItem.isOverdue b,
+  #app .taskItem.isOverdue .taskTitle{color:#f6e9f2!important}
+  #app .vitaLateTag{color:#dfadbf!important;background:#422d4569!important;border-color:#9c6b8780!important}
+  #app .vitaOverviewLate{border-color:#a16e8a78!important;background:linear-gradient(135deg,#292844c7,#172943cb)!important}
+  #app .vitaOverviewLate h3{color:#e8b0c4!important}
+  #app .vitaAgendaHeader.late{color:#dfaec2!important}
+  #app .vitaAgendaItem:not(.isOverdue){border-color:#4b789d78}
+  #app .homeWide.agendaCard{border-color:#81bad59c!important}
+  #app .taskItem:focus-within,#app .vitaAgendaItem:focus-visible{outline:2px solid #8edbfa;outline-offset:2px}
+}
+@media(prefers-reduced-motion:reduce){#app .vitaAgendaItem,#app .taskItem{transition:none!important}}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
