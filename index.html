@@ -3069,6 +3069,27 @@ body{height:100%;height:100dvh;min-height:0!important;overflow:hidden!important;
   font-size:12px!important;line-height:1.5!important;color:#afcde4!important
  }
 }
+</style><style id="vita-cosmic-investment-history-scroll-v1">
+@media (min-width:1024px) and (pointer:fine){
+ #overlay.show:has(#sheetContent .vitaInvestDetail)>.sheet{
+  max-height:calc(100dvh - 86px)!important;overflow-y:auto!important;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:#6c9cbf transparent;
+ }
+ #overlay #sheetContent .vitaInvestDetail .vitaInvestHistoryScroll{
+  max-height:min(43dvh,410px);min-height:0;overflow-y:auto!important;overflow-x:hidden!important;
+  overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#658ab6 #172943;
+  padding-right:8px;margin:0 0 12px;
+ }
+ #overlay #sheetContent .vitaInvestDetail .vitaInvestHistoryScroll .saleCard{margin:7px 0!important}
+ #overlay #sheetContent .vitaInvestDetail>.quickgrid{
+  position:sticky;bottom:-2px;z-index:5;padding:10px 0 2px;margin-top:2px!important;
+  background:linear-gradient(0deg,#14243cfb 65%,#14243cf2 90%,transparent)!important
+ }
+ #overlay #sheetContent .vitaInvestDetail>.card{margin-bottom:10px!important}
+}
+@media (min-width:1024px) and (pointer:fine) and (max-height:760px){
+ #overlay #sheetContent .vitaInvestDetail .vitaInvestHistoryScroll{max-height:31dvh!important}
+}
 </style></head>
 <body>
 <div id="app" class="safe"></div>
@@ -3131,7 +3152,7 @@ function openThaiInvestment(n){var name='Таиланд — квартира №
 function expenseProjectGroups(){var map={};data.expenses.forEach(function(x){var id=x.project||'';var k=id||'__none__';if(!map[k])map[k]={projectId:id,projectName:projectName(id),count:0,totals:{}};map[k].count++;var c=x.currency||'RUB';map[k].totals[c]=(map[k].totals[c]||0)+Number(x.amount||0)});return Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return a.projectName.localeCompare(b.projectName,'ru')})}
 function expenseTotalsHtml(t){return Object.keys(t).map(function(c){return money(t[c],c)}).join('<br>')}
 function thaiBahtSummary(pid){if(!vitaThai(pid))return '';var xs=data.expenses.filter(function(x){return x.project===pid&&(!x.currency||x.currency==='RUB')});var ys=xs.filter(function(x){return Number(x.thbRate)>0&&Number.isFinite(Number(x.thbAmount))});if(!ys.length)return '<div class="vitaBahtUnknown">Курс не указан</div>';var t=ys.reduce(function(a,x){return a+Number(x.thbAmount)},0);return '<div class="vitaBahtSub">'+t.toLocaleString('ru-RU',{maximumFractionDigits:2})+' ฿'+(ys.length<xs.length?'*':'')+'</div>'}
-function showExpenseProject(pid){var xs=data.expenses.filter(function(x){return (x.project||'')===pid}).slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))});var totals={};xs.forEach(function(x){var c=x.currency||'RUB';totals[c]=(totals[c]||0)+Number(x.amount||0)});var rows=xs.map(function(x){return '<div class="saleCard" ontouchstart="swipeStart(event,this)" ontouchend="swipeEnd(event,this)"><button class="swipeDelete" onclick="deleteExpense(\''+x.id+'\',\''+pid+'\')">Удалить</button><div class="saleInner" onclick="editExpense(\''+x.id+'\',\''+pid+'\')"><div class="row"><div class="grow"><b>'+fmtDateOnly((x.date||'').slice(0,10))+'</b><div class="small">'+esc(x.category||'Другое')+'</div></div><div class="amount">'+money(x.amount,x.currency||'RUB')+'</div></div><div class="small">'+esc(x.comment||'')+'</div>'+(vitaThai(pid)&&x.thbRate?'<div class="vitaSub">'+Number(x.thbAmount).toLocaleString('ru-RU')+' ฿ · '+x.thbRate+' ₽/฿</div>':'')+'</div></div>'}).join('');showSheet('<div class="vitaInvestDetail"><h2>'+esc(projectName(pid))+'</h2><div class="card"><div class="small">Всего вложено</div><div class="amount">'+expenseTotalsHtml(totals)+'</div></div><div class="tapHint">Нажатие — редактирование · свайп влево — удаление</div><h3 class="vitaHeading">История вложений</h3>'+rows+'<div class="quickgrid"><button class="primary" onclick="showSheet(expenseForm(\''+pid+'\'))">+ Добавить расход</button><button class="quick secondary" onclick="showPaybackProject(\''+pid+'\')">Окупаемость</button></div></div>')}
+function showExpenseProject(pid){var xs=data.expenses.filter(function(x){return (x.project||'')===pid}).slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))});var totals={};xs.forEach(function(x){var c=x.currency||'RUB';totals[c]=(totals[c]||0)+Number(x.amount||0)});var rows=xs.map(function(x){return '<div class="saleCard" ontouchstart="swipeStart(event,this)" ontouchend="swipeEnd(event,this)"><button class="swipeDelete" onclick="deleteExpense(\''+x.id+'\',\''+pid+'\')">Удалить</button><div class="saleInner" onclick="editExpense(\''+x.id+'\',\''+pid+'\')"><div class="row"><div class="grow"><b>'+fmtDateOnly((x.date||'').slice(0,10))+'</b><div class="small">'+esc(x.category||'Другое')+'</div></div><div class="amount">'+money(x.amount,x.currency||'RUB')+'</div></div><div class="small">'+esc(x.comment||'')+'</div>'+(vitaThai(pid)&&x.thbRate?'<div class="vitaSub">'+Number(x.thbAmount).toLocaleString('ru-RU')+' ฿ · '+x.thbRate+' ₽/฿</div>':'')+'</div></div>'}).join('');showSheet('<div class="vitaInvestDetail"><h2>'+esc(projectName(pid))+'</h2><div class="card"><div class="small">Всего вложено</div><div class="amount">'+expenseTotalsHtml(totals)+'</div></div><div class="tapHint">Нажатие — редактирование · свайп влево — удаление</div><h3 class="vitaHeading">История вложений</h3><div class="vitaInvestHistoryScroll">'+rows+'</div><div class="quickgrid"><button class="primary" onclick="showSheet(expenseForm(\''+pid+'\'))">+ Добавить расход</button><button class="quick secondary" onclick="showPaybackProject(\''+pid+'\')">Окупаемость</button></div></div>')}
 function deleteExpense(id,pid){if(!confirm('Удалить инвестиционную запись?'))return;data.expenses=data.expenses.filter(function(x){return x.id!==id});localStorage.setItem(KEY,JSON.stringify(data));render();if(data.expenses.some(function(x){return (x.project||'')===pid}))showExpenseProject(pid);else closeSheet()}
 
 function openRentalImport(){
